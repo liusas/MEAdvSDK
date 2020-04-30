@@ -62,10 +62,10 @@
 		6D241BAAC13AEC71C3AB2B7E /* Pods-MEAdvSDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEAdvSDK_Tests.release.xcconfig"; path = "Target Support Files/Pods-MEAdvSDK_Tests/Pods-MEAdvSDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		946241BEBC81CF5C1AB1A00E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		946241BEBC81CF5C1AB1A00E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		C6EC12FC2CFC7BAB4366942D /* Pods-MEAdvSDK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEAdvSDK_Example.release.xcconfig"; path = "Target Support Files/Pods-MEAdvSDK_Example/Pods-MEAdvSDK_Example.release.xcconfig"; sourceTree = "<group>"; };
-		D3CA6FE2A575222E363CB87F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		D659859EC5D433302758A35D /* MEAdvSDK.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = MEAdvSDK.podspec; path = ../MEAdvSDK.podspec; sourceTree = "<group>"; };
+		D3CA6FE2A575222E363CB87F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D659859EC5D433302758A35D /* MEAdvSDK.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = MEAdvSDK.podspec; path = ../MEAdvSDK.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F09955C7A0470265F2516321 /* Pods_MEAdvSDK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MEAdvSDK_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -193,7 +193,6 @@
 				139D2D63FBA57E134F34B15C /* Pods-MEAdvSDK_Tests.debug.xcconfig */,
 				6D241BAAC13AEC71C3AB2B7E /* Pods-MEAdvSDK_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -258,6 +257,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);

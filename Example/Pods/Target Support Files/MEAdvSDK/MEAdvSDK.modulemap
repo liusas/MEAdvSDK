@@ -1,0 +1,6 @@
+framework module MEAdvSDK {
+  umbrella header "MEAdvSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}
