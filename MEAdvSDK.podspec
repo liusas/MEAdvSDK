@@ -24,7 +24,7 @@ Pod::Spec.new do |spec|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = "ME.1" #
+  spec.description  = "this is a Mobiexchanger's advertise SDK, and we use it as a module" #
 
   spec.homepage     = "https://gitlab.ad-mex.com/Liusas/MEAdvSDK.git" #Pod主页
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
