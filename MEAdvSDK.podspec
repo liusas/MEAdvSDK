@@ -79,7 +79,7 @@ Pod::Spec.new do |spec|
   #
 
   #  获取库的地址,可以是 git,可以是 svn 也可以是本地库
-  spec.source       = { :git => "https://gitlab.ad-mex.com/Liusas/MEAdvSDK.git", :tag => s.version }
+  spec.source       = { :git => "https://gitlab.ad-mex.com/Liusas/MEAdvSDK.git", :tag => spec.version }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
