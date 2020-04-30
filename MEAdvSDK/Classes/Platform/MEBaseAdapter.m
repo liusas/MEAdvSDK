@@ -92,5 +92,5 @@
 
 // MARK: - 插屏广告
 /// 展示插屏页
-- (BOOL)showInterstitialViewWithPosid:(NSString *)posid showFunnyBtn:(BOOL)showFunnyBtn {}
+- (BOOL)showInterstitialViewWithPosid:(NSString *)posid showFunnyBtn:(BOOL)showFunnyBtn {return NO;}
 @end

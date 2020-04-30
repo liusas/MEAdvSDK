@@ -152,6 +152,7 @@
         NSError *error = [NSError errorWithDomain:@"adv assign failed" code:0 userInfo:@{NSLocalizedDescriptionKey: @"分配失败"}];
         failed(error);
     }
+    return YES;
 }
 
 /// 移除自渲染信息流视图

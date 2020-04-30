@@ -247,6 +247,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "刘峰";
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = ZZ347KD4HH;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -498,6 +501,7 @@
 			baseConfigurationReference = 4246B8C5AF918B1649684EC5 /* Pods-MEAdvSDK_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ZZ347KD4HH;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MEAdvSDK/MEAdvSDK-Prefix.pch";
 				INFOPLIST_FILE = "MEAdvSDK/MEAdvSDK-Info.plist";
@@ -514,6 +518,7 @@
 			baseConfigurationReference = C6EC12FC2CFC7BAB4366942D /* Pods-MEAdvSDK_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ZZ347KD4HH;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MEAdvSDK/MEAdvSDK-Prefix.pch";
 				INFOPLIST_FILE = "MEAdvSDK/MEAdvSDK-Info.plist";
