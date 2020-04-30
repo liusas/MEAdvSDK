@@ -134,9 +134,9 @@ Pod::Spec.new do |spec|
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
 #   spec.dependency "JSONKit", "~> 1.4"
-    spec.dependency "Bytedance-UnionAD"
-    spec.dependency "GDTMobSDK"
-    spec.dependency "Google-Mobile-Ads-SDK"
+    spec.dependency "Bytedance-UnionAD", "~> 2.5.1.2"
+    spec.dependency "GDTMobSDK", "~> 4.10.19"
+    spec.dependency "Google-Mobile-Ads-SDK", "~> 7.57.0"
     spec.dependency "Realm"
     spec.dependency 'KSAdSDK', '2.6.1'
 end

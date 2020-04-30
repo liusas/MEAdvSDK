@@ -1,0 +1,153 @@
+BUILD_CONFIGURATIONS:
+  Debug: :debug
+  Release: :release
+CACHE_KEYS:
+  Bytedance-UnionAD:
+    BUILD_SETTINGS_CHECKSUM:
+      Bytedance-UnionAD: d819f7e8b3d4ed6eaef0df11b8b275e2
+    CHECKSUM: 7705ad5c88472c13b503c45d5ecc09114f063913
+    PROJECT_NAME: Bytedance-UnionAD
+    SPECS:
+      - Bytedance-UnionAD (2.5.1.5)
+  GDTMobSDK:
+    BUILD_SETTINGS_CHECKSUM:
+      GDTMobSDK: 3ada6734b66b677ae3a3a5a6116e47ac
+    CHECKSUM: 7cadef357ef98125c5fb4e3cb9e50f3afe7801f4
+    PROJECT_NAME: GDTMobSDK
+    SPECS:
+      - GDTMobSDK (4.10.19)
+      - GDTMobSDK/GDTMobSDK (4.10.19)
+  Google-Mobile-Ads-SDK:
+    BUILD_SETTINGS_CHECKSUM:
+      Google-Mobile-Ads-SDK: 7b3d43810a8a064f174559837f7e2e7e
+    CHECKSUM: ec897018b9ab9b447e7aa4876e7f75aba13ba2de
+    PROJECT_NAME: Google-Mobile-Ads-SDK
+    SPECS:
+      - Google-Mobile-Ads-SDK (7.57.0)
+  GoogleAppMeasurement:
+    BUILD_SETTINGS_CHECKSUM:
+      GoogleAppMeasurement: adcce4463bb4b2795ff1cbab40c74c1e
+    CHECKSUM: 2253e99c1f22638cf234c059144660c338ad76c3
+    PROJECT_NAME: GoogleAppMeasurement
+    SPECS:
+      - GoogleAppMeasurement (6.4.2)
+  GoogleUtilities:
+    BUILD_SETTINGS_CHECKSUM:
+      GoogleUtilities: 261e32886a9ecf5b59bf22dbd4251df8
+    CHECKSUM: 39530bc0ad980530298e9c4af8549e991fd033b1
+    PROJECT_NAME: GoogleUtilities
+    SPECS:
+      - GoogleUtilities/AppDelegateSwizzler (6.6.0)
+      - GoogleUtilities/Environment (6.6.0)
+      - GoogleUtilities/Logger (6.6.0)
+      - GoogleUtilities/MethodSwizzler (6.6.0)
+      - GoogleUtilities/Network (6.6.0)
+      - "GoogleUtilities/NSData+zlib (6.6.0)"
+      - GoogleUtilities/Reachability (6.6.0)
+  KSAdSDK:
+    BUILD_SETTINGS_CHECKSUM:
+      KSAdSDK: 0eaef8405e4fc6c518c8d3e2743fcb2f
+    CHECKSUM: be75d60f395888e1e0ae60d351168c6078c4845f
+    PROJECT_NAME: KSAdSDK
+    SPECS:
+      - KSAdSDK (2.6.1)
+  MEAdvSDK:
+    BUILD_SETTINGS_CHECKSUM:
+      MEAdvSDK: 9dc149c19ca5e8ee9c2dba5bfa847c26
+    CHECKSUM: b8d0c8e743a79a92a6eada008a80a5f7aa94b071
+    FILES:
+      - "../../LICENSE"
+      - "../../MEAdvSDK/Assets/Resource/MEAdvBundle.bundle"
+      - "../../MEAdvSDK/Classes/Config/MEConfigManager.h"
+      - "../../MEAdvSDK/Classes/Config/MEConfigManager.m"
+      - "../../MEAdvSDK/Classes/Config/Model/MEAdFeedModel.h"
+      - "../../MEAdvSDK/Classes/Config/Model/MEAdFeedModel.m"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigBaseModel.h"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigBaseModel.m"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigInfo.h"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigInfo.m"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigList.h"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigList.m"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigNetwork.h"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigNetwork.m"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigParameter.h"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigParameter.m"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigSdkInfo.h"
+      - "../../MEAdvSDK/Classes/Config/Model/MEConfigSdkInfo.m"
+      - "../../MEAdvSDK/Classes/Feed/MEFeedAdManager.h"
+      - "../../MEAdvSDK/Classes/Feed/MEFeedAdManager.m"
+      - "../../MEAdvSDK/Classes/Interstitial/MEInterstitialAdManager.h"
+      - "../../MEAdvSDK/Classes/Interstitial/MEInterstitialAdManager.m"
+      - "../../MEAdvSDK/Classes/MEAdBaseManager.h"
+      - "../../MEAdvSDK/Classes/MEAdBaseManager.m"
+      - "../../MEAdvSDK/Classes/MEAdMemoryCache.h"
+      - "../../MEAdvSDK/Classes/MEAdMemoryCache.m"
+      - "../../MEAdvSDK/Classes/Platform/Adomb/MEAdombAdapter.h"
+      - "../../MEAdvSDK/Classes/Platform/Adomb/MEAdombAdapter.m"
+      - "../../MEAdvSDK/Classes/Platform/BUAD/MEBUADAdapter.h"
+      - "../../MEAdvSDK/Classes/Platform/BUAD/MEBUADAdapter.m"
+      - "../../MEAdvSDK/Classes/Platform/GDT/MEGDTAdapter.h"
+      - "../../MEAdvSDK/Classes/Platform/GDT/MEGDTAdapter.m"
+      - "../../MEAdvSDK/Classes/Platform/GDT/MEGDTFeedRenderAdapter.h"
+      - "../../MEAdvSDK/Classes/Platform/GDT/MEGDTFeedRenderAdapter.m"
+      - "../../MEAdvSDK/Classes/Platform/GDT/Views/MEGDTCustomView.h"
+      - "../../MEAdvSDK/Classes/Platform/GDT/Views/MEGDTCustomView.m"
+      - "../../MEAdvSDK/Classes/Platform/KS/MEKSAdapter.h"
+      - "../../MEAdvSDK/Classes/Platform/KS/MEKSAdapter.m"
+      - "../../MEAdvSDK/Classes/Platform/MEBaseAdapter.h"
+      - "../../MEAdvSDK/Classes/Platform/MEBaseAdapter.m"
+      - "../../MEAdvSDK/Classes/RewardVideo/MERewardedVideoManager.h"
+      - "../../MEAdvSDK/Classes/RewardVideo/MERewardedVideoManager.m"
+      - "../../MEAdvSDK/Classes/Splash/MESplashAdManager.h"
+      - "../../MEAdvSDK/Classes/Splash/MESplashAdManager.m"
+      - "../../MEAdvSDK/Classes/Tools/MEAdHelpTool.h"
+      - "../../MEAdvSDK/Classes/Tools/MEAdHelpTool.m"
+      - "../../MEAdvSDK/Classes/Tools/MEAdLogModel.h"
+      - "../../MEAdvSDK/Classes/Tools/MEAdLogModel.m"
+      - "../../MEAdvSDK/Classes/Tools/MEFunnyButton.h"
+      - "../../MEAdvSDK/Classes/Tools/MEFunnyButton.m"
+      - "../../MEAdvSDK/Classes/Tools/NBLHTTPFileManager.h"
+      - "../../MEAdvSDK/Classes/Tools/NBLHTTPFileManager.m"
+      - "../../MEAdvSDK/Classes/Tools/NBLHTTPManager.h"
+      - "../../MEAdvSDK/Classes/Tools/NBLHTTPManager.m"
+      - "../../MEAdvSDK/Classes/Tools/NSBundle+Library.h"
+      - "../../MEAdvSDK/Classes/Tools/NSBundle+Library.m"
+      - "../../MEAdvSDK/Classes/Tools/UIImage+Library.h"
+      - "../../MEAdvSDK/Classes/Tools/UIImage+Library.m"
+      - "../../README.md"
+    PROJECT_NAME: MEAdvSDK
+    SPECS:
+      - MEAdvSDK (0.1.0)
+  nanopb:
+    BUILD_SETTINGS_CHECKSUM:
+      nanopb: 576bb45f6f1262a9f9a409f37f3694b7
+    CHECKSUM: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+    PROJECT_NAME: nanopb
+    SPECS:
+      - nanopb (0.3.9011)
+      - nanopb/decode (0.3.9011)
+      - nanopb/encode (0.3.9011)
+  Pods-MEAdvSDK_Example:
+    BUILD_SETTINGS_CHECKSUM:
+      Debug: 5d7c0b67d0d09e1d85e629e778ea1433
+      Release: 5d7c0b67d0d09e1d85e629e778ea1433
+  Pods-MEAdvSDK_Tests:
+    BUILD_SETTINGS_CHECKSUM:
+      Debug: 85841b94cc47f15359d48d6f39c99756
+      Release: 85841b94cc47f15359d48d6f39c99756
+  PromisesObjC:
+    BUILD_SETTINGS_CHECKSUM:
+      PromisesObjC: 1b7465c5d645bb553b8076da86b881fc
+    CHECKSUM: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+    PROJECT_NAME: PromisesObjC
+    SPECS:
+      - PromisesObjC (1.2.8)
+  Realm:
+    BUILD_SETTINGS_CHECKSUM:
+      Realm: ced923823a7c6868fd8d917664a2abaa
+    CHECKSUM: 4eb04d7487bd43c0581256f40b424eafb711deff
+    PROJECT_NAME: Realm
+    SPECS:
+      - Realm (4.4.1)
+      - Realm/Headers (4.4.1)
+OBJECT_VERSION: 46

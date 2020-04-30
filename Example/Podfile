@@ -1,6 +1,13 @@
-use_frameworks!
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '9.0'
+# 消除所有警告
+inhibit_all_warnings!
 
-platform :ios, '8.0'
+install! 'cocoapods',
+# 生成多个 Xcodeproj
+:generate_multiple_pod_projects => true,
+# 支持增量安装
+:incremental_installation => true
 
 target 'MEAdvSDK_Example' do
   pod 'MEAdvSDK', :path => '../'

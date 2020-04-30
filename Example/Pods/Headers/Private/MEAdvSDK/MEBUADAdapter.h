@@ -1,0 +1,1 @@
+../../../../../MEAdvSDK/Classes/Platform/BUAD/MEBUADAdapter.h

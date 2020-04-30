@@ -1,16 +1,81 @@
 PODS:
-  - MEAdvSDK (0.1.0)
+  - Bytedance-UnionAD (2.5.1.5)
+  - GDTMobSDK (4.10.19):
+    - GDTMobSDK/GDTMobSDK (= 4.10.19)
+  - GDTMobSDK/GDTMobSDK (4.10.19)
+  - Google-Mobile-Ads-SDK (7.57.0):
+    - GoogleAppMeasurement (~> 6.0)
+  - GoogleAppMeasurement (6.4.2):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - GoogleUtilities/AppDelegateSwizzler (6.6.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (6.6.0):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (6.6.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (6.6.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (6.6.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (6.6.0)"
+  - GoogleUtilities/Reachability (6.6.0):
+    - GoogleUtilities/Logger
+  - KSAdSDK (2.6.1)
+  - MEAdvSDK (0.1.0):
+    - Bytedance-UnionAD (~> 2.5.1.2)
+    - GDTMobSDK (~> 4.10.19)
+    - Google-Mobile-Ads-SDK (~> 7.57.0)
+    - KSAdSDK (= 2.6.1)
+    - Realm
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
+  - PromisesObjC (1.2.8)
+  - Realm (4.4.1):
+    - Realm/Headers (= 4.4.1)
+  - Realm/Headers (4.4.1)
 
 DEPENDENCIES:
   - MEAdvSDK (from `../`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Bytedance-UnionAD
+    - GDTMobSDK
+    - Google-Mobile-Ads-SDK
+    - GoogleAppMeasurement
+    - GoogleUtilities
+    - KSAdSDK
+    - nanopb
+    - PromisesObjC
+    - Realm
 
 EXTERNAL SOURCES:
   MEAdvSDK:
     :path: "../"
 
 SPEC CHECKSUMS:
-  MEAdvSDK: 503141fbc7b81a1b227e6a6f37146dcea04c0b6d
+  Bytedance-UnionAD: 7705ad5c88472c13b503c45d5ecc09114f063913
+  GDTMobSDK: 7cadef357ef98125c5fb4e3cb9e50f3afe7801f4
+  Google-Mobile-Ads-SDK: ec897018b9ab9b447e7aa4876e7f75aba13ba2de
+  GoogleAppMeasurement: 2253e99c1f22638cf234c059144660c338ad76c3
+  GoogleUtilities: 39530bc0ad980530298e9c4af8549e991fd033b1
+  KSAdSDK: be75d60f395888e1e0ae60d351168c6078c4845f
+  MEAdvSDK: b8d0c8e743a79a92a6eada008a80a5f7aa94b071
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  Realm: 4eb04d7487bd43c0581256f40b424eafb711deff
 
-PODFILE CHECKSUM: 9094534570186b836a306f3d1007dae0bab711a2
+PODFILE CHECKSUM: c59f239bd481842c42d649ff7dc51c5d0c30e8f2
 
 COCOAPODS: 1.8.4
