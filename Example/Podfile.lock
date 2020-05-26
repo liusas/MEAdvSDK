@@ -29,7 +29,7 @@ PODS:
   - GoogleUtilities/Reachability (6.6.0):
     - GoogleUtilities/Logger
   - KSAdSDK (2.6.1)
-  - MEAdvSDK (0.1.0):
+  - MEAdvSDK (0.1.1):
     - Bytedance-UnionAD (~> 2.5.1.2)
     - GDTMobSDK (~> 4.10.19)
     - Google-Mobile-Ads-SDK (~> 7.57.0)
@@ -71,11 +71,11 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 2253e99c1f22638cf234c059144660c338ad76c3
   GoogleUtilities: 39530bc0ad980530298e9c4af8549e991fd033b1
   KSAdSDK: be75d60f395888e1e0ae60d351168c6078c4845f
-  MEAdvSDK: b8d0c8e743a79a92a6eada008a80a5f7aa94b071
+  MEAdvSDK: 705a67fdbf0e64ab1aecb739d83e4e047d44190c
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Realm: 4eb04d7487bd43c0581256f40b424eafb711deff
 
-PODFILE CHECKSUM: c59f239bd481842c42d649ff7dc51c5d0c30e8f2
+PODFILE CHECKSUM: c91645b851fd50c6dc235f0dfc9303967c08a366
 
 COCOAPODS: 1.8.4

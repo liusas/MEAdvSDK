@@ -54,7 +54,7 @@ CACHE_KEYS:
   MEAdvSDK:
     BUILD_SETTINGS_CHECKSUM:
       MEAdvSDK: 9dc149c19ca5e8ee9c2dba5bfa847c26
-    CHECKSUM: b8d0c8e743a79a92a6eada008a80a5f7aa94b071
+    CHECKSUM: 705a67fdbf0e64ab1aecb739d83e4e047d44190c
     FILES:
       - "../../LICENSE"
       - "../../MEAdvSDK/Assets/Resource/MEAdvBundle.bundle"
@@ -117,7 +117,7 @@ CACHE_KEYS:
       - "../../README.md"
     PROJECT_NAME: MEAdvSDK
     SPECS:
-      - MEAdvSDK (0.1.0)
+      - MEAdvSDK (0.1.1)
   nanopb:
     BUILD_SETTINGS_CHECKSUM:
       nanopb: 576bb45f6f1262a9f9a409f37f3694b7

@@ -132,11 +132,13 @@
     self.needShow = YES;
     self.posid = posId;
     
-    self.nativeExpressAd = [[GDTNativeExpressAd alloc] initWithAppId:[MEConfigManager sharedInstance].GDTAPPId
-                                                         placementId:posId//@"5030722621265924"
-                                                              adSize:CGSizeMake(feedWidth, 0)];
-    self.nativeExpressAd.delegate = self;
-    [self.nativeExpressAd loadAd:1];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.nativeExpressAd = [[GDTNativeExpressAd alloc] initWithAppId:[MEConfigManager sharedInstance].GDTAPPId
+                                                             placementId:posId//@"5030722621265924"
+                                                                  adSize:CGSizeMake(feedWidth, 0)];
+        self.nativeExpressAd.delegate = self;
+        [self.nativeExpressAd loadAd:1];
+    });
     
     return YES;
 }

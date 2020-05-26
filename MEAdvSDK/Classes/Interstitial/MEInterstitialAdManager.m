@@ -160,6 +160,11 @@
     // 按优先级选择合适的posid
     NSArray *posArr = [self.configManger getInterstitialPosidByOrderWithPlatform:targetPlatform sceneId:sceneId];
     
+    if ([[MEConfigManager sharedInstance].GDTAPPId isEqualToString:kTestGDT_APPID] && [[MEConfigManager sharedInstance].BUADAPPId isEqualToString:kTestBUAD_APPID] && [[MEConfigManager sharedInstance].KSAppId isEqualToString:kTestKS_APPID]) {
+        // 测试版本,只展示广点通广告
+        posArr = @[kTestGDT_Interstitial, sceneId, @(MEAdAgentTypeGDT)];
+    }
+    
     if (posArr == nil) {
         return NO;
     }

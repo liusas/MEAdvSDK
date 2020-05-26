@@ -319,6 +319,11 @@
     // 按优先级选择合适的posid
     NSArray *posArr = [self.configManger getFeedPosidByOrderWithPlatform:targetPlatform SceneId:sceneId];
     
+    if ([[MEConfigManager sharedInstance].GDTAPPId isEqualToString:kTestGDT_APPID] && [[MEConfigManager sharedInstance].BUADAPPId isEqualToString:kTestBUAD_APPID] && [[MEConfigManager sharedInstance].KSAppId isEqualToString:kTestKS_APPID]) {
+        // 测试版本,只展示广点通广告
+        posArr = @[kTestGDT_FeedView, sceneId, @(MEAdAgentTypeGDT)];
+    }
+    
     if (posArr == nil) {
         // 表示该位置没有分配到广告位,走广告位分配失败回调
         return NO;

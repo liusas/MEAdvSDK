@@ -1,4 +1,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
+# 增加私有资源库地址
+source 'https://gitlab.ad-mex.com/app/Module_iOS.git'
+
 platform :ios, '9.0'
 # 消除所有警告
 inhibit_all_warnings!
@@ -11,6 +14,7 @@ install! 'cocoapods',
 
 target 'MEAdvSDK_Example' do
   pod 'MEAdvSDK', :path => '../'
+#  pod 'MEAdvSDK'
 
   target 'MEAdvSDK_Tests' do
     inherit! :search_paths

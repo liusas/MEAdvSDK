@@ -106,10 +106,9 @@
     }
     
     if (self.configDic == nil) {
-        // 文件中没有广告配置,则写死广告id并初始化,因为appid一般是不会变化的
-        self.BUADAPPId = @"5038537";
-        self.GDTAPPId = @"1110066776";
-        self.KSAppId = @"510400002";
+//        self.BUADAPPId = @"5038537";
+//        self.GDTAPPId = @"1110066776";
+//        self.KSAppId = @"510400002";
         [self initPlatform];
         return;
     }
@@ -177,11 +176,6 @@
             break;
     }
     return adapter;
-}
-
-// 根据广告平台类型查询广告平台名称
-- (NSString *)platformNameOf:(MEAdAgentType)platformType {
-    return self.dicPlatformTypeName[@(platformType)];
 }
 
 /// 从服务端请求配置
@@ -331,29 +325,44 @@
 - (BOOL)parsePlatformPriority {
     // 分配权重
     // 取出iOS对应的配置
-    for (int i = 0; i < self.sdkInfoArr.count; i++) {
-        MEConfigInfo *info = self.sdkInfoArr[i];
-        // 头条穿山甲
-        if ([info.sdk isEqualToString:@"tt"]) {
-            self.BUADAPPId = info.appid;
-        }
-        
-        // 广点通
-        if ([info.sdk isEqualToString:@"gdt"]) {
-            self.GDTAPPId = info.appid;
-        }
-        
-        // 快手
-        if ([info.sdk isEqualToString:@"ks"]) {
-            self.KSAppId = info.appid;
-        }
-    }
+//    for (int i = 0; i < self.sdkInfoArr.count; i++) {
+//        MEConfigInfo *info = self.sdkInfoArr[i];
+//        // 头条穿山甲
+//        if ([info.sdk isEqualToString:@"tt"]) {
+//            self.BUADAPPId = info.appid;
+//        }
+//
+//        // 广点通
+//        if ([info.sdk isEqualToString:@"gdt"]) {
+//            self.GDTAPPId = info.appid;
+//        }
+//
+//        // 快手
+//        if ([info.sdk isEqualToString:@"ks"]) {
+//            self.KSAppId = info.appid;
+//        }
+//    }
     
     return [self initPlatform];
 }
 
 /// 初始化广告平台
 - (BOOL)initPlatform {
+    if (self.BUADAPPId == nil) {
+        // 若没有启动id,则默认只启用对应平台测试的Appid
+        self.BUADAPPId = kTestBUAD_APPID;
+    }
+    
+    if (self.GDTAPPId == nil) {
+        // 若没有启动id,则默认只启用对应平台测试的Appid
+        self.GDTAPPId = kTestGDT_APPID;
+    }
+    
+    if (self.KSAppId == nil) {
+        // 若没有启动id,则默认只启用对应平台测试的Appid
+        self.KSAppId = kTestKS_APPID;
+    }
+    
     if (self.BUADAPPId != nil && self.GDTAPPId != nil && self.KSAppId != nil) {
         // 用appId初始化各广告平台
         self.isInit = YES;

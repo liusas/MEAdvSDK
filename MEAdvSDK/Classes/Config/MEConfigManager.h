@@ -6,27 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MEAdvConfig.h"
 #import "MEConfigBaseModel.h"
 #import "MEAdFeedModel.h"
 
 @class MEBaseAdapter;
-
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
-
-#define kScreenWidth [[UIApplication sharedApplication]keyWindow].bounds.size.width
-#define kScreenHeight [[UIApplication sharedApplication]keyWindow].bounds.size.height
-
-#define kRequestConfigNotify @"kRequestConfigNotify"
-
-#define FilePath_AllConfig  [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"MEAdvertiseAllConfig.plist"]
-
-#define kConfigiOSSign @"2048" // 广告配置信息iOS对应的前缀
-
-#define kDefaultSplashPosid @"2048025" // 服务端默认的开屏广告id
-#define kDefaultRewardVideoPosid @"2048020" //服务端默认激励视频广告位Id
-#define kDefaultFeedPosid @"2048018" //服务端默认信息流广告位Id
-#define kDefaultInterstitialPosid @"2048043" //服务端默认插屏广告位Id
-#define kDefaultRenderFeedPosid @"2048051" // 自渲染信息流广告位id
 
 /// 广告平台
 typedef NS_ENUM(NSUInteger, MEAdAgentType) {
@@ -80,35 +64,41 @@ typedef NS_ENUM(NSUInteger, MEAdType) {
 /// 根据广告平台和广告类型分配相应适配器
 + (MEBaseAdapter *)getAdapterByPlatform:(MEAdAgentType)platformType andAdType:(MEAdType)adType;
 
-// 根据广告平台类型查询广告平台名称
-- (NSString *)platformNameOf:(MEAdAgentType)platformType;
-
-
 /// 从服务端请求各平台配置
 - (void)platformConfigIfRequestWithUrl:(NSString *)adRequestUrl;
 
-/// 若此次广告展示失败,返回备用展示的广告平台,没有则返回none
-/// @param sceneId 场景id
+/// 若上次广告展示失败,则根据广告场景id(sceneId)分配下一个广告平台展示广告,若没有符合条件则返回MEAdAgentTypeNone
+/// @param sceneId 广告场景id
 /// @param agentType 当前展示失败的广告平台
 - (MEAdAgentType)nextAdPlatformWithSceneId:(NSString *)sceneId currentPlatform:(MEAdAgentType)agentType;
 
 // MARK: - 按广告位posid选择广告的逻辑,此次采用
-/// 根据场景id和服务端配置的order选择要加载的广告平台和sceneId
+/// 根据广告场景id(sceneId)和指定广告平台分配相应广告适配器处理信息流广告展示,
+/// 返回数组[该广告平台对应的posid, 广告场景sceneId, 广告平台platform]
+/// @param platformType 指定广告平台,若platformType为MEAdAgentTypeNone,则按广告配置的优先级及频率等规则分配
 /// @param sceneId 场景id
 - (NSArray *)getFeedPosidByOrderWithPlatform:(MEAdAgentType)platformType SceneId:(NSString *)sceneId;
 
-/// 根据广告平台获取激励视频的posid
-/// @param platformType 广告平台
+/// 根据广告场景id(sceneId)和指定广告平台分配相应广告适配器处理激励视频广告展示,
+/// 返回数组[该广告平台对应的posid, 广告场景sceneId, 广告平台platform]
+/// @param platformType 指定广告平台,若platformType为MEAdAgentTypeNone,则按广告配置的优先级及频率等规则分配
+/// @param sceneId 场景id
 - (NSArray *)getRewardVideoPosidByOrderWithPlatform:(MEAdAgentType)platformType sceneId:(NSString *)sceneId;
 
-/// 开屏广告
+/// 根据广告场景id(sceneId)和指定广告平台分配相应广告适配器处理开屏广告展示,
+/// 返回数组[该广告平台对应的posid, 广告场景sceneId, 广告平台platform]
+/// @param platformType 指定广告平台,若platformType为MEAdAgentTypeNone,则按广告配置的优先级及频率等规则分配
+/// @param sceneId 场景id
 - (NSArray *)getSplashPosidByOrderWithPlatform:(MEAdAgentType)platformType sceneId:(NSString *)sceneId;
 
-/// 插屏广告
+/// 根据广告场景id(sceneId)和指定广告平台分配相应广告适配器处理插屏广告展示,
+/// 返回数组[该广告平台对应的posid, 广告场景sceneId, 广告平台platform]
+/// @param platformType 指定广告平台,若platformType为MEAdAgentTypeNone,则按广告配置的优先级及频率等规则分配
+/// @param sceneId 场景id
 - (NSArray *)getInterstitialPosidByOrderWithPlatform:(MEAdAgentType)platformType sceneId:(NSString *)sceneId;
 
 // MARK: - other
-/// 改变广告使用频次
+/// 更新广告频次,可在广告配置中配置展示顺序,平台在分配广告时优先按这个顺序分配广告平台
 /// @param sceneId 场景id
 - (void)changeAdFrequencyWithSceneId:(NSString *)sceneId;
 

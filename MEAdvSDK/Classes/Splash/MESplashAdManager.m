@@ -149,11 +149,15 @@
     // 按优先级选择合适的posid
     NSArray *posArr = [self.configManger getSplashPosidByOrderWithPlatform:MEAdAgentTypeNone sceneId:sceneId];
     
+    if ([[MEConfigManager sharedInstance].GDTAPPId isEqualToString:kTestGDT_APPID] && [[MEConfigManager sharedInstance].BUADAPPId isEqualToString:kTestBUAD_APPID] && [[MEConfigManager sharedInstance].KSAppId isEqualToString:kTestKS_APPID]) {
+        // 测试版本,只展示广点通广告
+        posArr = @[@"9040714184494018", sceneId, @(MEAdAgentTypeGDT)];
+    }
+    
     if (posArr == nil) {
         // 如果没找到广告位, 则默认给穿山甲广告
         posArr = @[@"838537172", sceneId, @(MEAdAgentTypeBUAD)];
 //        posArr = @[@"1070390225538460", sceneId, @(MEAdAgentTypeGDT)];
-//        return NO;
     }
     NSString *posid = posArr[0];
     

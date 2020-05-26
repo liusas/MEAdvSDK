@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		02ED2883C1A9F90FD8DD7EA24E036E5B /* NSBundle+Library.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE252706161056A9046FE1E6D54B664 /* NSBundle+Library.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		02F3084ED0B693C3D5CEB65004D842BD /* MESplashAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 571EA9DAD34C9D89E3813623F400A8EA /* MESplashAdManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		03BC290D247D014F00BBCB1D /* MEAdvConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03BC290A247D014F00BBCB1D /* MEAdvConfig.h */; };
 		046C7221142C6623EBFDD9C042CF9474 /* NBLHTTPFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 31F35879BD8235A45059A303233DB2D8 /* NBLHTTPFileManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		0EB3D3E4087A0F804CD4BF8191DA942F /* NSBundle+Library.h in Headers */ = {isa = PBXBuildFile; fileRef = 621C4E6574A4B733493D11A87AF9839A /* NSBundle+Library.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		0F97797D217A42FEF4A9D539F9BA291D /* MEBaseAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1705228D7773A8B3F06A4957AA8534 /* MEBaseAdapter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -67,37 +68,44 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		03BC290B247D014F00BBCB1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC4343D2C17098E2C710D991347C2147 /* Realm */;
+			proxyType = 2;
+			remoteGlobalIDString = B6661B617127D135D4F41AA235B7DA1F;
+			remoteInfo = Realm;
+		};
 		386A39FBAF5CEE71912B16FB7B36F737 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 07FCBF875E5662A6B2E43ACFB0ACCA5E /* GDTMobSDK.xcodeproj */;
+			containerPortal = 07FCBF875E5662A6B2E43ACFB0ACCA5E /* GDTMobSDK */;
 			proxyType = 1;
 			remoteGlobalIDString = 1A3CFDC0A2AD044C744F8B75288D67F4;
 			remoteInfo = GDTMobSDK;
 		};
 		3BA96B4BDD7FDF12DC832DBCEAF1D360 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 38469E4EE6CC327E297C5E1EA5FC41F2 /* KSAdSDK.xcodeproj */;
+			containerPortal = 38469E4EE6CC327E297C5E1EA5FC41F2 /* KSAdSDK */;
 			proxyType = 1;
 			remoteGlobalIDString = 52F8E625A098A051AC611874CB74C4C7;
 			remoteInfo = KSAdSDK;
 		};
 		806C0B99C9F36129404AEC9EF66ED439 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0229BF4ADB3E35CB818AAC4B34968E16 /* Bytedance-UnionAD.xcodeproj */;
+			containerPortal = 0229BF4ADB3E35CB818AAC4B34968E16 /* Bytedance-UnionAD */;
 			proxyType = 1;
 			remoteGlobalIDString = 5332E9233532B4756DF3841BFF2A4D94;
 			remoteInfo = "Bytedance-UnionAD";
 		};
 		9FDFEB66EC2315A1E0FC5FDD3ED42981 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = EC4343D2C17098E2C710D991347C2147 /* Realm.xcodeproj */;
+			containerPortal = EC4343D2C17098E2C710D991347C2147 /* Realm */;
 			proxyType = 1;
 			remoteGlobalIDString = BC4AC9FBD7453D9D72102559C8F6B8AC;
 			remoteInfo = Realm;
 		};
 		F5F838F4932622AE9BB6C052972C8D75 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FB9B2D22A5614CF06C632C2D29B52B5B /* Google-Mobile-Ads-SDK.xcodeproj */;
+			containerPortal = FB9B2D22A5614CF06C632C2D29B52B5B /* Google-Mobile-Ads-SDK */;
 			proxyType = 1;
 			remoteGlobalIDString = 662B519EDA759B92F78065D8C998C86E;
 			remoteInfo = "Google-Mobile-Ads-SDK";
@@ -106,8 +114,9 @@
 
 /* Begin PBXFileReference section */
 		0229BF4ADB3E35CB818AAC4B34968E16 /* Bytedance-UnionAD */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Bytedance-UnionAD"; path = "Bytedance-UnionAD.xcodeproj"; sourceTree = "<group>"; };
+		03BC290A247D014F00BBCB1D /* MEAdvConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEAdvConfig.h; sourceTree = "<group>"; };
 		04AB7C8EDDAECDD0A78B30660A14F78C /* MEGDTCustomView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEGDTCustomView.m; sourceTree = "<group>"; };
-		04F266C99B08DD454D7A13D9FBCD89AB /* libMEAdvSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libMEAdvSDK.a; path = libMEAdvSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		04F266C99B08DD454D7A13D9FBCD89AB /* libMEAdvSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMEAdvSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		075A136B8E4554DF601AF7069C1E3EA7 /* MEGDTAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEGDTAdapter.h; sourceTree = "<group>"; };
 		07FCBF875E5662A6B2E43ACFB0ACCA5E /* GDTMobSDK */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GDTMobSDK; path = GDTMobSDK.xcodeproj; sourceTree = "<group>"; };
 		0B130A60200B37E644AF6C1F894BC717 /* MEInterstitialAdManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEInterstitialAdManager.m; sourceTree = "<group>"; };
@@ -131,14 +140,14 @@
 		56DF9A7CC75A63841EE4A3E51DA46125 /* MEBaseAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEBaseAdapter.h; sourceTree = "<group>"; };
 		571EA9DAD34C9D89E3813623F400A8EA /* MESplashAdManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MESplashAdManager.m; sourceTree = "<group>"; };
 		621C4E6574A4B733493D11A87AF9839A /* NSBundle+Library.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Library.h"; sourceTree = "<group>"; };
-		6574216A18BE5E101A560566405CF40D /* MEAdvSDK.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = MEAdvSDK.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		6574216A18BE5E101A560566405CF40D /* MEAdvSDK.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = MEAdvSDK.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		68D568A34C5B33CB0BD74FBF139A5608 /* MEConfigManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigManager.h; sourceTree = "<group>"; };
 		6D5013AA86E7CBBADD188FC8A9745DA2 /* UIImage+Library.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Library.m"; sourceTree = "<group>"; };
 		6E76E3A254922759EAD10DB9AF778892 /* MEAdombAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEAdombAdapter.h; sourceTree = "<group>"; };
 		7159C071CF05194AA4F048ABB6D430CA /* MERewardedVideoManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MERewardedVideoManager.h; sourceTree = "<group>"; };
 		7A6967B46D36E745341D4834654BEF1F /* MEBUADAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEBUADAdapter.h; sourceTree = "<group>"; };
 		7AB45BB214299CB46D7FF03CC9E0486F /* MEConfigParameter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigParameter.m; sourceTree = "<group>"; };
-		7B67D3B4A038060E8837D331CF13257A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		7B67D3B4A038060E8837D331CF13257A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		7FD8AEAE1ACCEAC8D4A0D67191C21E02 /* MEConfigSdkInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigSdkInfo.h; sourceTree = "<group>"; };
 		81CAFC1E6F677C2C913D19AE5F62E328 /* MEGDTFeedRenderAdapter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEGDTFeedRenderAdapter.m; sourceTree = "<group>"; };
 		84D4F0440588F34CA25834450011A4F6 /* MEConfigNetwork.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigNetwork.m; sourceTree = "<group>"; };
@@ -151,7 +160,7 @@
 		A26889BA9440D0042E5F10F70F6FE377 /* MEAdFeedModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEAdFeedModel.h; sourceTree = "<group>"; };
 		A69DAA0FD0DD0DD24151A29DB45B512C /* MEAdFeedModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEAdFeedModel.m; sourceTree = "<group>"; };
 		A82611AF1301F7CB8BD928A7B22754FF /* MEAdvSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MEAdvSDK-dummy.m"; sourceTree = "<group>"; };
-		B0EDA3C3C5E13F9E1DB2EB63BC320BA0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		B0EDA3C3C5E13F9E1DB2EB63BC320BA0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B0FEFB605FB8AE15934CB2ABFF067BFF /* MEConfigBaseModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigBaseModel.h; sourceTree = "<group>"; };
 		B2A2FC8FEACD91A7D38DFEA533237F2C /* MEConfigList.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigList.m; sourceTree = "<group>"; };
 		BDE3A1C862245442D6C99D04D9DD3835 /* MEGDTFeedRenderAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEGDTFeedRenderAdapter.h; sourceTree = "<group>"; };
@@ -187,6 +196,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03BC28FA247D00F000BBCB1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		03BC28FC247D00F000BBCB1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		03BC28FE247D00F000BBCB1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		03BC2900247D00F000BBCB1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				03BC290C247D014F00BBCB1D /* libRealm.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		03BC2902247D00F000BBCB1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		061805A33B3920F1A1059AEA186A47F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,7 +300,6 @@
 				ECD39F73630F1EC10C97770AA8015E12 /* MEKSAdapter.h */,
 				47EC6D488DAB3694B8DF2EAB1459F94E /* MEKSAdapter.m */,
 			);
-			name = KS;
 			path = KS;
 			sourceTree = "<group>";
 		};
@@ -277,7 +321,6 @@
 				7FD8AEAE1ACCEAC8D4A0D67191C21E02 /* MEConfigSdkInfo.h */,
 				ED746681B9D023B5011594C89E1C0DD9 /* MEConfigSdkInfo.m */,
 			);
-			name = Model;
 			path = Model;
 			sourceTree = "<group>";
 		};
@@ -315,7 +358,6 @@
 				6E76E3A254922759EAD10DB9AF778892 /* MEAdombAdapter.h */,
 				2D9A66DEF41FF825CE8B26D111D29F3D /* MEAdombAdapter.m */,
 			);
-			name = Adomb;
 			path = Adomb;
 			sourceTree = "<group>";
 		};
@@ -330,6 +372,7 @@
 		AEA5A0897F8E38B5559429AD9875FDD9 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				03BC290A247D014F00BBCB1D /* MEAdvConfig.h */,
 				68D568A34C5B33CB0BD74FBF139A5608 /* MEConfigManager.h */,
 				E91D8A4BC46BD9FBC9C9975A109AE8CC /* MEConfigManager.m */,
 				791CD7751E9ACDAF17682F5676A809B6 /* Model */,
@@ -369,7 +412,6 @@
 				81CAFC1E6F677C2C913D19AE5F62E328 /* MEGDTFeedRenderAdapter.m */,
 				ED340FCF462516874391F6FF7BF829D7 /* Views */,
 			);
-			name = GDT;
 			path = GDT;
 			sourceTree = "<group>";
 		};
@@ -391,7 +433,6 @@
 				7A6967B46D36E745341D4834654BEF1F /* MEBUADAdapter.h */,
 				C5D98B2CF5AB8496B3A8D08846CD02D4 /* MEBUADAdapter.m */,
 			);
-			name = BUAD;
 			path = BUAD;
 			sourceTree = "<group>";
 		};
@@ -401,7 +442,6 @@
 				9C711F8F1AD24C6FBBA6165DD1A868CC /* MEGDTCustomView.h */,
 				04AB7C8EDDAECDD0A78B30660A14F78C /* MEGDTCustomView.m */,
 			);
-			name = Views;
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -450,6 +490,7 @@
 				BD22DA17E1993CA64E386BF78A778C12 /* MEAdLogModel.h in Headers */,
 				1CC818763298A5E5E4D55B4D33DAEF3F /* MEAdMemoryCache.h in Headers */,
 				473B0653DF2970422A00A9DC2B410133 /* MEAdombAdapter.h in Headers */,
+				03BC290D247D014F00BBCB1D /* MEAdvConfig.h in Headers */,
 				7A06C289D64FE15D428736D43B34D8F1 /* MEBaseAdapter.h in Headers */,
 				FB319A6BE5F2DCDCF9990EB8E998D0D6 /* MEBUADAdapter.h in Headers */,
 				2F0026A18F3EB9FFFFF53391CAA305C9 /* MEConfigBaseModel.h in Headers */,
@@ -522,19 +563,24 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 03BC28FE247D00F000BBCB1D /* Products */;
 					ProjectRef = 0229BF4ADB3E35CB818AAC4B34968E16 /* Bytedance-UnionAD */;
 				},
 				{
+					ProductGroup = 03BC28FA247D00F000BBCB1D /* Products */;
 					ProjectRef = 07FCBF875E5662A6B2E43ACFB0ACCA5E /* GDTMobSDK */;
 				},
 				{
+					ProductGroup = 03BC2902247D00F000BBCB1D /* Products */;
 					ProjectRef = FB9B2D22A5614CF06C632C2D29B52B5B /* Google-Mobile-Ads-SDK */;
 				},
 				{
-					ProjectRef = EC4343D2C17098E2C710D991347C2147 /* Realm */;
+					ProductGroup = 03BC28FC247D00F000BBCB1D /* Products */;
+					ProjectRef = 38469E4EE6CC327E297C5E1EA5FC41F2 /* KSAdSDK */;
 				},
 				{
-					ProjectRef = 38469E4EE6CC327E297C5E1EA5FC41F2 /* KSAdSDK */;
+					ProductGroup = 03BC2900247D00F000BBCB1D /* Products */;
+					ProjectRef = EC4343D2C17098E2C710D991347C2147 /* Realm */;
 				},
 			);
 			projectRoot = "";
@@ -543,6 +589,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		03BC290C247D014F00BBCB1D /* libRealm.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRealm.a;
+			remoteRef = 03BC290B247D014F00BBCB1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B67D99ACB49CAF556F62A632E38935E1 /* Sources */ = {
@@ -689,8 +745,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
