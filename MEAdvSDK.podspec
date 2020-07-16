@@ -138,6 +138,6 @@ Pod::Spec.new do |spec|
 #    spec.dependency "GDTMobSDK", "~> 4.10.19"
 #    spec.dependency "Google-Mobile-Ads-SDK", "~> 7.57.0"
     spec.dependency "Reachability"
-    spec.dependency "Realm"
+    spec.dependency "Realm", '4.4.1'
 #    spec.dependency 'KSAdSDK', '2.6.1'
 end
