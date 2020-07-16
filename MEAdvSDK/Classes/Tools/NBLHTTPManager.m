@@ -598,6 +598,7 @@ static dispatch_group_t urlsession_completion_group() {
         dispatch_sync(urlsession_creation_queue(), ^{
             urlSessionTask = [self.urlSession dataTaskWithRequest:request];
         });
+        
         // 配备任务项以保存相关数据
         URLSessionTaskItem *taskItem = [[URLSessionTaskItem alloc] init];
         taskItem.responseObjectType = resObjType;

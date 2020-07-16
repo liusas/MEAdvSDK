@@ -30,14 +30,6 @@ typedef void(^LoadAdClick)(void);               // 广告被点击
 + (instancetype)shareInstance;
 
 // MARK: - 信息流
-/// 拉取信息流广告到缓存
-/// @param feedWidth 信息流宽度
-/// @param sceneId 场景id
-- (void)saveFeedCacheWithWidth:(CGFloat)feedWidth
-                       sceneId:(NSString *)sceneId
-                      finished:(CacheLoadAdFinished)finished
-                        failed:(CacheLoadAdFailed)failed;
-
 /// 显示信息流视图
 /// @param feedWidth 信息流背景视图宽度
 /// @param sceneId 场景Id,在MEAdBaseManager.h中可查
@@ -56,24 +48,11 @@ typedef void(^LoadAdClick)(void);               // 广告被点击
                      finished:(LoadAdFinished)finished
                        failed:(LoadAdFailed)failed;
 
-/// 移除信息流视图
-- (void)removeFeedView;
-
 // MARK: - 信息流自渲染
-/// 信息流预加载,并存入缓存
-/// @param feedWidth 信息流宽度
-/// @param posId 广告位id
-- (void)saveRenderFeedCacheWithSceneId:(NSString *)sceneId
-                              finished:(LoadAdFinished)finished
-                                failed:(LoadAdFailed)failed;
-
 /// 显示自渲染的信息流视图
-- (BOOL)showRenderFeedViewWithSceneId:(NSString *)sceneId
+- (void)showRenderFeedViewWithSceneId:(NSString *)sceneId
                              finished:(LoadAdFinished)finished
                                failed:(LoadAdFailed)failed;
-
-/// 移除自渲染信息流视图
-- (void)removeRenderFeedView;
 
 @end
 

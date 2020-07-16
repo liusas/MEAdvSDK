@@ -1,16 +1,16 @@
 //
 //  MEConfigInfo.m
 //
-//  Created by 峰 刘 on 2019/11/25
-//  Copyright (c) 2019 __MyCompanyName__. All rights reserved.
+//  Created by 峰 刘 on 2020/7/3
+//  Copyright (c) 2020 __MyCompanyName__. All rights reserved.
 //
 
 #import "MEConfigInfo.h"
 
 
-NSString *const kInfoSdk = @"sdk";
-NSString *const kInfoAppid = @"appid";
-NSString *const kInfoAppname = @"appname";
+NSString *const kMEConfigInfoSdk = @"sdk";
+NSString *const kMEConfigInfoAppname = @"appname";
+NSString *const kMEConfigInfoAppid = @"appid";
 
 
 @interface MEConfigInfo ()
@@ -22,8 +22,8 @@ NSString *const kInfoAppname = @"appname";
 @implementation MEConfigInfo
 
 @synthesize sdk = _sdk;
-@synthesize appid = _appid;
 @synthesize appname = _appname;
+@synthesize appid = _appid;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -38,9 +38,9 @@ NSString *const kInfoAppname = @"appname";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
-            self.sdk = [self objectOrNilForKey:kInfoSdk fromDictionary:dict];
-            self.appid = [self objectOrNilForKey:kInfoAppid fromDictionary:dict];
-            self.appname = [self objectOrNilForKey:kInfoAppname fromDictionary:dict];
+            self.sdk = [self objectOrNilForKey:kMEConfigInfoSdk fromDictionary:dict];
+            self.appname = [self objectOrNilForKey:kMEConfigInfoAppname fromDictionary:dict];
+            self.appid = [self objectOrNilForKey:kMEConfigInfoAppid fromDictionary:dict];
 
     }
     
@@ -51,9 +51,9 @@ NSString *const kInfoAppname = @"appname";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
-    [mutableDict setValue:self.sdk forKey:kInfoSdk];
-    [mutableDict setValue:self.appid forKey:kInfoAppid];
-    [mutableDict setValue:self.appname forKey:kInfoAppname];
+    [mutableDict setValue:self.sdk forKey:kMEConfigInfoSdk];
+    [mutableDict setValue:self.appname forKey:kMEConfigInfoAppname];
+    [mutableDict setValue:self.appid forKey:kMEConfigInfoAppid];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -77,18 +77,18 @@ NSString *const kInfoAppname = @"appname";
 {
     self = [super init];
 
-    self.sdk = [aDecoder decodeObjectForKey:kInfoSdk];
-    self.appid = [aDecoder decodeObjectForKey:kInfoAppid];
-    self.appname = [aDecoder decodeObjectForKey:kInfoAppname];
+    self.sdk = [aDecoder decodeObjectForKey:kMEConfigInfoSdk];
+    self.appname = [aDecoder decodeObjectForKey:kMEConfigInfoAppname];
+    self.appid = [aDecoder decodeObjectForKey:kMEConfigInfoAppid];
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
 
-    [aCoder encodeObject:_sdk forKey:kInfoSdk];
-    [aCoder encodeObject:_appid forKey:kInfoAppid];
-    [aCoder encodeObject:_appname forKey:kInfoAppname];
+    [aCoder encodeObject:_sdk forKey:kMEConfigInfoSdk];
+    [aCoder encodeObject:_appname forKey:kMEConfigInfoAppname];
+    [aCoder encodeObject:_appid forKey:kMEConfigInfoAppid];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -98,8 +98,8 @@ NSString *const kInfoAppname = @"appname";
     if (copy) {
 
         copy.sdk = [self.sdk copyWithZone:zone];
-        copy.appid = [self.appid copyWithZone:zone];
         copy.appname = [self.appname copyWithZone:zone];
+        copy.appid = [self.appid copyWithZone:zone];
     }
     
     return copy;

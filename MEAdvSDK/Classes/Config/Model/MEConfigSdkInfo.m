@@ -1,8 +1,8 @@
 //
 //  MEConfigSdkInfo.m
 //
-//  Created by 峰 刘 on 2019/11/25
-//  Copyright (c) 2019 __MyCompanyName__. All rights reserved.
+//  Created by 峰 刘 on 2020/7/3
+//  Copyright (c) 2020 __MyCompanyName__. All rights reserved.
 //
 
 #import "MEConfigSdkInfo.h"
@@ -10,7 +10,7 @@
 
 
 NSString *const kMEConfigSdkInfoMid = @"mid";
-NSString *const kMEConfigSdkInfo = @"info";
+NSString *const kMEConfigSdkInfoInfo = @"info";
 
 
 @interface MEConfigSdkInfo ()
@@ -38,19 +38,19 @@ NSString *const kMEConfigSdkInfo = @"info";
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
             self.mid = [self objectOrNilForKey:kMEConfigSdkInfoMid fromDictionary:dict];
-    NSObject *receivedInfo = [dict objectForKey:kMEConfigSdkInfo];
-    NSMutableArray *parsedInfo = [NSMutableArray array];
-    if ([receivedInfo isKindOfClass:[NSArray class]]) {
-        for (NSDictionary *item in (NSArray *)receivedInfo) {
+    NSObject *receivedMEConfigInfo = [dict objectForKey:kMEConfigSdkInfoInfo];
+    NSMutableArray *parsedMEConfigInfo = [NSMutableArray array];
+    if ([receivedMEConfigInfo isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *item in (NSArray *)receivedMEConfigInfo) {
             if ([item isKindOfClass:[NSDictionary class]]) {
-                [parsedInfo addObject:[MEConfigInfo modelObjectWithDictionary:item]];
+                [parsedMEConfigInfo addObject:[MEConfigInfo modelObjectWithDictionary:item]];
             }
        }
-    } else if ([receivedInfo isKindOfClass:[NSDictionary class]]) {
-       [parsedInfo addObject:[MEConfigInfo modelObjectWithDictionary:(NSDictionary *)receivedInfo]];
+    } else if ([receivedMEConfigInfo isKindOfClass:[NSDictionary class]]) {
+       [parsedMEConfigInfo addObject:[MEConfigInfo modelObjectWithDictionary:(NSDictionary *)receivedMEConfigInfo]];
     }
 
-    self.info = [NSArray arrayWithArray:parsedInfo];
+    self.info = [NSArray arrayWithArray:parsedMEConfigInfo];
 
     }
     
@@ -72,7 +72,7 @@ NSString *const kMEConfigSdkInfo = @"info";
             [tempArrayForInfo addObject:subArrayObject];
         }
     }
-    [mutableDict setValue:[NSArray arrayWithArray:tempArrayForInfo] forKey:kMEConfigSdkInfo];
+    [mutableDict setValue:[NSArray arrayWithArray:tempArrayForInfo] forKey:kMEConfigSdkInfoInfo];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -97,7 +97,7 @@ NSString *const kMEConfigSdkInfo = @"info";
     self = [super init];
 
     self.mid = [aDecoder decodeObjectForKey:kMEConfigSdkInfoMid];
-    self.info = [aDecoder decodeObjectForKey:kMEConfigSdkInfo];
+    self.info = [aDecoder decodeObjectForKey:kMEConfigSdkInfoInfo];
     return self;
 }
 
@@ -105,7 +105,7 @@ NSString *const kMEConfigSdkInfo = @"info";
 {
 
     [aCoder encodeObject:_mid forKey:kMEConfigSdkInfoMid];
-    [aCoder encodeObject:_info forKey:kMEConfigSdkInfo];
+    [aCoder encodeObject:_info forKey:kMEConfigSdkInfoInfo];
 }
 
 - (id)copyWithZone:(NSZone *)zone

@@ -7,7 +7,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MEConfigManager.h"
-#import "MEGDTCustomView.h"
 
 @class MEAdBaseManager;
 
@@ -18,12 +17,6 @@ typedef void(^RequestAndInitFinished)(BOOL success);
 
 // MARK: - 广告平台的APPID
 // 目前集成了穿山甲,广点通,快手及谷歌,谷歌需要从info.plist中配置GADApplicationIdentifier
-/// 穿山甲Appid
-@property (nonatomic, copy) NSString *BUADAPPId;
-/// 广点通Appid
-@property (nonatomic, copy) NSString *GDTAPPId;
-/// 快手Appid
-@property (nonatomic, copy) NSString *KSAppId;
 /// 开屏广告代理
 @property (nonatomic, weak) id<MESplashDelegate> splashDelegate;
 /// 信息流广告代理
@@ -41,55 +34,54 @@ typedef void(^RequestAndInitFinished)(BOOL success);
 + (instancetype)sharedInstance;
 
 /// 从服务端请求广告平台配置信息,主要是"sceneId": "posid"这样的键值对,在调用展示广告时,我们只需传入相应的sceneId,由SDK内部根据配置和广告优先级等因素去分配由哪个平台展示广告,
-/// 调用此方法的前提需要先给BUADAPPId,GDTAPPId,KSAppId传值,以及在info.plist文件中配置谷歌的GADApplicationIdentifier
-/// 前期测试时可以不穿UUID,默认弹出广点通测试版广告,不会产生收益
-/// @param adRequestUrl 请求广告配置的url
-/// @param logUrl 上报广告数据的url
-- (void)requestPlatformConfigWithUrl:(NSString *)adRequestUrl
-                              logUrl:(NSString *)logUrl
-                            deviceId:(NSString *)deviceId
-                            finished:(RequestAndInitFinished)finished;
-
-/// 从服务端请求广告平台配置信息,主要是"sceneId": "posid"这样的键值对,在调用展示广告时,我们只需传入相应的sceneId,由SDK内部根据配置和广告优先级等因素去分配由哪个平台展示广告
-/// 调用此方法的前提需要先给BUADAPPId,GDTAPPId,KSAppId传值,以及在info.plist文件中配置谷歌的GADApplicationIdentifier
-/// 前期测试时可以不穿UUID,默认弹出广点通测试版广告,不会产生收益
-/// @param adRequestUrl 请求广告配置的url
-/// @param logUrl 上报广告数据的url
-/// @param deviceId 设备id,一般是使用存到钥匙串中的uuid来作为用户的唯一标识
-/// @param buadAppID 在穿山甲平台申请的穿山甲Appid,若不传,默认只初始化穿山甲平台的测试Appid,展示测试版穿山甲广告
-/// @param gdtAppID 广点通Appid,若不传,默认只初始化穿山甲平台的测试Appid,展示测试版穿山甲广告
-/// @param ksAppID 快手Appid,若不传,默认只初始化穿山甲平台的测试Appid,展示测试版穿山甲广告
-/// @param finished 初始化完成的回调
-- (void)requestPlatformConfigWithUrl:(NSString *)adRequestUrl
-                              logUrl:(NSString *)logUrl
-                            deviceId:(NSString *)deviceId
-                           BUADAPPId:(NSString *)buadAppID
-                            GDTAPPId:(NSString *)gdtAppID
-                             KSAppId:(NSString *)ksAppID
-                            finished:(RequestAndInitFinished)finished;
-
-/// 初始化广告平台, 注意需要用真机测试
-/// @param BUADAppId 穿山甲Appid
-/// @param GDTAppId 广点通Appid
-+ (void)lanuchAdPlatformWithBUADAppId:(NSString *)BUADAppId
-                             GDTAppId:(NSString *)GDTAppId
-                              KSAppId:(NSString *)ksAppid;
+/// 注意:要在info.plist文件中配置谷歌的appid,即使不接入谷歌广告也要传一个
+/// key:value对应 GADApplicationIdentifier : ca-app-pub-3940256099942544~1458002511
+/// UUID供上报分析数据使用,可不传,默认弹出广点通测试版广告,不会产生收益
+/// @param appid 聚合广告平台id
+/// @param finished 完成初始化的回调
++ (void)launchWithAppID:(NSString *)appid finished:(RequestAndInitFinished)finished;
 
 // MARK: - 开屏广告
 /// 展示开屏广告
 /// @param target 接收代理的类
 /// @param sceneId 场景id
-- (void)showSplashAdvTarget:(id)target sceneId:(NSString *)sceneId;
+/// @param delay 开屏广告拉取超时时间,默认 3 秒,注意设置时间少于 3 秒无效
+- (void)showSplashAdvTarget:(id)target
+                    sceneId:(NSString *)sceneId
+                      delay:(NSTimeInterval)delay;
 
 /// 展示开屏广告
 /// @param target 接收代理的类
 /// @param sceneId 场景id
+/// @param delay 开屏广告拉取超时时间,默认 3 秒,注意设置时间少于 3 秒无效
 /// @param finished 展示成功
 /// @param failed 展示失败
 /// @param close 广告关闭
 /// @param click 点击广告
 /// @param dismiss 开屏广告被点击后,回到应用
-- (void)showSplashAdvTarget:(id)target sceneId:(NSString *)sceneId
+- (void)showSplashAdvTarget:(id)target
+                    sceneId:(NSString *)sceneId
+                      delay:(NSTimeInterval)delay
+                showSuccess:(MEBaseSplashAdFinished)finished
+                     failed:(MEBaseSplashAdFailed)failed
+                      close:(MEBaseSplashAdCloseClick)close
+                      click:(MEBaseSplashAdClick)click
+                    dismiss:(MEBaseSplashAdDismiss)dismiss;
+
+/// 展示开屏广告
+/// @param target 接收代理的类
+/// @param sceneId 场景id
+/// @param delay 开屏广告拉取超时时间,默认 3 秒,注意设置时间少于 3 秒无效
+/// @param bottomView 放置logo的view,建议不要超过屏幕高度的25%
+/// @param finished 展示成功
+/// @param failed 展示失败
+/// @param close 广告关闭
+/// @param click 点击广告
+/// @param dismiss 开屏广告被点击后,回到应用
+- (void)showSplashAdvTarget:(id)target
+                    sceneId:(NSString *)sceneId
+                      delay:(NSTimeInterval)delay
+                 bottomView:(UIView *)bottomView
                 showSuccess:(MEBaseSplashAdFinished)finished
                      failed:(MEBaseSplashAdFailed)failed
                       close:(MEBaseSplashAdCloseClick)close
@@ -97,7 +89,7 @@ typedef void(^RequestAndInitFinished)(BOOL success);
                     dismiss:(MEBaseSplashAdDismiss)dismiss;
 
 /// 停止开屏广告渲染,可能因为超时等原因
-- (void)stopSplashRender;
+- (void)stopSplashRender:(NSString *)sceneId;
 
 // MARK: - 插屏广告
 /// 展示插屏广告
@@ -128,10 +120,6 @@ typedef void(^RequestAndInitFinished)(BOOL success);
                               dismiss:(MEBaseInterstitialAdDismiss)dismiss;
 
 // MARK: - 信息流广告
-/// 缓存信息流广告
-/// @param feedModelArr MEAdFeedModel实例的数组,包含信息流宽度和场景id
-- (void)saveFeedAdvToCacheWithFeedModelArr:(NSArray <MEAdFeedModel *>*)feedModelArr;
-
 /**
  *  展示信息流广告
  *  @param bgWidth 必填,信息流背景视图的宽度
@@ -140,7 +128,7 @@ typedef void(^RequestAndInitFinished)(BOOL success);
  */
 - (void)showFeedAdvWithBgWidth:(CGFloat)bgWidth sceneId:(NSString *)sceneId Target:(id)target;
 
-/// 展示信息流广告
+/// 展示信息流广告,推荐使用
 /// @param bgWidth 信息流广告背景的宽度
 /// @param sceneId 场景id
 /// @param target 必填,用来承接代理
@@ -156,16 +144,12 @@ typedef void(^RequestAndInitFinished)(BOOL success);
                          close:(MEBaseFeedAdCloseClick)close
                          click:(MEBaseFeedAdClick)click;
 
-/// 缓存自渲染信息流广告
-/// @param feedModelArr MEAdFeedModel实例的数组,包含信息流宽度和场景id
-- (void)saveRenderFeedAdvToCacheWithFeedModelArr:(NSArray <MEAdFeedModel *>*)feedModelArr;
-
 /// 展示自渲染信息流广告
 /// @param sceneId 场景id
 /// @param target  必填,用来承接代理
 - (void)showRenderFeedAdvWithSceneId:(NSString *)sceneId Target:(id)target;
 
-/// 展示自渲染信息流广告
+/// 展示自渲染信息流广告,推荐使用
 /// @param sceneId 场景id
 /// @param target  必填,用来承接代理
 /// @param finished 广告展示成功

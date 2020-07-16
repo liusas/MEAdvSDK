@@ -6,21 +6,27 @@
 //
 
 #import "MESplashAdManager.h"
-#import "MEBUADAdapter.h"
-#import "MEGDTAdapter.h"
-
+#import "MEBaseAdapter.h"
 #import "MEAdLogModel.h"
+#import "MEAdNetworkManager.h"
+#import "StrategyFactory.h"
 
 @interface MESplashAdManager ()<MEBaseAdapterSplashProtocol>
 
 @property (nonatomic, strong) MEConfigManager *configManger;
-@property (nonatomic, strong) MEBaseAdapter *currentAdapter;
+/// sceneId:adapter,记录当前展示广告的adapter
+@property (nonatomic, strong) NSMutableDictionary <NSString *, id<MEBaseAdapterProtocol>>*currentAdapters;
+/// 此次信息流管理类分配到的广告平台模型数组,保证一次信息流广告有一个广告平台成功展示
+@property (nonatomic, strong) NSMutableArray <StrategyResultModel *>*assignResultArr;
 
 @property (nonatomic, copy) LoadSplashAdFinished finished;
 @property (nonatomic, copy) LoadSplashAdFailed failed;
 
-// 成功回调的广告位数组
-@property (nonatomic, strong) NSMutableArray *successPosidArr;
+// 只允许回调一次加载成功事件
+@property (nonatomic, assign) BOOL hasSuccessfullyLoaded;
+
+// 广告应该停止请求,可能原因1.超时, 2.已经成功拉取到广告
+@property (nonatomic, assign) BOOL needToStop;
 
 @end
 
@@ -39,51 +45,69 @@
     self = [super init];
     if (self) {
         self.configManger = [MEConfigManager sharedInstance];
-        self.currentAdapter = [[MEBaseAdapter alloc] init];
+        self.currentAdapters = [NSMutableDictionary dictionary];
+        self.assignResultArr = [NSMutableArray array];
+        _needToStop = NO;
     }
     return self;
 }
 
 /// 展示开屏广告
 - (void)showSplashAdvWithSceneId:(NSString *)sceneId
+                           delay:(NSTimeInterval)delay
+                        Finished:(LoadSplashAdFinished)finished
+                          failed:(LoadSplashAdFailed)failed {
+    [self showSplashAdvWithSceneId:sceneId delay:delay bottomView:nil Finished:finished failed:failed];
+}
+
+- (void)showSplashAdvWithSceneId:(NSString *)sceneId
+                           delay:(NSTimeInterval)delay
+                      bottomView:(UIView *)bottomView
                         Finished:(LoadSplashAdFinished)finished
                           failed:(LoadSplashAdFailed)failed {
     self.finished = finished;
     self.failed = failed;
     
-    // 置空以便重新分配
-//    [self.currentAdapter removeFeedView];
-    self.currentAdapter.splashDelegate = nil;
-    self.currentAdapter = nil;
-    
     // 分配广告平台
-    if (![self assignAdPlatformAndShow:sceneId]) {
+    if (![self assignAdPlatformAndShow:sceneId platform:MEAdAgentTypeNone delay:delay bottomView:bottomView]) {
         NSError *error = [NSError errorWithDomain:@"adv assign failed" code:0 userInfo:@{NSLocalizedDescriptionKey: @"分配失败"}];
         failed(error);
     }
 }
 
 /// 停止开屏广告渲染,可能因为超时等原因
-- (void)stopSplashRender {
-    [self.currentAdapter stopSplashRender];
-    self.currentAdapter = nil;
+- (void)stopSplashRender:(NSString *)sceneId {
+    id <MEBaseAdapterProtocol>adapter = self.currentAdapters[sceneId];
+    if (adapter) {
+        [adapter stopSplashRenderWithPosid:adapter.posid];
+        [self.currentAdapters removeObjectForKey:sceneId];
+        adapter = nil;
+    }
 }
 
 // MARK: - MEBaseAdapterSplashProtocol
 /// 开屏展示成功
 - (void)adapterSplashShowSuccess:(MEBaseAdapter *)adapter {
+    if (self.hasSuccessfullyLoaded) {
+        return;
+    }
+
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopAdapterAndRemoveFromAssignResultArr) object:nil];
+    
+    self.hasSuccessfullyLoaded = YES;
+    
+    // 添加adapter到当前管理adapter的字典
+    self.currentAdapters[adapter.sceneId] = adapter;
+    [self removeAssignResultArrObjectWithAdapter:adapter];
+    
+    // 停止其他adapter
+    [self stopAdapterAndRemoveFromAssignResultArr];
+    
     // 当前广告平台
     self.currentAdPlatform = adapter.platformType;
     
-    MEAdLogModel *model = [MEAdLogModel new];
-    model.network = self.configManger.dicPlatformTypeName[@(adapter.platformType)];
-    model.posid = adapter.sceneId;
-    model.pv = @"1";
-    model.click = @"0";
-    [MEAdLogModel saveLogModelToRealm:model];
-    
     // 控制广告平台展示频次
-    [self.configManger changeAdFrequencyWithSceneId:adapter.sceneId];
+    [StrategyFactory changeAdFrequencyWithSceneId:adapter.sceneId];
     
     if (self.finished) {
         self.finished();
@@ -91,15 +115,12 @@
 }
 /// 开屏展现失败
 - (void)adapter:(MEBaseAdapter *)adapter splashShowFailure:(NSError *)error {
+    // 从数组中移除不需要处理的adapter
+    [self removeAssignResultArrObjectWithAdapter:adapter];
+    
     // 当前广告平台
     self.currentAdPlatform = adapter.platformType;
     
-    MEAdLogModel *model = [MEAdLogModel new];
-    model.network = self.configManger.dicPlatformTypeName[@(adapter.platformType)];
-    model.posid = adapter.sceneId;
-    model.pv = @"0";
-    model.click = @"0";
-    [MEAdLogModel saveLogModelToRealm:model];
     if (self.failed) {
         self.failed(error);
     }
@@ -108,13 +129,6 @@
 - (void)adapterSplashClicked:(MEBaseAdapter *)adapter {
     // 当前广告平台
     self.currentAdPlatform = adapter.platformType;
-    
-    MEAdLogModel *model = [MEAdLogModel new];
-    model.network = self.configManger.dicPlatformTypeName[@(adapter.platformType)];
-    model.posid = adapter.sceneId;
-    model.pv = @"0";
-    model.click = @"1";
-    [MEAdLogModel saveLogModelToRealm:model];
     
     if (self.clickBlock) {
         self.clickBlock();
@@ -140,38 +154,73 @@
 }
 
 // MARK: 按广告位posid选择广告的逻辑,此次采用
-- (BOOL)assignAdPlatformAndShow:(NSString *)sceneId {
-    // 先清空当前适配器
-//    [self.currentAdapter stopCurrentVideo];
-    self.currentAdapter = nil;
+- (BOOL)assignAdPlatformAndShow:(NSString *)sceneId platform:(MEAdAgentType)platformType delay:(NSTimeInterval)delay bottomView:(UIView *)bottomView {
+    NSArray <StrategyResultModel *>*resultArr = [[StrategyFactory sharedInstance] getPosidBySortTypeWithPlatform:platformType SceneId:sceneId];
     
-    // 显示开屏广告失败则重新分配广告平台
-    // 按优先级选择合适的posid
-    NSArray *posArr = [self.configManger getSplashPosidByOrderWithPlatform:MEAdAgentTypeNone sceneId:sceneId];
-    
-    if ([[MEConfigManager sharedInstance].GDTAPPId isEqualToString:kTestGDT_APPID] && [[MEConfigManager sharedInstance].BUADAPPId isEqualToString:kTestBUAD_APPID] && [[MEConfigManager sharedInstance].KSAppId isEqualToString:kTestKS_APPID]) {
-        // 测试版本,只展示广点通广告
-        posArr = @[@"9040714184494018", sceneId, @(MEAdAgentTypeGDT)];
+    if (resultArr == nil || resultArr.count == 0) {
+        return NO;
     }
     
-    if (posArr == nil) {
-        // 如果没找到广告位, 则默认给穿山甲广告
-        posArr = @[@"838537172", sceneId, @(MEAdAgentTypeBUAD)];
-//        posArr = @[@"1070390225538460", sceneId, @(MEAdAgentTypeGDT)];
-    }
-    NSString *posid = posArr[0];
+    self.assignResultArr = [NSMutableArray arrayWithArray:resultArr];
     
-    // 获取相应的Adapter
-    MEAdAgentType platformType = [posArr[2] integerValue];
-    self.currentAdapter = [MEConfigManager getAdapterOfADPlatform:platformType];
-    self.currentAdapter.splashDelegate = self;
-    
-    self.currentAdapter.sceneId = posArr[1];
-    if (![self.currentAdapter showSplashWithPosid:posid]) {
-        return [self assignAdPlatformAndShow:sceneId];
+    // 数组返回几个适配器就去请求几个平台的广告
+    for (StrategyResultModel *model in resultArr) {
+        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[model.sceneId];
+        if ([adapter isKindOfClass:model.targetAdapterClass]) {
+            // 若当前有可用的adapter则直接拿来用
+        } else {
+            adapter = [model.targetAdapterClass sharedInstance];
+        }
+        
+        // 若此时adapter依然为空,则表示没有相应广告平台的适配器,若策略是每次只请求一个广告平台,则继续找下一个广告平台
+        if (adapter == nil && resultArr.count == 1) {
+            MEAdAgentType nextPlatform = [self.configManger nextAdPlatformWithSceneId:sceneId currentPlatform:model.platformType];
+            
+            if (nextPlatform == MEAdAgentTypeAll) {
+                // 没有分配到合适广告
+                return NO;
+            }
+            
+            // 找到下一个广告平台则指定出这个平台的广告
+            return [self assignAdPlatformAndShow:sceneId platform:nextPlatform delay:delay bottomView:bottomView];
+        }
+        
+        adapter.splashDelegate = self;
+        // 场景id
+        adapter.sceneId = sceneId;
+        adapter.isGetForCache = NO;
+        adapter.sortType = [[MEConfigManager sharedInstance] getSortTypeFromSceneId:model.sceneId];
+        [adapter showSplashWithPosid:model.posid delay:delay bottomView:bottomView];
     }
     
     return YES;
+}
+
+// MARK: - Private
+
+/// 停止assignResultArr中的adapter,然后删除adapter
+- (void)stopAdapterAndRemoveFromAssignResultArr {
+    self.needToStop = YES;
+    // 停止其他adapter
+    for (StrategyResultModel *model in self.assignResultArr) {
+        id<MEBaseAdapterProtocol> adapter = [model.targetAdapterClass sharedInstance];
+        if ([adapter respondsToSelector:@selector(stopCurrentVideoWithPosid:)]) {
+            [adapter stopCurrentVideoWithPosid:model.posid];
+        }
+    }
+    [self.assignResultArr removeAllObjects];
+}
+
+// 删除分配结果数组中的元素
+- (void)removeAssignResultArrObjectWithAdapter:(id<MEBaseAdapterProtocol>)adapter {
+    [self.assignResultArr enumerateObjectsUsingBlock:^(StrategyResultModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([adapter isKindOfClass:[obj.targetAdapterClass class]]) {
+            *stop = YES;
+            if (*stop == YES) {
+                [self.assignResultArr removeObject:obj];
+            }
+        }
+    }];
 }
 
 @end

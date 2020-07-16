@@ -1,1 +1,0 @@
-../../../../../MEAdvSDK/Classes/Platform/GDT/MEGDTAdapter.h

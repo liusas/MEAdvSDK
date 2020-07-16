@@ -349,14 +349,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MEAdvSDK_Example/Pods-MEAdvSDK_Example-resources.sh",
-				"${PODS_ROOT}/Bytedance-UnionAD/Bytedance-UnionAd/Frameworks/BUAdSDK.bundle",
-				"${PODS_ROOT}/KSAdSDK/KSAdSDK.bundle",
 				"${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MEAdvBundle.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/BUAdSDK.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/KSAdSDK.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MEAdvBundle.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

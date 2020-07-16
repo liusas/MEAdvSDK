@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MEAdvSDK" #库的名称
-  spec.version      = "0.1.2" #库的版本号
+  spec.version      = "0.1.3" #库的版本号
   spec.summary      = "Mobiexchanger's advertise SDK" #pod库的简要概述
 
   # This description is used to generate tags and improve search results.
@@ -134,9 +134,10 @@ Pod::Spec.new do |spec|
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
 #   spec.dependency "JSONKit", "~> 1.4"
-    spec.dependency "Bytedance-UnionAD", "~> 2.5.1.2"
-    spec.dependency "GDTMobSDK", "~> 4.10.19"
-    spec.dependency "Google-Mobile-Ads-SDK", "~> 7.57.0"
+#    spec.dependency "Bytedance-UnionAD", "~> 2.5.1.2"
+#    spec.dependency "GDTMobSDK", "~> 4.10.19"
+#    spec.dependency "Google-Mobile-Ads-SDK", "~> 7.57.0"
+    spec.dependency "Reachability"
     spec.dependency "Realm"
-    spec.dependency 'KSAdSDK', '2.6.1'
+#    spec.dependency 'KSAdSDK', '2.6.1'
 end

@@ -42,6 +42,10 @@ PromisesObjC:
   LABEL: PromisesObjC
   PROJECT_PATH: PromisesObjC.xcodeproj
   UUID: 615BB6D15EC37D16C898941802F0D251
+Reachability:
+  LABEL: Reachability
+  PROJECT_PATH: Reachability.xcodeproj
+  UUID: DA1EBD7850A215E94DBD19A247725F9F
 Realm:
   LABEL: Realm
   PROJECT_PATH: Realm.xcodeproj

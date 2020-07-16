@@ -1,16 +1,16 @@
 //
 //  MEConfigParameter.m
 //
-//  Created by 峰 刘 on 2019/11/9
-//  Copyright (c) 2019 __MyCompanyName__. All rights reserved.
+//  Created by 峰 刘 on 2020/7/3
+//  Copyright (c) 2020 __MyCompanyName__. All rights reserved.
 //
 
 #import "MEConfigParameter.h"
 
 
-NSString *const kParameterAppid = @"appid";
-NSString *const kParameterAppname = @"appname";
-NSString *const kParameterPosid = @"posid";
+NSString *const kMEConfigParameterPosid = @"posid";
+NSString *const kMEConfigParameterAppname = @"appname";
+NSString *const kMEConfigParameterAppid = @"appid";
 
 
 @interface MEConfigParameter ()
@@ -21,9 +21,9 @@ NSString *const kParameterPosid = @"posid";
 
 @implementation MEConfigParameter
 
-@synthesize appid = _appid;
-@synthesize appname = _appname;
 @synthesize posid = _posid;
+@synthesize appname = _appname;
+@synthesize appid = _appid;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -38,9 +38,9 @@ NSString *const kParameterPosid = @"posid";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
-            self.appid = [self objectOrNilForKey:kParameterAppid fromDictionary:dict];
-            self.appname = [self objectOrNilForKey:kParameterAppname fromDictionary:dict];
-            self.posid = [self objectOrNilForKey:kParameterPosid fromDictionary:dict];
+            self.posid = [self objectOrNilForKey:kMEConfigParameterPosid fromDictionary:dict];
+            self.appname = [self objectOrNilForKey:kMEConfigParameterAppname fromDictionary:dict];
+            self.appid = [self objectOrNilForKey:kMEConfigParameterAppid fromDictionary:dict];
 
     }
     
@@ -51,9 +51,9 @@ NSString *const kParameterPosid = @"posid";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
-    [mutableDict setValue:self.appid forKey:kParameterAppid];
-    [mutableDict setValue:self.appname forKey:kParameterAppname];
-    [mutableDict setValue:self.posid forKey:kParameterPosid];
+    [mutableDict setValue:self.posid forKey:kMEConfigParameterPosid];
+    [mutableDict setValue:self.appname forKey:kMEConfigParameterAppname];
+    [mutableDict setValue:self.appid forKey:kMEConfigParameterAppid];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -77,18 +77,18 @@ NSString *const kParameterPosid = @"posid";
 {
     self = [super init];
 
-    self.appid = [aDecoder decodeObjectForKey:kParameterAppid];
-    self.appname = [aDecoder decodeObjectForKey:kParameterAppname];
-    self.posid = [aDecoder decodeObjectForKey:kParameterPosid];
+    self.posid = [aDecoder decodeObjectForKey:kMEConfigParameterPosid];
+    self.appname = [aDecoder decodeObjectForKey:kMEConfigParameterAppname];
+    self.appid = [aDecoder decodeObjectForKey:kMEConfigParameterAppid];
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
 
-    [aCoder encodeObject:_appid forKey:kParameterAppid];
-    [aCoder encodeObject:_appname forKey:kParameterAppname];
-    [aCoder encodeObject:_posid forKey:kParameterPosid];
+    [aCoder encodeObject:_posid forKey:kMEConfigParameterPosid];
+    [aCoder encodeObject:_appname forKey:kMEConfigParameterAppname];
+    [aCoder encodeObject:_appid forKey:kMEConfigParameterAppid];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -97,9 +97,9 @@ NSString *const kParameterPosid = @"posid";
     
     if (copy) {
 
-        copy.appid = [self.appid copyWithZone:zone];
-        copy.appname = [self.appname copyWithZone:zone];
         copy.posid = [self.posid copyWithZone:zone];
+        copy.appname = [self.appname copyWithZone:zone];
+        copy.appid = [self.appid copyWithZone:zone];
     }
     
     return copy;

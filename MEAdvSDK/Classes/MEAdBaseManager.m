@@ -6,17 +6,11 @@
 //  所有广告平台的管理
 
 #import "MEAdBaseManager.h"
-#import <BUAdSDK/BUAdSDKManager.h>
-//#import <GoogleMobileAds/GoogleMobileAds.h>
-#import <KSAdSDK/KSAdSDK.h>
-#import "MEBaseAdapter.h"
 
 #import "MESplashAdManager.h"
 #import "MEFeedAdManager.h"
 #import "MERewardedVideoManager.h"
 #import "MEInterstitialAdManager.h"
-
-#import "MEAdLogModel.h"
 
 static  MEAdBaseManager *baseManager;
 static dispatch_once_t onceToken;
@@ -53,99 +47,42 @@ static dispatch_once_t onceToken;
     return self;
 }
 
-/// 从服务端请求广告平台配置信息
-/// @param adRequestUrl 服务端的请求baseUrl
-/// @param logUrl 日志上报url
-- (void)requestPlatformConfigWithUrl:(NSString *)adRequestUrl
-                              logUrl:(NSString *)logUrl
-                            deviceId:(NSString *)deviceId
-                            finished:(RequestAndInitFinished)finished {
-    [self requestPlatformConfigWithUrl:adRequestUrl logUrl:logUrl deviceId:deviceId BUADAPPId:self.BUADAPPId GDTAPPId:self.GDTAPPId KSAppId:self.KSAppId finished:finished];
++ (void)launchWithAppID:(NSString *)appid {
+    [self launchWithAppID:appid finished:nil];
 }
 
-/// 从服务端请求广告平台配置信息,主要是"sceneId": "posid"这样的键值对,在调用展示广告时,我们只需传入相应的sceneId,由SDK内部根据配置和广告优先级等因素去分配由哪个平台展示广告
-/// @param adRequestUrl 请求广告配置的url
-/// @param logUrl 上报广告数据的url
-/// @param deviceId 设备id,一般是使用存到钥匙串中的uuid来作为用户的唯一标识
-/// @param buadAppID 在穿山甲平台申请的穿山甲Appid,若不传,默认只初始化穿山甲平台的测试Appid,展示测试版穿山甲广告
-/// @param gdtAppID 广点通Appid,若不传,默认只初始化穿山甲平台的测试Appid,展示测试版穿山甲广告
-/// @param ksAppID 快手Appid,若不传,默认只初始化穿山甲平台的测试Appid,展示测试版穿山甲广告
-/// @param finished 初始化完成的回调
-- (void)requestPlatformConfigWithUrl:(NSString *)adRequestUrl
-                              logUrl:(NSString *)logUrl
-                            deviceId:(NSString *)deviceId
-                           BUADAPPId:(NSString *)buadAppID
-                            GDTAPPId:(NSString *)gdtAppID
-                             KSAppId:(NSString *)ksAppID
-                            finished:(RequestAndInitFinished)finished {
-    self.requestConfigFinished = finished;
-    [MEConfigManager sharedInstance].adLogUrl = logUrl;
-    [MEConfigManager sharedInstance].deviceId = deviceId;
-    [MEConfigManager sharedInstance].BUADAPPId = buadAppID;
-    [MEConfigManager sharedInstance].GDTAPPId = gdtAppID;
-    [MEConfigManager sharedInstance].KSAppId = ksAppID;
-    [[MEConfigManager sharedInstance] platformConfigIfRequestWithUrl:adRequestUrl];
-}
-
-
-/// 初始化广告平台
-/// @param BUADAppId 穿山甲Appid
-/// @param GDTAppId 广点通Appid
-+ (void)lanuchAdPlatformWithBUADAppId:(NSString *)BUADAppId
-                             GDTAppId:(NSString *)GDTAppId
-                              KSAppId:(NSString *)ksAppid {
-    // 穿山甲初始化
-    if (![BUADAppId isEqualToString:kTestBUAD_APPID]) {
-        // 不设置穿山甲测试
-        [BUAdSDKManager setAppID:BUADAppId];
-#if DEBUG
-        // Whether to open log. default is none.
-        [BUAdSDKManager setLoglevel:BUAdSDKLogLevelDebug];
-#endif
-        [BUAdSDKManager setIsPaidApp:NO];
-    }
-    
-    // 快手初始化
-    [KSAdSDKManager setAppId:ksAppid];
-    // 根据需要设置⽇志级别
-    [KSAdSDKManager setLoglevel:KSAdSDKLogLevelOff];
-
-    // 初始化谷歌SDK
-//    [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
-
-    [MEAdBaseManager sharedInstance].isPlatformInit = YES;
-    // 配置穿山甲和广点通id
-    [MEConfigManager sharedInstance].BUADAPPId = BUADAppId;
-    [MEConfigManager sharedInstance].GDTAPPId = GDTAppId;
-    
-    if ([MEAdBaseManager sharedInstance].requestConfigFinished) {
-        [MEAdBaseManager sharedInstance].requestConfigFinished(YES);
-    }
-}
-
-/// 初始化广告平台成功的回调
-- (void)listenConfigAndInitSuccess:(NSNotification *)notify {
-    BOOL success = [notify object];
-    if (self.requestConfigFinished) {
-        self.requestConfigFinished(success);
-    }
++ (void)launchWithAppID:(NSString *)appid finished:(RequestAndInitFinished)finished {
+    [MEConfigManager loadWithAppID:appid finished:^{
+        MEAdBaseManager *sharedInstance = [MEAdBaseManager sharedInstance];
+        sharedInstance.isPlatformInit = YES;
+        
+        if (finished) {
+            finished(YES);
+        }
+    }];
 }
 
 // MARK: 开屏广告
 /// 展示开屏广告
-- (void)showSplashAdvTarget:(id)target sceneId:(NSString *)sceneId {
-    [self showSplashAdvTarget:target sceneId:sceneId showSuccess:nil failed:nil close:nil click:nil dismiss:nil];
+- (void)showSplashAdvTarget:(id)target sceneId:(NSString *)sceneId delay:(NSTimeInterval)delay {
+    [self showSplashAdvTarget:target sceneId:sceneId delay:delay showSuccess:nil failed:nil close:nil click:nil dismiss:nil];
 }
 
-/// 展示开屏广告
-/// @param target 接收代理的类
-/// @param sceneId 场景id
-/// @param finished 展示成功
-/// @param failed 展示失败
-/// @param close 广告关闭
-/// @param click 点击广告
-/// @param dismiss 开屏广告被点击后,回到应用
-- (void)showSplashAdvTarget:(id)target sceneId:(NSString *)sceneId
+- (void)showSplashAdvTarget:(id)target
+                    sceneId:(NSString *)sceneId
+                      delay:(NSTimeInterval)delay
+                showSuccess:(MEBaseSplashAdFinished)finished
+                     failed:(MEBaseSplashAdFailed)failed
+                      close:(MEBaseSplashAdCloseClick)close
+                      click:(MEBaseSplashAdClick)click
+                    dismiss:(MEBaseSplashAdDismiss)dismiss {
+    [self showSplashAdvTarget:target sceneId:sceneId delay:delay bottomView:nil showSuccess:finished failed:failed close:close click:click dismiss:dismiss];
+}
+
+- (void)showSplashAdvTarget:(id)target
+                    sceneId:(NSString *)sceneId
+                      delay:(NSTimeInterval)delay
+                 bottomView:(UIView *)bottomView
                 showSuccess:(MEBaseSplashAdFinished)finished
                      failed:(MEBaseSplashAdFailed)failed
                       close:(MEBaseSplashAdCloseClick)close
@@ -162,9 +99,10 @@ static dispatch_once_t onceToken;
     // 遵守代理
     self.splashDelegate = target;
     
-    self.splashAdManager = [MESplashAdManager shareInstance];
+    //    self.splashAdManager = [MESplashAdManager shareInstance];
+    self.splashAdManager = [[MESplashAdManager alloc] init];
     
-    [self.splashAdManager showSplashAdvWithSceneId:sceneId Finished:^{
+    [self.splashAdManager showSplashAdvWithSceneId:sceneId delay:delay bottomView:bottomView Finished:^{
         [weakSelf splashFinishedOperationSuccess:finished close:close click:click dismiss:dismiss];
     } failed:^(NSError * _Nonnull error) {
         [weakSelf splashFailedOpertion:error failed:failed];
@@ -172,8 +110,8 @@ static dispatch_once_t onceToken;
 }
 
 /// 停止开屏广告渲染,可能因为超时等原因
-- (void)stopSplashRender {
-    [self.splashAdManager stopSplashRender];
+- (void)stopSplashRender:(NSString *)sceneId {
+    [self.splashAdManager stopSplashRender:sceneId];
 }
 
 // MARK: 插屏广告
@@ -214,8 +152,8 @@ static dispatch_once_t onceToken;
     // 遵守代理
     self.interstitialDelegate = target;
     
-    self.interstitialManager = [MEInterstitialAdManager shareInstance];
-    
+//    self.interstitialManager = [MEInterstitialAdManager shareInstance];
+    self.interstitialManager = [[MEInterstitialAdManager alloc] init];
     [self.interstitialManager showInterstitialAdvWithSceneId:sceneId showFunnyBtn:showFunnyBtn Finished:^{
         [weakSelf interstitialFinishedOperationFinished:finished close:close click:click dismiss:dismiss];
     } failed:^(NSError * _Nonnull error) {
@@ -224,29 +162,6 @@ static dispatch_once_t onceToken;
 }
 
 // MARK: 信息流广告
-/// 缓存信息流广告
-/// @param feedModelArr MEAdFeedModel实例的数组,包含信息流宽度和场景id
-- (void)saveFeedAdvToCacheWithFeedModelArr:(NSArray <MEAdFeedModel *>*)feedModelArr {
-    if ([MEConfigManager sharedInstance].isInit == NO) {
-        // 若平台尚未初始化,则不执行
-        return;
-    }
-    
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);
-    [feedModelArr enumerateObjectsUsingBlock:^(MEAdFeedModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            MEAdFeedModel *model = obj;
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-            self.feedAdManager = [MEFeedAdManager shareInstance];
-            [self.feedAdManager saveFeedCacheWithWidth:model.width sceneId:model.sceneId finished:^{
-                dispatch_semaphore_signal(semaphore);
-            } failed:^(NSError * _Nonnull error) {
-                dispatch_semaphore_signal(semaphore);
-            }];
-        });
-    }];
-}
-
 /**
 *  展示信息流广告
 *  @param bgWidth 必填,信息流背景视图的宽度
@@ -274,7 +189,7 @@ static dispatch_once_t onceToken;
                          click:(MEBaseFeedAdClick)click {
     _target = target;
     
-    if ([MEConfigManager sharedInstance].isInit == NO) {
+    if (self.isPlatformInit == NO) {
         // 若平台尚未初始化,则不执行
         return;
     }
@@ -286,8 +201,8 @@ static dispatch_once_t onceToken;
     
     __weak typeof(self) weakSelf = self;
     // 遵守代理
-    self.feedAdManager = [MEFeedAdManager shareInstance];
-    //    self.feedAdManager = [[MEFeedAdManager alloc] init];
+//    self.feedAdManager = [MEFeedAdManager shareInstance];
+    self.feedAdManager = [[MEFeedAdManager alloc] init];
     [self.feedAdManager showFeedViewWithWidth:bgWidth sceneId:sceneId finished:^(UIView * _Nonnull feedView) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         strongSelf.feedDelegate = target;
@@ -296,29 +211,6 @@ static dispatch_once_t onceToken;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         strongSelf.feedDelegate = target;
         [strongSelf feedViewFailedOpertion:error failed:failed];
-    }];
-}
-
-/// 缓存自渲染信息流广告
-/// @param feedModelArr MEAdFeedModel实例的数组,包含信息流宽度和场景id
-- (void)saveRenderFeedAdvToCacheWithFeedModelArr:(NSArray <MEAdFeedModel *>*)feedModelArr {
-    if ([MEConfigManager sharedInstance].isInit == NO) {
-        // 若平台尚未初始化,则不执行
-        return;
-    }
-    
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);
-    [feedModelArr enumerateObjectsUsingBlock:^(MEAdFeedModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            MEAdFeedModel *model = obj;
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-            self.feedAdManager = [MEFeedAdManager shareInstance];
-            [self.feedAdManager saveRenderFeedCacheWithSceneId:model.sceneId finished:^(UIView * _Nonnull feedView) {
-                dispatch_semaphore_signal(semaphore);
-            } failed:^(NSError * _Nonnull error) {
-                dispatch_semaphore_signal(semaphore);
-            }];
-        });
     }];
 }
 
@@ -344,7 +236,7 @@ static dispatch_once_t onceToken;
                                click:(MEBaseFeedAdClick)click {
     _target = target;
     
-    if ([MEConfigManager sharedInstance].isInit == NO) {
+    if (self.isPlatformInit == NO) {
         // 若平台尚未初始化,则不执行
         return;
     }
@@ -357,7 +249,9 @@ static dispatch_once_t onceToken;
     __weak typeof(self) weakSelf = self;
     // 遵守代理
     self.feedDelegate = target;
-    self.feedAdManager = [MEFeedAdManager shareInstance];
+//    self.feedAdManager = [MEFeedAdManager shareInstance];
+    self.feedAdManager = [[MEFeedAdManager alloc] init];
+    
     [self.feedAdManager showRenderFeedViewWithSceneId:sceneId finished:^(UIView * _Nonnull feedView) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         strongSelf.feedDelegate = target;
@@ -372,15 +266,7 @@ static dispatch_once_t onceToken;
 // MARK: 激励视频广告
 /**
  *  展示激励视频广告
- *  @param sceneId 场景Id,在MEAdBaseManager.h中可查
- *  sceneId有以下可选项
- *  2048001 金币泡泡翻倍激励视频
- *  2048005 签到翻倍激励视频
- *  2048006 观看激励视频任务
- *  2048008 大转盘激励视频
- *  2048011 大转盘金币奖励翻倍激励视频
- *  2048019 提现页激励视频
- *  2048020 fault激励视频
+ *  @param sceneId 场景Id,按自己业务场景展示对应业务场景的广告
  *  @param target 必填,接收回调
 */
 - (void)showRewardedVideoWithSceneId:(NSString *)sceneId target:(id)target {
@@ -407,14 +293,15 @@ static dispatch_once_t onceToken;
         return;
     }
     
-    if ([MEConfigManager sharedInstance].isInit == NO) {
+    if (self.isPlatformInit == NO) {
         // 若平台尚未初始化,则不执行
         return;
     }
     
     __weak typeof(self) weakSelf = self;
     self.rewardVideoDelegate = target;
-    self.rewardedVideoManager = [MERewardedVideoManager shareInstance];
+//    self.rewardedVideoManager = [MERewardedVideoManager shareInstance];
+    self.rewardedVideoManager = [[MERewardedVideoManager alloc] init];
     [self.rewardedVideoManager showRewardVideoWithSceneId:sceneId Finished:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf rewardVideoShowSuccessOperationFinished:finished finishPlay:finishPlay close:close click:click];

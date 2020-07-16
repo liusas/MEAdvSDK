@@ -7,186 +7,177 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02ED2883C1A9F90FD8DD7EA24E036E5B /* NSBundle+Library.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE252706161056A9046FE1E6D54B664 /* NSBundle+Library.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		02F3084ED0B693C3D5CEB65004D842BD /* MESplashAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 571EA9DAD34C9D89E3813623F400A8EA /* MESplashAdManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		03BC290D247D014F00BBCB1D /* MEAdvConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03BC290A247D014F00BBCB1D /* MEAdvConfig.h */; };
-		046C7221142C6623EBFDD9C042CF9474 /* NBLHTTPFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 31F35879BD8235A45059A303233DB2D8 /* NBLHTTPFileManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		0EB3D3E4087A0F804CD4BF8191DA942F /* NSBundle+Library.h in Headers */ = {isa = PBXBuildFile; fileRef = 621C4E6574A4B733493D11A87AF9839A /* NSBundle+Library.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		0F97797D217A42FEF4A9D539F9BA291D /* MEBaseAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1705228D7773A8B3F06A4957AA8534 /* MEBaseAdapter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		10B2033500A808ED130069C5093A0B7B /* UIImage+Library.h in Headers */ = {isa = PBXBuildFile; fileRef = E790C4ADBFEA1F4EFAC9A7A5471CA8D9 /* UIImage+Library.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		10ED70EF78F13A8194A782412CA0F1BC /* MEConfigList.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE2A3638C8B732F6BF7AD3D994BC966 /* MEConfigList.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		15C50C31C10CF347DB6BA72C6026DC1D /* MEGDTCustomView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C711F8F1AD24C6FBBA6165DD1A868CC /* MEGDTCustomView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		1926AA7FF41F1EE37B7E6EC00C67FABE /* MEGDTAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 075A136B8E4554DF601AF7069C1E3EA7 /* MEGDTAdapter.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		1CC818763298A5E5E4D55B4D33DAEF3F /* MEAdMemoryCache.h in Headers */ = {isa = PBXBuildFile; fileRef = C223A92C3A963082A06A64E973330021 /* MEAdMemoryCache.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		298E3E69ED1E306EDA334E255F3B4223 /* MEGDTFeedRenderAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = BDE3A1C862245442D6C99D04D9DD3835 /* MEGDTFeedRenderAdapter.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		2F0026A18F3EB9FFFFF53391CAA305C9 /* MEConfigBaseModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FEFB605FB8AE15934CB2ABFF067BFF /* MEConfigBaseModel.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		31FD9B6FA2CAD57A91D1CF2C1FFB29EB /* MEAdFeedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A69DAA0FD0DD0DD24151A29DB45B512C /* MEAdFeedModel.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		32613AC2C312D7B863993CF2D2A29B7E /* MEConfigInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 39160BF88C66D0646CBBF6B275E16AA4 /* MEConfigInfo.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		38DFF339B1F35F9E81728C5A74CE8B5D /* MEConfigParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = D7ECFC95701D6B8336C654BBDCC5D47E /* MEConfigParameter.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		396F3E7D0A8F629594EEF47FB1CBDAF5 /* MEAdFeedModel.h in Headers */ = {isa = PBXBuildFile; fileRef = A26889BA9440D0042E5F10F70F6FE377 /* MEAdFeedModel.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		3ADA8F8EFB62C3481EDDDD452BEB3B49 /* MEGDTFeedRenderAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 81CAFC1E6F677C2C913D19AE5F62E328 /* MEGDTFeedRenderAdapter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		473B0653DF2970422A00A9DC2B410133 /* MEAdombAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E76E3A254922759EAD10DB9AF778892 /* MEAdombAdapter.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		545837724099EA80B1BB221D9B16310F /* MEBUADAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D98B2CF5AB8496B3A8D08846CD02D4 /* MEBUADAdapter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		59FF6F1520838001AFEEEAA5A8298C0F /* MEAdHelpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A836A0DFC01E44BC182D667CEDD753 /* MEAdHelpTool.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		5C9DBB26473AF3015433B86C90C0F6B4 /* MEConfigNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 2912702BA034AA20EA2C7DD17D2DE7D1 /* MEConfigNetwork.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		6319D57E301719C6E8A116620C39E433 /* MEAdMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CF41891D856732FAC7FFB1DEF22020F7 /* MEAdMemoryCache.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		65713BA974D9C775F423E1D5DD419871 /* MEFunnyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = EBF96BB98686456D9A1ABB0D0EC441FC /* MEFunnyButton.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		6A0F6D02B9ADBB22ECF642F641FEA34B /* MEInterstitialAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B130A60200B37E644AF6C1F894BC717 /* MEInterstitialAdManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		73B574A723BAFF330F1E5CB6C64718A5 /* MEConfigList.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A2FC8FEACD91A7D38DFEA533237F2C /* MEConfigList.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		75D800EAFE31553551D8DB9D5BEC0FF8 /* NBLHTTPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6420F83908538373394B894E2D38CB4 /* NBLHTTPManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		7A06C289D64FE15D428736D43B34D8F1 /* MEBaseAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 56DF9A7CC75A63841EE4A3E51DA46125 /* MEBaseAdapter.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		7DC7E1DEA34B4F4533AF9862A4B9F25E /* MEGDTCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AB7C8EDDAECDD0A78B30660A14F78C /* MEGDTCustomView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		7F70E7D9B89FABAF61B7E1F769B36B3D /* MEFeedAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4DD160BCE624A936F518E5374B4BE56 /* MEFeedAdManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		8C3A6D4A68FC26381895A5C23BC35383 /* NBLHTTPFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D7A4EE1C40364A2E74C5D457A1A4EF /* NBLHTTPFileManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		910FAB8F2863E29BEF3129100B75C1B9 /* MEFunnyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2308D4377294C189675BC0211C6BE3D8 /* MEFunnyButton.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		920D3D92FB1B0DE5B72E86E22AB189B4 /* UIImage+Library.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5013AA86E7CBBADD188FC8A9745DA2 /* UIImage+Library.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		98B458A7EC9EF8D6E152F244E92CA1C3 /* MEConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E91D8A4BC46BD9FBC9C9975A109AE8CC /* MEConfigManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		9B26C820E016FF5443E87FF9C53835A8 /* MERewardedVideoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E53ED91E9F4BFF1F64D9D1710A8333A3 /* MERewardedVideoManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		9C519536D87BCDBAE504716146CE0D3B /* MEAdombAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D9A66DEF41FF825CE8B26D111D29F3D /* MEAdombAdapter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		A6C31D4CA64FD45B6FEF93D1DCD08192 /* MEConfigInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EA872C2509D21B1E9BD5E1DDD252F14 /* MEConfigInfo.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		B43AA1D20AA37F2FB01E2A4D5BEA58C8 /* MEConfigSdkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ED746681B9D023B5011594C89E1C0DD9 /* MEConfigSdkInfo.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		BD22DA17E1993CA64E386BF78A778C12 /* MEAdLogModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C2DF5B3D3D6815EDF08030915E9880BF /* MEAdLogModel.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		C88DC85DD7113A2F7082D7D2EBBBF7D6 /* MEAdLogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC893A6EF7A44E8C4C1C98DCFD8DBDD /* MEAdLogModel.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		C94302994108219C4D593FA0441A2C99 /* MEAdHelpTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B4E44C6B5379045F53AAA02669524EA /* MEAdHelpTool.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		CA70828017FB14952E68BC4958D47CF5 /* MEConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 68D568A34C5B33CB0BD74FBF139A5608 /* MEConfigManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		D068BFA68A86ED7D2473C3B4420ADB7E /* MEAdBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 979A508B7615172A4947324ABD5D6F13 /* MEAdBaseManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		D0BF3BAF69267D3CAEA908BAB373B5E1 /* MERewardedVideoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7159C071CF05194AA4F048ABB6D430CA /* MERewardedVideoManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		D141386799AB8946D26D5C222A21D9CC /* MEConfigNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D4F0440588F34CA25834450011A4F6 /* MEConfigNetwork.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		D7FD65E7800C8568B6F411170BB6AD42 /* MEGDTAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = DECB9B8F7AFC2AE88D9B85DA1A6579C1 /* MEGDTAdapter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		DC6CEFCF83331BC22B150ABA913F121C /* MEConfigBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1473B5B6569D7F2E9F643B06CE673E82 /* MEConfigBaseModel.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		DCFCE1A2E4B48C2E6A31F144D4B26916 /* MESplashAdManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 99D5870257850CF50AA5A030E06D7FDD /* MESplashAdManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		E0F560BF41C6C65B0589DEDEB610E57C /* MEFeedAdManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E5E9AF8D085B6380E7CAB27F5717327F /* MEFeedAdManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		E5D550DB9B4E1F1206250CF16F011DBB /* MEConfigSdkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FD8AEAE1ACCEAC8D4A0D67191C21E02 /* MEConfigSdkInfo.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		E998B596822629A957EF1E4A169B7294 /* NBLHTTPManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D9B36E3DE229DC24ED5138652EDEE75A /* NBLHTTPManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		E9FB2B6109BDF67AD56765EDE1F70BD3 /* MEAdvSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A82611AF1301F7CB8BD928A7B22754FF /* MEAdvSDK-dummy.m */; };
-		EAFD5AE061B8C54AB4AE20AB86503BB0 /* MEInterstitialAdManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E726B17796818B48F084187E4ED66F9 /* MEInterstitialAdManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		ED4E25F3C54EE4BD5A72B35089E01FDE /* MEKSAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 47EC6D488DAB3694B8DF2EAB1459F94E /* MEKSAdapter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		F1D0C9746C33DA49393007BB98358FE2 /* MEKSAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = ECD39F73630F1EC10C97770AA8015E12 /* MEKSAdapter.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		F264EB0EEBF57625D0395FA9D044A3E7 /* MEConfigParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB45BB214299CB46D7FF03CC9E0486F /* MEConfigParameter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		F4D4E28922F247545F70CCD3A315CB5A /* MEAdBaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F2B3144AC5D1201048EB11B0A2FD2E4 /* MEAdBaseManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		FB319A6BE5F2DCDCF9990EB8E998D0D6 /* MEBUADAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A6967B46D36E745341D4834654BEF1F /* MEBUADAdapter.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		02E7DFC05DEC367166B808CA2812234B /* MEConfigConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2413D18941B913803E4CED6EC96B43 /* MEConfigConfig.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		07301A3C90FDC4426223416707F7B01D /* UIImage+Library.h in Headers */ = {isa = PBXBuildFile; fileRef = F07E0B46EB3F00CA323078164B44D0B7 /* UIImage+Library.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		0CDAFA2A2BF650D503B755013863D96A /* MEBaseAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 95280B02C64C9F7F88CBC3A1C572A967 /* MEBaseAdapter.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		0F84261D9B01E6D19C36A2D75B482E13 /* AssignStrategy5.h in Headers */ = {isa = PBXBuildFile; fileRef = C602E56B552FE20B052DA34829D7CC36 /* AssignStrategy5.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		120797C693FFFBADA4B880163F2175F6 /* MEAdMemoryCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B717B52922DE56CBCA484BC75B47A566 /* MEAdMemoryCache.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		129167DA3A9E1F6B15B09E6911135B72 /* MEExpirationTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B95D381ED90DEC8B83A862724FA9831 /* MEExpirationTimer.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		14AF5D5569FB3A71B9ED0AE6C6FBBBD5 /* AssignStrategy5.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D989B893F9CA2C50EC209C7BC9979A /* AssignStrategy5.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		1616C6B6C94A7F2DBA55F01F7ECF6498 /* MEConfigList.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A00FB44B008FA5898FC96727F34E43A /* MEConfigList.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		2831EBA26EE42305B15764CD9A505239 /* MEConfigInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D7A61BC1BF9EF5949ED23CAC9DA74E5 /* MEConfigInfo.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		334DAEAB8041CDDF4194E1CB05ECC03D /* NSBundle+Library.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CC734382312A1FA379F27549DF7028 /* NSBundle+Library.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		3394297839E767AE8DAA21357AEC0F94 /* MEInterstitialAdManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F84BE8585AA1470B5851FE76F930037D /* MEInterstitialAdManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		352B91D9B29BFF3783C06BBAD512DBA6 /* MEBaseAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E88EE4E1C8EC5CA612F3E3B24ED0D93A /* MEBaseAdapter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		3726FC4D32A463458F291674B433801A /* MEConfigConf.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D80B68DF2EE33152521BE037929FC7 /* MEConfigConf.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		3A2AAF2C5EEBB780BD14F385066C398B /* NBLHTTPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F29DD3F87D9928F14865FF8368A8A44 /* NBLHTTPManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		3D86484F0A73123B7EE6B84B11CE465D /* MERewardedVideoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0196DEA639F2394277CE8130A2215 /* MERewardedVideoManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		3EB94D8F0B99970D43CCD4D8A03C5FB3 /* MEConfigNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = C0CD0B342BD9E5B674A13BDF4A4E4AD7 /* MEConfigNetwork.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		4341CF6DB03D413E354BB0D6F084077A /* MEAdvConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CC9D92E23CEF445D66729B4F543F1C /* MEAdvConfig.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		481FC7DAC8D1EDEF640722F2813A5F77 /* MEFunnyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E2FC775415DC0D12A53880DA3E943F5 /* MEFunnyButton.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		544A9C2E8CBBCFC4B07698344796BAD3 /* MEExpirationTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 30E29499A15BB41186F5891C970A9241 /* MEExpirationTimer.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		5737F9E600491BAA7633BBE0F7F9AD0B /* MEConfigBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 723845B50DDD2CA8D4DC2924B263A623 /* MEConfigBaseClass.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		5824152FE279E71524B32925197BAD97 /* MEAdLogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 75D9161EB8FA1ED6A5AC433C2DA8E003 /* MEAdLogModel.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		58A2B69DFF8E5AFBF5F509534BBE12E8 /* MEConfigConf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C06ACD5A31C234B315B687A4BEDAF74 /* MEConfigConf.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		5CCA32534B3CF3D5C19635E42FC9BD6F /* MEConfigNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = EE25CE7B14A705775673281E9D8BB5A3 /* MEConfigNetwork.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		5F141CC98C0383936973D84610B0ACCC /* AssignStrategy4.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D98FF8CBAB1D8A080A532CA78DC3BBE /* AssignStrategy4.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		67402E5F1C61370AA30FF150470B4C70 /* AssignStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 78320CAE7E3C7D51EAA3CC22608F14A4 /* AssignStrategy.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		747D112CD6F75040DE7E9C05D13A62B4 /* UIImage+Library.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392D1A5F4D275E38ECBB6C819291A12 /* UIImage+Library.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		75408F72B1006B51FC146C3ACED89BEC /* AssignStrategy1.h in Headers */ = {isa = PBXBuildFile; fileRef = 5443D90C7C106204E8DEBAB42C763B84 /* AssignStrategy1.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		7728D74D6CCC29555F026F038351A8E4 /* MEConfigBaseClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 86870B20852C739559EBD8E84A32CDE6 /* MEConfigBaseClass.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		7B2543F680269B177F2A77C3DC1D7358 /* MEAdBaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EA0BDF9B726817E00E262D04B03E1590 /* MEAdBaseManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		7FAA0C8D4644224A4CD1B94215E22164 /* MEAdNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 959BE311C7AD9E2380CDB369F80E6445 /* MEAdNetworkManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		81B127D47FE28BC74D03E0DC8B5CC037 /* MEFunnyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9992300733E49389357331D2E3967392 /* MEFunnyButton.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		8B90BE57E9B4FDA9662E6594DBF5B61E /* AssignStrategy4.m in Sources */ = {isa = PBXBuildFile; fileRef = 53414131BC9AD2772272C4C44054BAB7 /* AssignStrategy4.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		93B6C669278E2BAB60F8E82151B9F72D /* MEConfigConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = CACDE02E7809AB759DCA7E470E687A7D /* MEConfigConfig.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		94F2F2875ED0048BDCBCF79EF5EFD134 /* MESplashAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4808AF083BB654D72B6FC54D8613E /* MESplashAdManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		96444F4079EB092B40E9C73E4CD7083B /* StrategyFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 486F6C072434B83FA72A5BF48F277B0E /* StrategyFactory.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		9DBA2DC55A8D8C3683410D879919556F /* MEAdvSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C11F4A882681D63642C4BDDD4D9163A /* MEAdvSDK-dummy.m */; };
+		9E2430E2CB2EBA42C89AC4E875104F49 /* MEConfigList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9509813CC8BF34E75DFAB666A9242806 /* MEConfigList.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		9F5EEDB2C220413C6188E1FB5EA14F20 /* MEConfigParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A721D7A5373FB67E4CC4BF68751632 /* MEConfigParameter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		A22D5EBC8DEB92BBCD55F7A3903DCA2F /* MEAdMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 67ADAD4F01F0B464A8019BC6E68FDD7B /* MEAdMemoryCache.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		A51AE8A3CF1708C9377D524AE83780AE /* MEAdHelpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = F820FAF261305FE1D91BE25FF99A421A /* MEAdHelpTool.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		AFBE13FAC3B566EBC803D5FE7C5304A6 /* NBLHTTPManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ED1DD5CEF86CD4E0036017DE31D6E9D2 /* NBLHTTPManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		B5C1E746BADB0D36C1A1ACC95096BC21 /* MEFeedAdManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E490949FA8C17470E9A8A1566DD84FBD /* MEFeedAdManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		B5EF7E9235D777A17874C681BA7E9ADC /* MEFeedAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0D742937B93E19117D264291F6B220 /* MEFeedAdManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		B66AA1CA9E1C184EDDCEFB01E8BD3E2B /* MEConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 24F0F74D2B07ECDDA53CA21D46E3DD2C /* MEConfigManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		BBD83BF004790620AFA0593F950D7844 /* MEAdNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C5E96071FDA7B217A1CA6101E899FA5A /* MEAdNetworkManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		C0A713F120CCD6052554654DA992FDAF /* NSBundle+Library.h in Headers */ = {isa = PBXBuildFile; fileRef = 824FF9B3E8C70DD62968E9D121FBAE89 /* NSBundle+Library.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		C2FCA1E43C445C243C3B2F11A4F16D0D /* MEAdHelpTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 4509E96CF90347CAF8C73E9F819AC1E9 /* MEAdHelpTool.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		C5EF48729B0624A4582D3D0DEB54AE94 /* MEConfigSdkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 460132AE5E20E5064B848B1B60360978 /* MEConfigSdkInfo.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		CD15CBF591EEA363EFAA2E7E78EA5E36 /* MEConfigSdkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 36A660B89272D614E5B62BD0C53ACB1D /* MEConfigSdkInfo.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		D33FFBE7B1E1353011257151B9257E94 /* MEInterstitialAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A14A548030F8FBF4A1AE31841D5A7299 /* MEInterstitialAdManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		DA013D70646D8F49B3EE03EFC43EBF0A /* MERewardedVideoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CE06317B66E7FEF5ADC1ED6F08C1A1 /* MERewardedVideoManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		DCF98F4DD2DB596820CB4E6041629064 /* AssignStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B431A279FC3488CBB35E816098E7C251 /* AssignStrategy.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		DDE0C16F49F42899B5DB7F31E0007C4D /* StrategyFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 78F415971E23AE54D640B92049718F72 /* StrategyFactory.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		E2EF1116D9B219791A0C9D8769DD3099 /* NBLHTTPFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA16B67E28D80C8D17129F1EBCB9D2D /* NBLHTTPFileManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		EA578AA63ED30C428C349C1A6528B675 /* MEAdBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF454E24FE1F7E7E78B2C6E8AAE76EDA /* MEAdBaseManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		EC3C6377579F5214FA19005D9880C88B /* MEAdLogModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 27554B8446675C2680D6AC3432D3D03F /* MEAdLogModel.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		F3489BE53DF4DB9759225D5D5E6C42E7 /* NBLHTTPFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB65C39157E4371042DB39FD6A94182 /* NBLHTTPFileManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		F615E720AA075DBB0D6FF56AC207EE9C /* AssignStrategy1.m in Sources */ = {isa = PBXBuildFile; fileRef = 21AB4C551457AD4D52950975E6CAB236 /* AssignStrategy1.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		F8308039F13639E95BAEB85A7AA72B1F /* MEConfigParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = C929B43705A577534E66EA17926D304F /* MEConfigParameter.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		FA48E3FE24B88FB020DE504289584080 /* MESplashAdManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B741C9FC589C15DA8A999119C092994 /* MESplashAdManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		FDDB7015417A692E14FE44C8B7592867 /* MEConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F64C60AAF9682DE28375177FF00870 /* MEConfigManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		FE62C15829A207F4FCBBD72AA1B15015 /* MEConfigInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E183F2962E02F9D2FF687048BB8FE8 /* MEConfigInfo.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		03BC290B247D014F00BBCB1D /* PBXContainerItemProxy */ = {
+		0360A4C724C0334A00DBA640 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = EC4343D2C17098E2C710D991347C2147 /* Realm */;
+			containerPortal = B41D91CCAA6415BCEF3DCC7717D8533D /* Reachability */;
+			proxyType = 2;
+			remoteGlobalIDString = BE66B463A751E094A03532B929111CA5;
+			remoteInfo = Reachability;
+		};
+		0360A4C924C0334A00DBA640 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70DE97E35AF3B13F6188C9D289D79BA1 /* Realm */;
 			proxyType = 2;
 			remoteGlobalIDString = B6661B617127D135D4F41AA235B7DA1F;
 			remoteInfo = Realm;
 		};
-		386A39FBAF5CEE71912B16FB7B36F737 /* PBXContainerItemProxy */ = {
+		09E34658B33F9D5C62DD8EB9BE496BDE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 07FCBF875E5662A6B2E43ACFB0ACCA5E /* GDTMobSDK */;
-			proxyType = 1;
-			remoteGlobalIDString = 1A3CFDC0A2AD044C744F8B75288D67F4;
-			remoteInfo = GDTMobSDK;
-		};
-		3BA96B4BDD7FDF12DC832DBCEAF1D360 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38469E4EE6CC327E297C5E1EA5FC41F2 /* KSAdSDK */;
-			proxyType = 1;
-			remoteGlobalIDString = 52F8E625A098A051AC611874CB74C4C7;
-			remoteInfo = KSAdSDK;
-		};
-		806C0B99C9F36129404AEC9EF66ED439 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0229BF4ADB3E35CB818AAC4B34968E16 /* Bytedance-UnionAD */;
-			proxyType = 1;
-			remoteGlobalIDString = 5332E9233532B4756DF3841BFF2A4D94;
-			remoteInfo = "Bytedance-UnionAD";
-		};
-		9FDFEB66EC2315A1E0FC5FDD3ED42981 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EC4343D2C17098E2C710D991347C2147 /* Realm */;
+			containerPortal = 70DE97E35AF3B13F6188C9D289D79BA1 /* Realm */;
 			proxyType = 1;
 			remoteGlobalIDString = BC4AC9FBD7453D9D72102559C8F6B8AC;
 			remoteInfo = Realm;
 		};
-		F5F838F4932622AE9BB6C052972C8D75 /* PBXContainerItemProxy */ = {
+		4DAF38A34320B9D4EF07ECF02DF5D4C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FB9B2D22A5614CF06C632C2D29B52B5B /* Google-Mobile-Ads-SDK */;
+			containerPortal = B41D91CCAA6415BCEF3DCC7717D8533D /* Reachability */;
 			proxyType = 1;
-			remoteGlobalIDString = 662B519EDA759B92F78065D8C998C86E;
-			remoteInfo = "Google-Mobile-Ads-SDK";
+			remoteGlobalIDString = DA1EBD7850A215E94DBD19A247725F9F;
+			remoteInfo = Reachability;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0229BF4ADB3E35CB818AAC4B34968E16 /* Bytedance-UnionAD */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Bytedance-UnionAD"; path = "Bytedance-UnionAD.xcodeproj"; sourceTree = "<group>"; };
-		03BC290A247D014F00BBCB1D /* MEAdvConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEAdvConfig.h; sourceTree = "<group>"; };
-		04AB7C8EDDAECDD0A78B30660A14F78C /* MEGDTCustomView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEGDTCustomView.m; sourceTree = "<group>"; };
 		04F266C99B08DD454D7A13D9FBCD89AB /* libMEAdvSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMEAdvSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		075A136B8E4554DF601AF7069C1E3EA7 /* MEGDTAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEGDTAdapter.h; sourceTree = "<group>"; };
-		07FCBF875E5662A6B2E43ACFB0ACCA5E /* GDTMobSDK */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GDTMobSDK; path = GDTMobSDK.xcodeproj; sourceTree = "<group>"; };
-		0B130A60200B37E644AF6C1F894BC717 /* MEInterstitialAdManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEInterstitialAdManager.m; sourceTree = "<group>"; };
-		1473B5B6569D7F2E9F643B06CE673E82 /* MEConfigBaseModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigBaseModel.m; sourceTree = "<group>"; };
-		1E726B17796818B48F084187E4ED66F9 /* MEInterstitialAdManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEInterstitialAdManager.h; sourceTree = "<group>"; };
-		1EA872C2509D21B1E9BD5E1DDD252F14 /* MEConfigInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigInfo.m; sourceTree = "<group>"; };
-		2308D4377294C189675BC0211C6BE3D8 /* MEFunnyButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEFunnyButton.m; sourceTree = "<group>"; };
-		2912702BA034AA20EA2C7DD17D2DE7D1 /* MEConfigNetwork.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigNetwork.h; sourceTree = "<group>"; };
-		2B4E44C6B5379045F53AAA02669524EA /* MEAdHelpTool.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEAdHelpTool.h; sourceTree = "<group>"; };
-		2D9A66DEF41FF825CE8B26D111D29F3D /* MEAdombAdapter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEAdombAdapter.m; sourceTree = "<group>"; };
-		2EC893A6EF7A44E8C4C1C98DCFD8DBDD /* MEAdLogModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEAdLogModel.m; sourceTree = "<group>"; };
-		2F6FAE5952D3D9F7EF1D3F99EB79338C /* MEAdvSDK.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MEAdvSDK.xcconfig; sourceTree = "<group>"; };
-		31A836A0DFC01E44BC182D667CEDD753 /* MEAdHelpTool.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEAdHelpTool.m; sourceTree = "<group>"; };
-		31F35879BD8235A45059A303233DB2D8 /* NBLHTTPFileManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = NBLHTTPFileManager.h; sourceTree = "<group>"; };
-		38469E4EE6CC327E297C5E1EA5FC41F2 /* KSAdSDK */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KSAdSDK; path = KSAdSDK.xcodeproj; sourceTree = "<group>"; };
-		3875ED2E1D1C988127B9F304B7606A28 /* MEAdvSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MEAdvSDK-prefix.pch"; sourceTree = "<group>"; };
-		39160BF88C66D0646CBBF6B275E16AA4 /* MEConfigInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigInfo.h; sourceTree = "<group>"; };
-		40D7A4EE1C40364A2E74C5D457A1A4EF /* NBLHTTPFileManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = NBLHTTPFileManager.m; sourceTree = "<group>"; };
-		47EC6D488DAB3694B8DF2EAB1459F94E /* MEKSAdapter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEKSAdapter.m; sourceTree = "<group>"; };
-		4BE252706161056A9046FE1E6D54B664 /* NSBundle+Library.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Library.m"; sourceTree = "<group>"; };
-		56DF9A7CC75A63841EE4A3E51DA46125 /* MEBaseAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEBaseAdapter.h; sourceTree = "<group>"; };
-		571EA9DAD34C9D89E3813623F400A8EA /* MESplashAdManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MESplashAdManager.m; sourceTree = "<group>"; };
-		621C4E6574A4B733493D11A87AF9839A /* NSBundle+Library.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Library.h"; sourceTree = "<group>"; };
-		6574216A18BE5E101A560566405CF40D /* MEAdvSDK.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = MEAdvSDK.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		68D568A34C5B33CB0BD74FBF139A5608 /* MEConfigManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigManager.h; sourceTree = "<group>"; };
-		6D5013AA86E7CBBADD188FC8A9745DA2 /* UIImage+Library.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Library.m"; sourceTree = "<group>"; };
-		6E76E3A254922759EAD10DB9AF778892 /* MEAdombAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEAdombAdapter.h; sourceTree = "<group>"; };
-		7159C071CF05194AA4F048ABB6D430CA /* MERewardedVideoManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MERewardedVideoManager.h; sourceTree = "<group>"; };
-		7A6967B46D36E745341D4834654BEF1F /* MEBUADAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEBUADAdapter.h; sourceTree = "<group>"; };
-		7AB45BB214299CB46D7FF03CC9E0486F /* MEConfigParameter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigParameter.m; sourceTree = "<group>"; };
-		7B67D3B4A038060E8837D331CF13257A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		7FD8AEAE1ACCEAC8D4A0D67191C21E02 /* MEConfigSdkInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigSdkInfo.h; sourceTree = "<group>"; };
-		81CAFC1E6F677C2C913D19AE5F62E328 /* MEGDTFeedRenderAdapter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEGDTFeedRenderAdapter.m; sourceTree = "<group>"; };
-		84D4F0440588F34CA25834450011A4F6 /* MEConfigNetwork.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigNetwork.m; sourceTree = "<group>"; };
-		8FE2A3638C8B732F6BF7AD3D994BC966 /* MEConfigList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigList.h; sourceTree = "<group>"; };
-		979A508B7615172A4947324ABD5D6F13 /* MEAdBaseManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MEAdBaseManager.m; path = MEAdvSDK/Classes/MEAdBaseManager.m; sourceTree = "<group>"; };
-		99D5870257850CF50AA5A030E06D7FDD /* MESplashAdManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MESplashAdManager.h; sourceTree = "<group>"; };
-		9B1705228D7773A8B3F06A4957AA8534 /* MEBaseAdapter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEBaseAdapter.m; sourceTree = "<group>"; };
-		9C711F8F1AD24C6FBBA6165DD1A868CC /* MEGDTCustomView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEGDTCustomView.h; sourceTree = "<group>"; };
-		9F2B3144AC5D1201048EB11B0A2FD2E4 /* MEAdBaseManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MEAdBaseManager.h; path = MEAdvSDK/Classes/MEAdBaseManager.h; sourceTree = "<group>"; };
-		A26889BA9440D0042E5F10F70F6FE377 /* MEAdFeedModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEAdFeedModel.h; sourceTree = "<group>"; };
-		A69DAA0FD0DD0DD24151A29DB45B512C /* MEAdFeedModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEAdFeedModel.m; sourceTree = "<group>"; };
-		A82611AF1301F7CB8BD928A7B22754FF /* MEAdvSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MEAdvSDK-dummy.m"; sourceTree = "<group>"; };
-		B0EDA3C3C5E13F9E1DB2EB63BC320BA0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		B0FEFB605FB8AE15934CB2ABFF067BFF /* MEConfigBaseModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigBaseModel.h; sourceTree = "<group>"; };
-		B2A2FC8FEACD91A7D38DFEA533237F2C /* MEConfigList.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigList.m; sourceTree = "<group>"; };
-		BDE3A1C862245442D6C99D04D9DD3835 /* MEGDTFeedRenderAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEGDTFeedRenderAdapter.h; sourceTree = "<group>"; };
-		C1CE5AEBCC928F20E833798A68D632A7 /* MEAdvBundle.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = MEAdvBundle.bundle; path = MEAdvSDK/Assets/Resource/MEAdvBundle.bundle; sourceTree = "<group>"; };
-		C223A92C3A963082A06A64E973330021 /* MEAdMemoryCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MEAdMemoryCache.h; path = MEAdvSDK/Classes/MEAdMemoryCache.h; sourceTree = "<group>"; };
-		C2DF5B3D3D6815EDF08030915E9880BF /* MEAdLogModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEAdLogModel.h; sourceTree = "<group>"; };
-		C4DD160BCE624A936F518E5374B4BE56 /* MEFeedAdManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEFeedAdManager.m; sourceTree = "<group>"; };
-		C5D98B2CF5AB8496B3A8D08846CD02D4 /* MEBUADAdapter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEBUADAdapter.m; sourceTree = "<group>"; };
-		CF41891D856732FAC7FFB1DEF22020F7 /* MEAdMemoryCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MEAdMemoryCache.m; path = MEAdvSDK/Classes/MEAdMemoryCache.m; sourceTree = "<group>"; };
-		D7ECFC95701D6B8336C654BBDCC5D47E /* MEConfigParameter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigParameter.h; sourceTree = "<group>"; };
-		D9B36E3DE229DC24ED5138652EDEE75A /* NBLHTTPManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = NBLHTTPManager.h; sourceTree = "<group>"; };
-		DECB9B8F7AFC2AE88D9B85DA1A6579C1 /* MEGDTAdapter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEGDTAdapter.m; sourceTree = "<group>"; };
-		E53ED91E9F4BFF1F64D9D1710A8333A3 /* MERewardedVideoManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MERewardedVideoManager.m; sourceTree = "<group>"; };
-		E5E9AF8D085B6380E7CAB27F5717327F /* MEFeedAdManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEFeedAdManager.h; sourceTree = "<group>"; };
-		E790C4ADBFEA1F4EFAC9A7A5471CA8D9 /* UIImage+Library.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIImage+Library.h"; sourceTree = "<group>"; };
-		E91D8A4BC46BD9FBC9C9975A109AE8CC /* MEConfigManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigManager.m; sourceTree = "<group>"; };
-		EBF96BB98686456D9A1ABB0D0EC441FC /* MEFunnyButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEFunnyButton.h; sourceTree = "<group>"; };
-		EC4343D2C17098E2C710D991347C2147 /* Realm */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Realm; path = Realm.xcodeproj; sourceTree = "<group>"; };
-		ECD39F73630F1EC10C97770AA8015E12 /* MEKSAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEKSAdapter.h; sourceTree = "<group>"; };
-		ED746681B9D023B5011594C89E1C0DD9 /* MEConfigSdkInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigSdkInfo.m; sourceTree = "<group>"; };
-		F6420F83908538373394B894E2D38CB4 /* NBLHTTPManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = NBLHTTPManager.m; sourceTree = "<group>"; };
-		FB9B2D22A5614CF06C632C2D29B52B5B /* Google-Mobile-Ads-SDK */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Google-Mobile-Ads-SDK"; path = "Google-Mobile-Ads-SDK.xcodeproj"; sourceTree = "<group>"; };
+		0B95D381ED90DEC8B83A862724FA9831 /* MEExpirationTimer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEExpirationTimer.m; sourceTree = "<group>"; };
+		1B741C9FC589C15DA8A999119C092994 /* MESplashAdManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MESplashAdManager.h; sourceTree = "<group>"; };
+		1BF0196DEA639F2394277CE8130A2215 /* MERewardedVideoManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MERewardedVideoManager.m; sourceTree = "<group>"; };
+		21AB4C551457AD4D52950975E6CAB236 /* AssignStrategy1.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AssignStrategy1.m; sourceTree = "<group>"; };
+		24D80B68DF2EE33152521BE037929FC7 /* MEConfigConf.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigConf.m; sourceTree = "<group>"; };
+		24F0F74D2B07ECDDA53CA21D46E3DD2C /* MEConfigManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigManager.h; sourceTree = "<group>"; };
+		27554B8446675C2680D6AC3432D3D03F /* MEAdLogModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEAdLogModel.h; sourceTree = "<group>"; };
+		2C11F4A882681D63642C4BDDD4D9163A /* MEAdvSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MEAdvSDK-dummy.m"; sourceTree = "<group>"; };
+		2E2FC775415DC0D12A53880DA3E943F5 /* MEFunnyButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEFunnyButton.h; sourceTree = "<group>"; };
+		30E29499A15BB41186F5891C970A9241 /* MEExpirationTimer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEExpirationTimer.h; sourceTree = "<group>"; };
+		36A660B89272D614E5B62BD0C53ACB1D /* MEConfigSdkInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigSdkInfo.h; sourceTree = "<group>"; };
+		3C06ACD5A31C234B315B687A4BEDAF74 /* MEConfigConf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigConf.h; sourceTree = "<group>"; };
+		3EA16B67E28D80C8D17129F1EBCB9D2D /* NBLHTTPFileManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = NBLHTTPFileManager.h; sourceTree = "<group>"; };
+		4392D1A5F4D275E38ECBB6C819291A12 /* UIImage+Library.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Library.m"; sourceTree = "<group>"; };
+		4509E96CF90347CAF8C73E9F819AC1E9 /* MEAdHelpTool.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEAdHelpTool.h; sourceTree = "<group>"; };
+		460132AE5E20E5064B848B1B60360978 /* MEConfigSdkInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigSdkInfo.m; sourceTree = "<group>"; };
+		486F6C072434B83FA72A5BF48F277B0E /* StrategyFactory.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = StrategyFactory.m; sourceTree = "<group>"; };
+		4C4694E1925244EF035692C24CD5B7BE /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4D7A61BC1BF9EF5949ED23CAC9DA74E5 /* MEConfigInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigInfo.h; sourceTree = "<group>"; };
+		4F29DD3F87D9928F14865FF8368A8A44 /* NBLHTTPManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = NBLHTTPManager.m; sourceTree = "<group>"; };
+		53414131BC9AD2772272C4C44054BAB7 /* AssignStrategy4.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AssignStrategy4.m; sourceTree = "<group>"; };
+		5443D90C7C106204E8DEBAB42C763B84 /* AssignStrategy1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AssignStrategy1.h; sourceTree = "<group>"; };
+		5A00FB44B008FA5898FC96727F34E43A /* MEConfigList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigList.h; sourceTree = "<group>"; };
+		5D98FF8CBAB1D8A080A532CA78DC3BBE /* AssignStrategy4.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AssignStrategy4.h; sourceTree = "<group>"; };
+		62CC9D92E23CEF445D66729B4F543F1C /* MEAdvConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEAdvConfig.h; sourceTree = "<group>"; };
+		67ADAD4F01F0B464A8019BC6E68FDD7B /* MEAdMemoryCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MEAdMemoryCache.m; path = MEAdvSDK/Classes/MEAdMemoryCache.m; sourceTree = "<group>"; };
+		6F0D742937B93E19117D264291F6B220 /* MEFeedAdManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEFeedAdManager.m; sourceTree = "<group>"; };
+		70DE97E35AF3B13F6188C9D289D79BA1 /* Realm */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Realm; path = Realm.xcodeproj; sourceTree = "<group>"; };
+		723845B50DDD2CA8D4DC2924B263A623 /* MEConfigBaseClass.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigBaseClass.m; sourceTree = "<group>"; };
+		75D9161EB8FA1ED6A5AC433C2DA8E003 /* MEAdLogModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEAdLogModel.m; sourceTree = "<group>"; };
+		78320CAE7E3C7D51EAA3CC22608F14A4 /* AssignStrategy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AssignStrategy.h; sourceTree = "<group>"; };
+		78F415971E23AE54D640B92049718F72 /* StrategyFactory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = StrategyFactory.h; sourceTree = "<group>"; };
+		7B9AD566FBD8E45CA25B0117D644CA54 /* MEAdvBundle.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = MEAdvBundle.bundle; path = MEAdvSDK/Assets/Resource/MEAdvBundle.bundle; sourceTree = "<group>"; };
+		80D989B893F9CA2C50EC209C7BC9979A /* AssignStrategy5.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AssignStrategy5.m; sourceTree = "<group>"; };
+		824FF9B3E8C70DD62968E9D121FBAE89 /* NSBundle+Library.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Library.h"; sourceTree = "<group>"; };
+		86870B20852C739559EBD8E84A32CDE6 /* MEConfigBaseClass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigBaseClass.h; sourceTree = "<group>"; };
+		8D2413D18941B913803E4CED6EC96B43 /* MEConfigConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigConfig.m; sourceTree = "<group>"; };
+		93CC734382312A1FA379F27549DF7028 /* NSBundle+Library.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Library.m"; sourceTree = "<group>"; };
+		9509813CC8BF34E75DFAB666A9242806 /* MEConfigList.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigList.m; sourceTree = "<group>"; };
+		95280B02C64C9F7F88CBC3A1C572A967 /* MEBaseAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEBaseAdapter.h; sourceTree = "<group>"; };
+		959BE311C7AD9E2380CDB369F80E6445 /* MEAdNetworkManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEAdNetworkManager.m; sourceTree = "<group>"; };
+		9992300733E49389357331D2E3967392 /* MEFunnyButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEFunnyButton.m; sourceTree = "<group>"; };
+		9DA4808AF083BB654D72B6FC54D8613E /* MESplashAdManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MESplashAdManager.m; sourceTree = "<group>"; };
+		A14A548030F8FBF4A1AE31841D5A7299 /* MEInterstitialAdManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEInterstitialAdManager.m; sourceTree = "<group>"; };
+		A8F64C60AAF9682DE28375177FF00870 /* MEConfigManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigManager.m; sourceTree = "<group>"; };
+		A9942F2C190494407A00D60394B76849 /* MEAdvSDK.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MEAdvSDK.xcconfig; sourceTree = "<group>"; };
+		AEED8189798199556ADFCD4AD768E102 /* MEAdvSDK.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = MEAdvSDK.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B41D91CCAA6415BCEF3DCC7717D8533D /* Reachability */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Reachability; path = Reachability.xcodeproj; sourceTree = "<group>"; };
+		B431A279FC3488CBB35E816098E7C251 /* AssignStrategy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AssignStrategy.m; sourceTree = "<group>"; };
+		B717B52922DE56CBCA484BC75B47A566 /* MEAdMemoryCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MEAdMemoryCache.h; path = MEAdvSDK/Classes/MEAdMemoryCache.h; sourceTree = "<group>"; };
+		BAB65C39157E4371042DB39FD6A94182 /* NBLHTTPFileManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = NBLHTTPFileManager.m; sourceTree = "<group>"; };
+		C0CD0B342BD9E5B674A13BDF4A4E4AD7 /* MEConfigNetwork.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigNetwork.h; sourceTree = "<group>"; };
+		C2A721D7A5373FB67E4CC4BF68751632 /* MEConfigParameter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigParameter.m; sourceTree = "<group>"; };
+		C5E96071FDA7B217A1CA6101E899FA5A /* MEAdNetworkManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEAdNetworkManager.h; sourceTree = "<group>"; };
+		C602E56B552FE20B052DA34829D7CC36 /* AssignStrategy5.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AssignStrategy5.h; sourceTree = "<group>"; };
+		C929B43705A577534E66EA17926D304F /* MEConfigParameter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigParameter.h; sourceTree = "<group>"; };
+		C9CE06317B66E7FEF5ADC1ED6F08C1A1 /* MERewardedVideoManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MERewardedVideoManager.h; sourceTree = "<group>"; };
+		CACDE02E7809AB759DCA7E470E687A7D /* MEConfigConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEConfigConfig.h; sourceTree = "<group>"; };
+		DA86B2DA28B64F21D263E62562F107B6 /* MEAdvSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MEAdvSDK-prefix.pch"; sourceTree = "<group>"; };
+		DF454E24FE1F7E7E78B2C6E8AAE76EDA /* MEAdBaseManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MEAdBaseManager.m; path = MEAdvSDK/Classes/MEAdBaseManager.m; sourceTree = "<group>"; };
+		E490949FA8C17470E9A8A1566DD84FBD /* MEFeedAdManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEFeedAdManager.h; sourceTree = "<group>"; };
+		E4E183F2962E02F9D2FF687048BB8FE8 /* MEConfigInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigInfo.m; sourceTree = "<group>"; };
+		E88EE4E1C8EC5CA612F3E3B24ED0D93A /* MEBaseAdapter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEBaseAdapter.m; sourceTree = "<group>"; };
+		EA0BDF9B726817E00E262D04B03E1590 /* MEAdBaseManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MEAdBaseManager.h; path = MEAdvSDK/Classes/MEAdBaseManager.h; sourceTree = "<group>"; };
+		EB2364F306C903F3322D55642C5E1864 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		ED1DD5CEF86CD4E0036017DE31D6E9D2 /* NBLHTTPManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = NBLHTTPManager.h; sourceTree = "<group>"; };
+		EE25CE7B14A705775673281E9D8BB5A3 /* MEConfigNetwork.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEConfigNetwork.m; sourceTree = "<group>"; };
+		F07E0B46EB3F00CA323078164B44D0B7 /* UIImage+Library.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIImage+Library.h"; sourceTree = "<group>"; };
+		F820FAF261305FE1D91BE25FF99A421A /* MEAdHelpTool.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MEAdHelpTool.m; sourceTree = "<group>"; };
+		F84BE8585AA1470B5851FE76F930037D /* MEInterstitialAdManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MEInterstitialAdManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		86C14EFFD05969F1826F986335EC3C21 /* Frameworks */ = {
+		5154E61517CBD816D424F855A15767BA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -196,38 +187,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		03BC28FA247D00F000BBCB1D /* Products */ = {
+		0360A3EC24C0323E00DBA640 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				0360A4CA24C0334A00DBA640 /* libRealm.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		03BC28FC247D00F000BBCB1D /* Products */ = {
+		0360A3EE24C0323E00DBA640 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		03BC28FE247D00F000BBCB1D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		03BC2900247D00F000BBCB1D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				03BC290C247D014F00BBCB1D /* libRealm.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		03BC2902247D00F000BBCB1D /* Products */ = {
-			isa = PBXGroup;
-			children = (
+				0360A4C824C0334A00DBA640 /* libReachability.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -239,126 +210,160 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		25674ACE8B9D09F486BB73A02CCD0C71 = {
+		11ABDCFFEE96E39EA6EA30608E463146 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				C1F87ACCBAE58881E8B5E97E05E815C4 /* Dependencies */,
-				061805A33B3920F1A1059AEA186A47F7 /* Frameworks */,
-				B08CF2A2A9374BD27D434DC554057024 /* MEAdvSDK */,
-				A47795A767DD10A2A4A45052FCF1E275 /* Products */,
+				4509E96CF90347CAF8C73E9F819AC1E9 /* MEAdHelpTool.h */,
+				F820FAF261305FE1D91BE25FF99A421A /* MEAdHelpTool.m */,
+				27554B8446675C2680D6AC3432D3D03F /* MEAdLogModel.h */,
+				75D9161EB8FA1ED6A5AC433C2DA8E003 /* MEAdLogModel.m */,
+				30E29499A15BB41186F5891C970A9241 /* MEExpirationTimer.h */,
+				0B95D381ED90DEC8B83A862724FA9831 /* MEExpirationTimer.m */,
+				2E2FC775415DC0D12A53880DA3E943F5 /* MEFunnyButton.h */,
+				9992300733E49389357331D2E3967392 /* MEFunnyButton.m */,
+				3EA16B67E28D80C8D17129F1EBCB9D2D /* NBLHTTPFileManager.h */,
+				BAB65C39157E4371042DB39FD6A94182 /* NBLHTTPFileManager.m */,
+				ED1DD5CEF86CD4E0036017DE31D6E9D2 /* NBLHTTPManager.h */,
+				4F29DD3F87D9928F14865FF8368A8A44 /* NBLHTTPManager.m */,
+				824FF9B3E8C70DD62968E9D121FBAE89 /* NSBundle+Library.h */,
+				93CC734382312A1FA379F27549DF7028 /* NSBundle+Library.m */,
+				F07E0B46EB3F00CA323078164B44D0B7 /* UIImage+Library.h */,
+				4392D1A5F4D275E38ECBB6C819291A12 /* UIImage+Library.m */,
 			);
+			name = Tools;
+			path = MEAdvSDK/Classes/Tools;
 			sourceTree = "<group>";
 		};
-		273720D845E81180BADB2666FF32DB3B /* Interstitial */ = {
+		1D2707145F13688F138B6FED3BED46CD /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				1E726B17796818B48F084187E4ED66F9 /* MEInterstitialAdManager.h */,
-				0B130A60200B37E644AF6C1F894BC717 /* MEInterstitialAdManager.m */,
+				B41D91CCAA6415BCEF3DCC7717D8533D /* Reachability */,
+				70DE97E35AF3B13F6188C9D289D79BA1 /* Realm */,
 			);
-			name = Interstitial;
-			path = MEAdvSDK/Classes/Interstitial;
+			name = Dependencies;
 			sourceTree = "<group>";
 		};
-		296BA40D2EEDB97DB322E2072ADEEA63 /* Platform */ = {
+		21A72D6B267A93A9B34B5597694AA804 /* RewardVideo */ = {
 			isa = PBXGroup;
 			children = (
-				56DF9A7CC75A63841EE4A3E51DA46125 /* MEBaseAdapter.h */,
-				9B1705228D7773A8B3F06A4957AA8534 /* MEBaseAdapter.m */,
-				996D69F7060917D5EB37408861C34D74 /* Adomb */,
-				D1E914F55EDFF1AC2C88041A4BE43ED0 /* BUAD */,
-				B249C570819213434C5DF51F41F7FDBF /* GDT */,
-				7567B1481A7E2E368EE295E3C7A6B6F0 /* KS */,
-			);
-			name = Platform;
-			path = MEAdvSDK/Classes/Platform;
-			sourceTree = "<group>";
-		};
-		38DA73CBCA8FA5F5C2DF95B578E35670 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				2F6FAE5952D3D9F7EF1D3F99EB79338C /* MEAdvSDK.xcconfig */,
-				A82611AF1301F7CB8BD928A7B22754FF /* MEAdvSDK-dummy.m */,
-				3875ED2E1D1C988127B9F304B7606A28 /* MEAdvSDK-prefix.pch */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/MEAdvSDK";
-			sourceTree = "<group>";
-		};
-		3BB24E001572288F6040974034AB01EB /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				99D5870257850CF50AA5A030E06D7FDD /* MESplashAdManager.h */,
-				571EA9DAD34C9D89E3813623F400A8EA /* MESplashAdManager.m */,
-			);
-			name = Splash;
-			path = MEAdvSDK/Classes/Splash;
-			sourceTree = "<group>";
-		};
-		7567B1481A7E2E368EE295E3C7A6B6F0 /* KS */ = {
-			isa = PBXGroup;
-			children = (
-				ECD39F73630F1EC10C97770AA8015E12 /* MEKSAdapter.h */,
-				47EC6D488DAB3694B8DF2EAB1459F94E /* MEKSAdapter.m */,
-			);
-			path = KS;
-			sourceTree = "<group>";
-		};
-		791CD7751E9ACDAF17682F5676A809B6 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A26889BA9440D0042E5F10F70F6FE377 /* MEAdFeedModel.h */,
-				A69DAA0FD0DD0DD24151A29DB45B512C /* MEAdFeedModel.m */,
-				B0FEFB605FB8AE15934CB2ABFF067BFF /* MEConfigBaseModel.h */,
-				1473B5B6569D7F2E9F643B06CE673E82 /* MEConfigBaseModel.m */,
-				39160BF88C66D0646CBBF6B275E16AA4 /* MEConfigInfo.h */,
-				1EA872C2509D21B1E9BD5E1DDD252F14 /* MEConfigInfo.m */,
-				8FE2A3638C8B732F6BF7AD3D994BC966 /* MEConfigList.h */,
-				B2A2FC8FEACD91A7D38DFEA533237F2C /* MEConfigList.m */,
-				2912702BA034AA20EA2C7DD17D2DE7D1 /* MEConfigNetwork.h */,
-				84D4F0440588F34CA25834450011A4F6 /* MEConfigNetwork.m */,
-				D7ECFC95701D6B8336C654BBDCC5D47E /* MEConfigParameter.h */,
-				7AB45BB214299CB46D7FF03CC9E0486F /* MEConfigParameter.m */,
-				7FD8AEAE1ACCEAC8D4A0D67191C21E02 /* MEConfigSdkInfo.h */,
-				ED746681B9D023B5011594C89E1C0DD9 /* MEConfigSdkInfo.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		7BE90BE84629FB1C74F7EF273120972E /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				7B67D3B4A038060E8837D331CF13257A /* LICENSE */,
-				6574216A18BE5E101A560566405CF40D /* MEAdvSDK.podspec */,
-				B0EDA3C3C5E13F9E1DB2EB63BC320BA0 /* README.md */,
-			);
-			name = Pod;
-			sourceTree = "<group>";
-		};
-		7E74060A82F9399183BCDCF0BA8686F9 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				C1CE5AEBCC928F20E833798A68D632A7 /* MEAdvBundle.bundle */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		96DECB510A165EDEC2FB57F3CFDAA632 /* RewardVideo */ = {
-			isa = PBXGroup;
-			children = (
-				7159C071CF05194AA4F048ABB6D430CA /* MERewardedVideoManager.h */,
-				E53ED91E9F4BFF1F64D9D1710A8333A3 /* MERewardedVideoManager.m */,
+				C9CE06317B66E7FEF5ADC1ED6F08C1A1 /* MERewardedVideoManager.h */,
+				1BF0196DEA639F2394277CE8130A2215 /* MERewardedVideoManager.m */,
 			);
 			name = RewardVideo;
 			path = MEAdvSDK/Classes/RewardVideo;
 			sourceTree = "<group>";
 		};
-		996D69F7060917D5EB37408861C34D74 /* Adomb */ = {
+		25674ACE8B9D09F486BB73A02CCD0C71 = {
 			isa = PBXGroup;
 			children = (
-				6E76E3A254922759EAD10DB9AF778892 /* MEAdombAdapter.h */,
-				2D9A66DEF41FF825CE8B26D111D29F3D /* MEAdombAdapter.m */,
+				1D2707145F13688F138B6FED3BED46CD /* Dependencies */,
+				061805A33B3920F1A1059AEA186A47F7 /* Frameworks */,
+				70B020BC0AFB5142011A0C80C5CCEBA2 /* MEAdvSDK */,
+				A47795A767DD10A2A4A45052FCF1E275 /* Products */,
 			);
-			path = Adomb;
+			sourceTree = "<group>";
+		};
+		44895B717F7A87A203BDBD2D9A2E6BF8 /* Strategy */ = {
+			isa = PBXGroup;
+			children = (
+				78320CAE7E3C7D51EAA3CC22608F14A4 /* AssignStrategy.h */,
+				B431A279FC3488CBB35E816098E7C251 /* AssignStrategy.m */,
+				5443D90C7C106204E8DEBAB42C763B84 /* AssignStrategy1.h */,
+				21AB4C551457AD4D52950975E6CAB236 /* AssignStrategy1.m */,
+				5D98FF8CBAB1D8A080A532CA78DC3BBE /* AssignStrategy4.h */,
+				53414131BC9AD2772272C4C44054BAB7 /* AssignStrategy4.m */,
+				C602E56B552FE20B052DA34829D7CC36 /* AssignStrategy5.h */,
+				80D989B893F9CA2C50EC209C7BC9979A /* AssignStrategy5.m */,
+				78F415971E23AE54D640B92049718F72 /* StrategyFactory.h */,
+				486F6C072434B83FA72A5BF48F277B0E /* StrategyFactory.m */,
+			);
+			name = Strategy;
+			path = MEAdvSDK/Classes/Strategy;
+			sourceTree = "<group>";
+		};
+		4A03EB1B778AA7E87DBD7827622C4AF6 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				95280B02C64C9F7F88CBC3A1C572A967 /* MEBaseAdapter.h */,
+				E88EE4E1C8EC5CA612F3E3B24ED0D93A /* MEBaseAdapter.m */,
+			);
+			name = Platform;
+			path = MEAdvSDK/Classes/Platform;
+			sourceTree = "<group>";
+		};
+		6C7C32E4EAAE460A6D162942FD301A6C /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				1B741C9FC589C15DA8A999119C092994 /* MESplashAdManager.h */,
+				9DA4808AF083BB654D72B6FC54D8613E /* MESplashAdManager.m */,
+			);
+			name = Splash;
+			path = MEAdvSDK/Classes/Splash;
+			sourceTree = "<group>";
+		};
+		6FB838CFBE0F5C02813FC2948507C83D /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				E490949FA8C17470E9A8A1566DD84FBD /* MEFeedAdManager.h */,
+				6F0D742937B93E19117D264291F6B220 /* MEFeedAdManager.m */,
+			);
+			name = Feed;
+			path = MEAdvSDK/Classes/Feed;
+			sourceTree = "<group>";
+		};
+		70B020BC0AFB5142011A0C80C5CCEBA2 /* MEAdvSDK */ = {
+			isa = PBXGroup;
+			children = (
+				EA0BDF9B726817E00E262D04B03E1590 /* MEAdBaseManager.h */,
+				DF454E24FE1F7E7E78B2C6E8AAE76EDA /* MEAdBaseManager.m */,
+				B717B52922DE56CBCA484BC75B47A566 /* MEAdMemoryCache.h */,
+				67ADAD4F01F0B464A8019BC6E68FDD7B /* MEAdMemoryCache.m */,
+				832F4AEA9103F152E6A0953BA49B4768 /* Config */,
+				6FB838CFBE0F5C02813FC2948507C83D /* Feed */,
+				8D56400EEA6CC063D2A5712D07341895 /* Interstitial */,
+				4A03EB1B778AA7E87DBD7827622C4AF6 /* Platform */,
+				A4EA7544C9B563036AB45EAF2BC49216 /* Pod */,
+				A2FB7DDBA2233D70EDEAB71D66A9AF72 /* Resources */,
+				21A72D6B267A93A9B34B5597694AA804 /* RewardVideo */,
+				6C7C32E4EAAE460A6D162942FD301A6C /* Splash */,
+				44895B717F7A87A203BDBD2D9A2E6BF8 /* Strategy */,
+				B6A1EC9E4DCD29A3F9EA904EF9DF4E62 /* Support Files */,
+				11ABDCFFEE96E39EA6EA30608E463146 /* Tools */,
+			);
+			name = MEAdvSDK;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		832F4AEA9103F152E6A0953BA49B4768 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				C5E96071FDA7B217A1CA6101E899FA5A /* MEAdNetworkManager.h */,
+				959BE311C7AD9E2380CDB369F80E6445 /* MEAdNetworkManager.m */,
+				62CC9D92E23CEF445D66729B4F543F1C /* MEAdvConfig.h */,
+				24F0F74D2B07ECDDA53CA21D46E3DD2C /* MEConfigManager.h */,
+				A8F64C60AAF9682DE28375177FF00870 /* MEConfigManager.m */,
+				DDD3B4221BFE7D665808B1A40175FB89 /* Model */,
+			);
+			name = Config;
+			path = MEAdvSDK/Classes/Config;
+			sourceTree = "<group>";
+		};
+		8D56400EEA6CC063D2A5712D07341895 /* Interstitial */ = {
+			isa = PBXGroup;
+			children = (
+				F84BE8585AA1470B5851FE76F930037D /* MEInterstitialAdManager.h */,
+				A14A548030F8FBF4A1AE31841D5A7299 /* MEInterstitialAdManager.m */,
+			);
+			name = Interstitial;
+			path = MEAdvSDK/Classes/Interstitial;
+			sourceTree = "<group>";
+		};
+		A2FB7DDBA2233D70EDEAB71D66A9AF72 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7B9AD566FBD8E45CA25B0117D644CA54 /* MEAdvBundle.bundle */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		A47795A767DD10A2A4A45052FCF1E275 /* Products */ = {
@@ -369,150 +374,88 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AEA5A0897F8E38B5559429AD9875FDD9 /* Config */ = {
+		A4EA7544C9B563036AB45EAF2BC49216 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				03BC290A247D014F00BBCB1D /* MEAdvConfig.h */,
-				68D568A34C5B33CB0BD74FBF139A5608 /* MEConfigManager.h */,
-				E91D8A4BC46BD9FBC9C9975A109AE8CC /* MEConfigManager.m */,
-				791CD7751E9ACDAF17682F5676A809B6 /* Model */,
+				EB2364F306C903F3322D55642C5E1864 /* LICENSE */,
+				AEED8189798199556ADFCD4AD768E102 /* MEAdvSDK.podspec */,
+				4C4694E1925244EF035692C24CD5B7BE /* README.md */,
 			);
-			name = Config;
-			path = MEAdvSDK/Classes/Config;
+			name = Pod;
 			sourceTree = "<group>";
 		};
-		B08CF2A2A9374BD27D434DC554057024 /* MEAdvSDK */ = {
+		B6A1EC9E4DCD29A3F9EA904EF9DF4E62 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				9F2B3144AC5D1201048EB11B0A2FD2E4 /* MEAdBaseManager.h */,
-				979A508B7615172A4947324ABD5D6F13 /* MEAdBaseManager.m */,
-				C223A92C3A963082A06A64E973330021 /* MEAdMemoryCache.h */,
-				CF41891D856732FAC7FFB1DEF22020F7 /* MEAdMemoryCache.m */,
-				AEA5A0897F8E38B5559429AD9875FDD9 /* Config */,
-				F19B04479BA0D683B4DDAD85FA2F8F20 /* Feed */,
-				273720D845E81180BADB2666FF32DB3B /* Interstitial */,
-				296BA40D2EEDB97DB322E2072ADEEA63 /* Platform */,
-				7BE90BE84629FB1C74F7EF273120972E /* Pod */,
-				7E74060A82F9399183BCDCF0BA8686F9 /* Resources */,
-				96DECB510A165EDEC2FB57F3CFDAA632 /* RewardVideo */,
-				3BB24E001572288F6040974034AB01EB /* Splash */,
-				38DA73CBCA8FA5F5C2DF95B578E35670 /* Support Files */,
-				FE3AA8C978CFA901DA4DE6BF1EC61564 /* Tools */,
+				A9942F2C190494407A00D60394B76849 /* MEAdvSDK.xcconfig */,
+				2C11F4A882681D63642C4BDDD4D9163A /* MEAdvSDK-dummy.m */,
+				DA86B2DA28B64F21D263E62562F107B6 /* MEAdvSDK-prefix.pch */,
 			);
-			name = MEAdvSDK;
-			path = ../..;
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/MEAdvSDK";
 			sourceTree = "<group>";
 		};
-		B249C570819213434C5DF51F41F7FDBF /* GDT */ = {
+		DDD3B4221BFE7D665808B1A40175FB89 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				075A136B8E4554DF601AF7069C1E3EA7 /* MEGDTAdapter.h */,
-				DECB9B8F7AFC2AE88D9B85DA1A6579C1 /* MEGDTAdapter.m */,
-				BDE3A1C862245442D6C99D04D9DD3835 /* MEGDTFeedRenderAdapter.h */,
-				81CAFC1E6F677C2C913D19AE5F62E328 /* MEGDTFeedRenderAdapter.m */,
-				ED340FCF462516874391F6FF7BF829D7 /* Views */,
+				86870B20852C739559EBD8E84A32CDE6 /* MEConfigBaseClass.h */,
+				723845B50DDD2CA8D4DC2924B263A623 /* MEConfigBaseClass.m */,
+				3C06ACD5A31C234B315B687A4BEDAF74 /* MEConfigConf.h */,
+				24D80B68DF2EE33152521BE037929FC7 /* MEConfigConf.m */,
+				CACDE02E7809AB759DCA7E470E687A7D /* MEConfigConfig.h */,
+				8D2413D18941B913803E4CED6EC96B43 /* MEConfigConfig.m */,
+				4D7A61BC1BF9EF5949ED23CAC9DA74E5 /* MEConfigInfo.h */,
+				E4E183F2962E02F9D2FF687048BB8FE8 /* MEConfigInfo.m */,
+				5A00FB44B008FA5898FC96727F34E43A /* MEConfigList.h */,
+				9509813CC8BF34E75DFAB666A9242806 /* MEConfigList.m */,
+				C0CD0B342BD9E5B674A13BDF4A4E4AD7 /* MEConfigNetwork.h */,
+				EE25CE7B14A705775673281E9D8BB5A3 /* MEConfigNetwork.m */,
+				C929B43705A577534E66EA17926D304F /* MEConfigParameter.h */,
+				C2A721D7A5373FB67E4CC4BF68751632 /* MEConfigParameter.m */,
+				36A660B89272D614E5B62BD0C53ACB1D /* MEConfigSdkInfo.h */,
+				460132AE5E20E5064B848B1B60360978 /* MEConfigSdkInfo.m */,
 			);
-			path = GDT;
-			sourceTree = "<group>";
-		};
-		C1F87ACCBAE58881E8B5E97E05E815C4 /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				0229BF4ADB3E35CB818AAC4B34968E16 /* Bytedance-UnionAD */,
-				07FCBF875E5662A6B2E43ACFB0ACCA5E /* GDTMobSDK */,
-				FB9B2D22A5614CF06C632C2D29B52B5B /* Google-Mobile-Ads-SDK */,
-				38469E4EE6CC327E297C5E1EA5FC41F2 /* KSAdSDK */,
-				EC4343D2C17098E2C710D991347C2147 /* Realm */,
-			);
-			name = Dependencies;
-			sourceTree = "<group>";
-		};
-		D1E914F55EDFF1AC2C88041A4BE43ED0 /* BUAD */ = {
-			isa = PBXGroup;
-			children = (
-				7A6967B46D36E745341D4834654BEF1F /* MEBUADAdapter.h */,
-				C5D98B2CF5AB8496B3A8D08846CD02D4 /* MEBUADAdapter.m */,
-			);
-			path = BUAD;
-			sourceTree = "<group>";
-		};
-		ED340FCF462516874391F6FF7BF829D7 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				9C711F8F1AD24C6FBBA6165DD1A868CC /* MEGDTCustomView.h */,
-				04AB7C8EDDAECDD0A78B30660A14F78C /* MEGDTCustomView.m */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		F19B04479BA0D683B4DDAD85FA2F8F20 /* Feed */ = {
-			isa = PBXGroup;
-			children = (
-				E5E9AF8D085B6380E7CAB27F5717327F /* MEFeedAdManager.h */,
-				C4DD160BCE624A936F518E5374B4BE56 /* MEFeedAdManager.m */,
-			);
-			name = Feed;
-			path = MEAdvSDK/Classes/Feed;
-			sourceTree = "<group>";
-		};
-		FE3AA8C978CFA901DA4DE6BF1EC61564 /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-				2B4E44C6B5379045F53AAA02669524EA /* MEAdHelpTool.h */,
-				31A836A0DFC01E44BC182D667CEDD753 /* MEAdHelpTool.m */,
-				C2DF5B3D3D6815EDF08030915E9880BF /* MEAdLogModel.h */,
-				2EC893A6EF7A44E8C4C1C98DCFD8DBDD /* MEAdLogModel.m */,
-				EBF96BB98686456D9A1ABB0D0EC441FC /* MEFunnyButton.h */,
-				2308D4377294C189675BC0211C6BE3D8 /* MEFunnyButton.m */,
-				31F35879BD8235A45059A303233DB2D8 /* NBLHTTPFileManager.h */,
-				40D7A4EE1C40364A2E74C5D457A1A4EF /* NBLHTTPFileManager.m */,
-				D9B36E3DE229DC24ED5138652EDEE75A /* NBLHTTPManager.h */,
-				F6420F83908538373394B894E2D38CB4 /* NBLHTTPManager.m */,
-				621C4E6574A4B733493D11A87AF9839A /* NSBundle+Library.h */,
-				4BE252706161056A9046FE1E6D54B664 /* NSBundle+Library.m */,
-				E790C4ADBFEA1F4EFAC9A7A5471CA8D9 /* UIImage+Library.h */,
-				6D5013AA86E7CBBADD188FC8A9745DA2 /* UIImage+Library.m */,
-			);
-			name = Tools;
-			path = MEAdvSDK/Classes/Tools;
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		D622D2D34503458FC2B46F03E4D56A6F /* Headers */ = {
+		940155154D25CBF0AFD018B11F1AA82A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4D4E28922F247545F70CCD3A315CB5A /* MEAdBaseManager.h in Headers */,
-				396F3E7D0A8F629594EEF47FB1CBDAF5 /* MEAdFeedModel.h in Headers */,
-				C94302994108219C4D593FA0441A2C99 /* MEAdHelpTool.h in Headers */,
-				BD22DA17E1993CA64E386BF78A778C12 /* MEAdLogModel.h in Headers */,
-				1CC818763298A5E5E4D55B4D33DAEF3F /* MEAdMemoryCache.h in Headers */,
-				473B0653DF2970422A00A9DC2B410133 /* MEAdombAdapter.h in Headers */,
-				03BC290D247D014F00BBCB1D /* MEAdvConfig.h in Headers */,
-				7A06C289D64FE15D428736D43B34D8F1 /* MEBaseAdapter.h in Headers */,
-				FB319A6BE5F2DCDCF9990EB8E998D0D6 /* MEBUADAdapter.h in Headers */,
-				2F0026A18F3EB9FFFFF53391CAA305C9 /* MEConfigBaseModel.h in Headers */,
-				32613AC2C312D7B863993CF2D2A29B7E /* MEConfigInfo.h in Headers */,
-				10ED70EF78F13A8194A782412CA0F1BC /* MEConfigList.h in Headers */,
-				CA70828017FB14952E68BC4958D47CF5 /* MEConfigManager.h in Headers */,
-				5C9DBB26473AF3015433B86C90C0F6B4 /* MEConfigNetwork.h in Headers */,
-				38DFF339B1F35F9E81728C5A74CE8B5D /* MEConfigParameter.h in Headers */,
-				E5D550DB9B4E1F1206250CF16F011DBB /* MEConfigSdkInfo.h in Headers */,
-				E0F560BF41C6C65B0589DEDEB610E57C /* MEFeedAdManager.h in Headers */,
-				65713BA974D9C775F423E1D5DD419871 /* MEFunnyButton.h in Headers */,
-				1926AA7FF41F1EE37B7E6EC00C67FABE /* MEGDTAdapter.h in Headers */,
-				15C50C31C10CF347DB6BA72C6026DC1D /* MEGDTCustomView.h in Headers */,
-				298E3E69ED1E306EDA334E255F3B4223 /* MEGDTFeedRenderAdapter.h in Headers */,
-				EAFD5AE061B8C54AB4AE20AB86503BB0 /* MEInterstitialAdManager.h in Headers */,
-				F1D0C9746C33DA49393007BB98358FE2 /* MEKSAdapter.h in Headers */,
-				D0BF3BAF69267D3CAEA908BAB373B5E1 /* MERewardedVideoManager.h in Headers */,
-				DCFCE1A2E4B48C2E6A31F144D4B26916 /* MESplashAdManager.h in Headers */,
-				046C7221142C6623EBFDD9C042CF9474 /* NBLHTTPFileManager.h in Headers */,
-				E998B596822629A957EF1E4A169B7294 /* NBLHTTPManager.h in Headers */,
-				0EB3D3E4087A0F804CD4BF8191DA942F /* NSBundle+Library.h in Headers */,
-				10B2033500A808ED130069C5093A0B7B /* UIImage+Library.h in Headers */,
+				67402E5F1C61370AA30FF150470B4C70 /* AssignStrategy.h in Headers */,
+				75408F72B1006B51FC146C3ACED89BEC /* AssignStrategy1.h in Headers */,
+				5F141CC98C0383936973D84610B0ACCC /* AssignStrategy4.h in Headers */,
+				0F84261D9B01E6D19C36A2D75B482E13 /* AssignStrategy5.h in Headers */,
+				7B2543F680269B177F2A77C3DC1D7358 /* MEAdBaseManager.h in Headers */,
+				C2FCA1E43C445C243C3B2F11A4F16D0D /* MEAdHelpTool.h in Headers */,
+				EC3C6377579F5214FA19005D9880C88B /* MEAdLogModel.h in Headers */,
+				120797C693FFFBADA4B880163F2175F6 /* MEAdMemoryCache.h in Headers */,
+				BBD83BF004790620AFA0593F950D7844 /* MEAdNetworkManager.h in Headers */,
+				4341CF6DB03D413E354BB0D6F084077A /* MEAdvConfig.h in Headers */,
+				0CDAFA2A2BF650D503B755013863D96A /* MEBaseAdapter.h in Headers */,
+				7728D74D6CCC29555F026F038351A8E4 /* MEConfigBaseClass.h in Headers */,
+				58A2B69DFF8E5AFBF5F509534BBE12E8 /* MEConfigConf.h in Headers */,
+				93B6C669278E2BAB60F8E82151B9F72D /* MEConfigConfig.h in Headers */,
+				2831EBA26EE42305B15764CD9A505239 /* MEConfigInfo.h in Headers */,
+				1616C6B6C94A7F2DBA55F01F7ECF6498 /* MEConfigList.h in Headers */,
+				B66AA1CA9E1C184EDDCEFB01E8BD3E2B /* MEConfigManager.h in Headers */,
+				3EB94D8F0B99970D43CCD4D8A03C5FB3 /* MEConfigNetwork.h in Headers */,
+				F8308039F13639E95BAEB85A7AA72B1F /* MEConfigParameter.h in Headers */,
+				CD15CBF591EEA363EFAA2E7E78EA5E36 /* MEConfigSdkInfo.h in Headers */,
+				544A9C2E8CBBCFC4B07698344796BAD3 /* MEExpirationTimer.h in Headers */,
+				B5C1E746BADB0D36C1A1ACC95096BC21 /* MEFeedAdManager.h in Headers */,
+				481FC7DAC8D1EDEF640722F2813A5F77 /* MEFunnyButton.h in Headers */,
+				3394297839E767AE8DAA21357AEC0F94 /* MEInterstitialAdManager.h in Headers */,
+				DA013D70646D8F49B3EE03EFC43EBF0A /* MERewardedVideoManager.h in Headers */,
+				FA48E3FE24B88FB020DE504289584080 /* MESplashAdManager.h in Headers */,
+				E2EF1116D9B219791A0C9D8769DD3099 /* NBLHTTPFileManager.h in Headers */,
+				AFBE13FAC3B566EBC803D5FE7C5304A6 /* NBLHTTPManager.h in Headers */,
+				C0A713F120CCD6052554654DA992FDAF /* NSBundle+Library.h in Headers */,
+				DDE0C16F49F42899B5DB7F31E0007C4D /* StrategyFactory.h in Headers */,
+				07301A3C90FDC4426223416707F7B01D /* UIImage+Library.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,20 +464,17 @@
 /* Begin PBXNativeTarget section */
 		2B1A12BF7022690FC3855E7A43566AAC /* MEAdvSDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2135C2199BD2BF04BA51B4633979E343 /* Build configuration list for PBXNativeTarget "MEAdvSDK" */;
+			buildConfigurationList = FE0DC093AD1D6A117B6024645ECA8E85 /* Build configuration list for PBXNativeTarget "MEAdvSDK" */;
 			buildPhases = (
-				D622D2D34503458FC2B46F03E4D56A6F /* Headers */,
-				B67D99ACB49CAF556F62A632E38935E1 /* Sources */,
-				86C14EFFD05969F1826F986335EC3C21 /* Frameworks */,
+				940155154D25CBF0AFD018B11F1AA82A /* Headers */,
+				B3C8B9F7966EE6F8D0B5C689DDDCDB84 /* Sources */,
+				5154E61517CBD816D424F855A15767BA /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				DB711088B96A6E181CBBD874099620AA /* PBXTargetDependency */,
-				A3DF0C0493AE231CD4174869E2516F75 /* PBXTargetDependency */,
-				C1700731C7FDE283F8B2604A2A28496F /* PBXTargetDependency */,
-				8FA4EDABCED5DECEB5F10FFDB93894D7 /* PBXTargetDependency */,
-				30027037794B22281379B2580E6F4BDA /* PBXTargetDependency */,
+				209D77BD693C6B42D36F135C162515A2 /* PBXTargetDependency */,
+				7A23F978C9DCD141949B6A057B9B7FCE /* PBXTargetDependency */,
 			);
 			name = MEAdvSDK;
 			productName = MEAdvSDK;
@@ -563,24 +503,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 03BC28FE247D00F000BBCB1D /* Products */;
-					ProjectRef = 0229BF4ADB3E35CB818AAC4B34968E16 /* Bytedance-UnionAD */;
+					ProductGroup = 0360A3EE24C0323E00DBA640 /* Products */;
+					ProjectRef = B41D91CCAA6415BCEF3DCC7717D8533D /* Reachability */;
 				},
 				{
-					ProductGroup = 03BC28FA247D00F000BBCB1D /* Products */;
-					ProjectRef = 07FCBF875E5662A6B2E43ACFB0ACCA5E /* GDTMobSDK */;
-				},
-				{
-					ProductGroup = 03BC2902247D00F000BBCB1D /* Products */;
-					ProjectRef = FB9B2D22A5614CF06C632C2D29B52B5B /* Google-Mobile-Ads-SDK */;
-				},
-				{
-					ProductGroup = 03BC28FC247D00F000BBCB1D /* Products */;
-					ProjectRef = 38469E4EE6CC327E297C5E1EA5FC41F2 /* KSAdSDK */;
-				},
-				{
-					ProductGroup = 03BC2900247D00F000BBCB1D /* Products */;
-					ProjectRef = EC4343D2C17098E2C710D991347C2147 /* Realm */;
+					ProductGroup = 0360A3EC24C0323E00DBA640 /* Products */;
+					ProjectRef = 70DE97E35AF3B13F6188C9D289D79BA1 /* Realm */;
 				},
 			);
 			projectRoot = "";
@@ -591,86 +519,105 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		03BC290C247D014F00BBCB1D /* libRealm.a */ = {
+		0360A4C824C0334A00DBA640 /* libReachability.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReachability.a;
+			remoteRef = 0360A4C724C0334A00DBA640 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0360A4CA24C0334A00DBA640 /* libRealm.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRealm.a;
-			remoteRef = 03BC290B247D014F00BBCB1D /* PBXContainerItemProxy */;
+			remoteRef = 0360A4C924C0334A00DBA640 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B67D99ACB49CAF556F62A632E38935E1 /* Sources */ = {
+		B3C8B9F7966EE6F8D0B5C689DDDCDB84 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D068BFA68A86ED7D2473C3B4420ADB7E /* MEAdBaseManager.m in Sources */,
-				31FD9B6FA2CAD57A91D1CF2C1FFB29EB /* MEAdFeedModel.m in Sources */,
-				59FF6F1520838001AFEEEAA5A8298C0F /* MEAdHelpTool.m in Sources */,
-				C88DC85DD7113A2F7082D7D2EBBBF7D6 /* MEAdLogModel.m in Sources */,
-				6319D57E301719C6E8A116620C39E433 /* MEAdMemoryCache.m in Sources */,
-				9C519536D87BCDBAE504716146CE0D3B /* MEAdombAdapter.m in Sources */,
-				E9FB2B6109BDF67AD56765EDE1F70BD3 /* MEAdvSDK-dummy.m in Sources */,
-				0F97797D217A42FEF4A9D539F9BA291D /* MEBaseAdapter.m in Sources */,
-				545837724099EA80B1BB221D9B16310F /* MEBUADAdapter.m in Sources */,
-				DC6CEFCF83331BC22B150ABA913F121C /* MEConfigBaseModel.m in Sources */,
-				A6C31D4CA64FD45B6FEF93D1DCD08192 /* MEConfigInfo.m in Sources */,
-				73B574A723BAFF330F1E5CB6C64718A5 /* MEConfigList.m in Sources */,
-				98B458A7EC9EF8D6E152F244E92CA1C3 /* MEConfigManager.m in Sources */,
-				D141386799AB8946D26D5C222A21D9CC /* MEConfigNetwork.m in Sources */,
-				F264EB0EEBF57625D0395FA9D044A3E7 /* MEConfigParameter.m in Sources */,
-				B43AA1D20AA37F2FB01E2A4D5BEA58C8 /* MEConfigSdkInfo.m in Sources */,
-				7F70E7D9B89FABAF61B7E1F769B36B3D /* MEFeedAdManager.m in Sources */,
-				910FAB8F2863E29BEF3129100B75C1B9 /* MEFunnyButton.m in Sources */,
-				D7FD65E7800C8568B6F411170BB6AD42 /* MEGDTAdapter.m in Sources */,
-				7DC7E1DEA34B4F4533AF9862A4B9F25E /* MEGDTCustomView.m in Sources */,
-				3ADA8F8EFB62C3481EDDDD452BEB3B49 /* MEGDTFeedRenderAdapter.m in Sources */,
-				6A0F6D02B9ADBB22ECF642F641FEA34B /* MEInterstitialAdManager.m in Sources */,
-				ED4E25F3C54EE4BD5A72B35089E01FDE /* MEKSAdapter.m in Sources */,
-				9B26C820E016FF5443E87FF9C53835A8 /* MERewardedVideoManager.m in Sources */,
-				02F3084ED0B693C3D5CEB65004D842BD /* MESplashAdManager.m in Sources */,
-				8C3A6D4A68FC26381895A5C23BC35383 /* NBLHTTPFileManager.m in Sources */,
-				75D800EAFE31553551D8DB9D5BEC0FF8 /* NBLHTTPManager.m in Sources */,
-				02ED2883C1A9F90FD8DD7EA24E036E5B /* NSBundle+Library.m in Sources */,
-				920D3D92FB1B0DE5B72E86E22AB189B4 /* UIImage+Library.m in Sources */,
+				DCF98F4DD2DB596820CB4E6041629064 /* AssignStrategy.m in Sources */,
+				F615E720AA075DBB0D6FF56AC207EE9C /* AssignStrategy1.m in Sources */,
+				8B90BE57E9B4FDA9662E6594DBF5B61E /* AssignStrategy4.m in Sources */,
+				14AF5D5569FB3A71B9ED0AE6C6FBBBD5 /* AssignStrategy5.m in Sources */,
+				EA578AA63ED30C428C349C1A6528B675 /* MEAdBaseManager.m in Sources */,
+				A51AE8A3CF1708C9377D524AE83780AE /* MEAdHelpTool.m in Sources */,
+				5824152FE279E71524B32925197BAD97 /* MEAdLogModel.m in Sources */,
+				A22D5EBC8DEB92BBCD55F7A3903DCA2F /* MEAdMemoryCache.m in Sources */,
+				7FAA0C8D4644224A4CD1B94215E22164 /* MEAdNetworkManager.m in Sources */,
+				9DBA2DC55A8D8C3683410D879919556F /* MEAdvSDK-dummy.m in Sources */,
+				352B91D9B29BFF3783C06BBAD512DBA6 /* MEBaseAdapter.m in Sources */,
+				5737F9E600491BAA7633BBE0F7F9AD0B /* MEConfigBaseClass.m in Sources */,
+				3726FC4D32A463458F291674B433801A /* MEConfigConf.m in Sources */,
+				02E7DFC05DEC367166B808CA2812234B /* MEConfigConfig.m in Sources */,
+				FE62C15829A207F4FCBBD72AA1B15015 /* MEConfigInfo.m in Sources */,
+				9E2430E2CB2EBA42C89AC4E875104F49 /* MEConfigList.m in Sources */,
+				FDDB7015417A692E14FE44C8B7592867 /* MEConfigManager.m in Sources */,
+				5CCA32534B3CF3D5C19635E42FC9BD6F /* MEConfigNetwork.m in Sources */,
+				9F5EEDB2C220413C6188E1FB5EA14F20 /* MEConfigParameter.m in Sources */,
+				C5EF48729B0624A4582D3D0DEB54AE94 /* MEConfigSdkInfo.m in Sources */,
+				129167DA3A9E1F6B15B09E6911135B72 /* MEExpirationTimer.m in Sources */,
+				B5EF7E9235D777A17874C681BA7E9ADC /* MEFeedAdManager.m in Sources */,
+				81B127D47FE28BC74D03E0DC8B5CC037 /* MEFunnyButton.m in Sources */,
+				D33FFBE7B1E1353011257151B9257E94 /* MEInterstitialAdManager.m in Sources */,
+				3D86484F0A73123B7EE6B84B11CE465D /* MERewardedVideoManager.m in Sources */,
+				94F2F2875ED0048BDCBCF79EF5EFD134 /* MESplashAdManager.m in Sources */,
+				F3489BE53DF4DB9759225D5D5E6C42E7 /* NBLHTTPFileManager.m in Sources */,
+				3A2AAF2C5EEBB780BD14F385066C398B /* NBLHTTPManager.m in Sources */,
+				334DAEAB8041CDDF4194E1CB05ECC03D /* NSBundle+Library.m in Sources */,
+				96444F4079EB092B40E9C73E4CD7083B /* StrategyFactory.m in Sources */,
+				747D112CD6F75040DE7E9C05D13A62B4 /* UIImage+Library.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		30027037794B22281379B2580E6F4BDA /* PBXTargetDependency */ = {
+		209D77BD693C6B42D36F135C162515A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Reachability;
+			targetProxy = 4DAF38A34320B9D4EF07ECF02DF5D4C6 /* PBXContainerItemProxy */;
+		};
+		7A23F978C9DCD141949B6A057B9B7FCE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Realm;
-			targetProxy = 9FDFEB66EC2315A1E0FC5FDD3ED42981 /* PBXContainerItemProxy */;
-		};
-		8FA4EDABCED5DECEB5F10FFDB93894D7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = KSAdSDK;
-			targetProxy = 3BA96B4BDD7FDF12DC832DBCEAF1D360 /* PBXContainerItemProxy */;
-		};
-		A3DF0C0493AE231CD4174869E2516F75 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GDTMobSDK;
-			targetProxy = 386A39FBAF5CEE71912B16FB7B36F737 /* PBXContainerItemProxy */;
-		};
-		C1700731C7FDE283F8B2604A2A28496F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Google-Mobile-Ads-SDK";
-			targetProxy = F5F838F4932622AE9BB6C052972C8D75 /* PBXContainerItemProxy */;
-		};
-		DB711088B96A6E181CBBD874099620AA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Bytedance-UnionAD";
-			targetProxy = 806C0B99C9F36129404AEC9EF66ED439 /* PBXContainerItemProxy */;
+			targetProxy = 09E34658B33F9D5C62DD8EB9BE496BDE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		13FFF99B8B5A709667922BC69127C321 /* Debug */ = {
+		46C6E2BC26A497537C7D971E87A310B6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2F6FAE5952D3D9F7EF1D3F99EB79338C /* MEAdvSDK.xcconfig */;
+			baseConfigurationReference = A9942F2C190494407A00D60394B76849 /* MEAdvSDK.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/MEAdvSDK/MEAdvSDK-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = MEAdvSDK;
+				PRODUCT_NAME = MEAdvSDK;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8DB99F9E786007D9EC0B10CF16D7313B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9942F2C190494407A00D60394B76849 /* MEAdvSDK.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -815,48 +762,23 @@
 			};
 			name = Debug;
 		};
-		D372A30DBC4FE9E809A84D8835F4D931 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2F6FAE5952D3D9F7EF1D3F99EB79338C /* MEAdvSDK.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/MEAdvSDK/MEAdvSDK-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = MEAdvSDK;
-				PRODUCT_NAME = MEAdvSDK;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2135C2199BD2BF04BA51B4633979E343 /* Build configuration list for PBXNativeTarget "MEAdvSDK" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				13FFF99B8B5A709667922BC69127C321 /* Debug */,
-				D372A30DBC4FE9E809A84D8835F4D931 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		B582BBD902CEE6AE3A9F579FEA58AD50 /* Build configuration list for PBXProject "MEAdvSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B822199C6AD313E493B100F36784A850 /* Debug */,
 				B37B0B977B2CB46491C3E17E729008AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FE0DC093AD1D6A117B6024645ECA8E85 /* Build configuration list for PBXNativeTarget "MEAdvSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DB99F9E786007D9EC0B10CF16D7313B /* Debug */,
+				46C6E2BC26A497537C7D971E87A310B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

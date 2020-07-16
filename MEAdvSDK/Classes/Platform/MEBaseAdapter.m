@@ -6,6 +6,7 @@
 //
 
 #import "MEBaseAdapter.h"
+#import <CommonCrypto/CommonCrypto.h>
 
 @implementation MEBaseAdapter
 
@@ -17,6 +18,11 @@
     });
     return sharedInstance;
 }
+
+/// 初始化相应广告平台
++ (void)launchAdPlatformWithAppid:(NSString *)appid {}
+/// 返回对应平台的缩写,穿山甲-tt,广点通-gdt,快手-ks,谷歌-admob,valpub-gdt2
++ (NSString *)networkName {return nil;}
 
 /// 获取顶层VC
 - (UIViewController *)topVC {
@@ -38,6 +44,21 @@
         topVC = topVC.presentedViewController;
     }
     return topVC;
+}
+
+- (NSMutableString *)stringMD5:(NSString *)string {
+    const char *data = [string UTF8String];
+    
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+
+    CC_MD5(data, (CC_LONG)strlen(data), result);
+    NSMutableString *mString = [NSMutableString string];
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
+        //02:不足两位前面补0,   %02x:十六进制数
+        [mString appendFormat:@"%02x",result[i]];
+    }
+    
+    return mString;
 }
 
 // 设置广告平台参数
@@ -67,7 +88,6 @@
 
 // MARK: - 信息流自渲染
 /// 信息流预加载,并存入缓存
-/// @param feedWidth 信息流宽度
 /// @param posId 广告位id
 - (void)saveRenderFeedCacheWithPosId:(NSString *)posId {}
 
@@ -87,6 +107,8 @@
 // MARK: - 开屏广告
 /// 展示开屏页
 - (BOOL)showSplashWithPosid:(NSString *)posid {return NO;}
+/// 展示带底部logo的开屏页
+- (BOOL)showSplashWithPosid:(NSString *)posid delay:(NSTimeInterval)delay bottomView:(UIView *)view {return NO;}
 /// 停止开屏广告
 - (void)stopSplashRender {}
 

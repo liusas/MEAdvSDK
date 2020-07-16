@@ -13,6 +13,37 @@
 
 @class MEAdBaseManager;
 
+#if DEBUG
+#define kBaseRequestURL @"http://dev.findwxapp.com/flow-mediation/v1/ad"
+#else
+#define kBaseRequestURL @"http://proto.findwxapp.com/flow-mediation/v1/ad"
+#endif
+
+#define kSDKVersion @"1.0.0"
+
+
+/// 广告平台
+typedef NS_ENUM(NSUInteger, MEAdAgentType) {
+    MEAdAgentTypeAll,   // 所有可用的平台
+    MEAdAgentTypeNone = 0,
+    MEAdAgentTypeGDT,   // 广点通
+    MEAdAgentTypeBUAD,  // 穿山甲
+    MEAdAgentTypeAdmob,  // 谷歌
+    MEAdAgentTypeKS,  // 快手
+    MEAdAgentTypeValpub, // Valpub,和广点通无法并存
+    MEAdAgentTypeMobiSDK,   // Mobipub,自有广告SDK
+    MEAdAgentTypeCount,
+};
+
+/// 广告类型
+typedef NS_ENUM(NSUInteger, MEAdType) {
+    MEAdType_Feed = 1,      // 普通信息流
+    MEAdType_Render_Feed,   // 自渲染信息流
+    MEAdType_Interstitial,  // 插屏
+    MEAdType_RewardVideo,   // 激励视频
+    MEAdType_Splash,        // 开屏广告
+};
+
 // block回调
 typedef void(^MEBaseSplashAdFinished)(void);                    // 开屏广告展示成功
 typedef void(^MEBaseSplashAdFailed)(NSError *error);            // 开屏广告展示失败
@@ -45,8 +76,6 @@ typedef void(^MEBaseRewardVideoCloseClick)(void);               // 视频广告�
 #define kRequestConfigNotify @"kRequestConfigNotify"
 
 #define FilePath_AllConfig  [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"MEAdvertiseAllConfig.plist"]
-
-#define kConfigiOSSign @"2048" // 广告配置信息iOS对应的前缀
 
 #define kDefaultSplashPosid @"2048025" // 服务端默认的开屏广告id
 #define kDefaultRewardVideoPosid @"2048020" //服务端默认激励视频广告位Id

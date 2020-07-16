@@ -8,8 +8,6 @@
 #import <Foundation/Foundation.h>
 #import "MEConfigManager.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 typedef void(^LoadSplashAdFinished)(void);   // 广告展示成功
 typedef void(^LoadSplashAdFailed)(NSError *error);    // 广告展示失败
 typedef void(^LoadSplashAdCloseClick)(void);          // 广告被关闭
@@ -31,10 +29,17 @@ typedef void(^LoadSplashAdDismiss)(void);               // 广告被点击后,�
 
 /// 展示开屏广告
 - (void)showSplashAdvWithSceneId:(NSString *)sceneId
+                           delay:(NSTimeInterval)delay
                         Finished:(LoadSplashAdFinished)finished
                           failed:(LoadSplashAdFailed)failed;
-/// 停止开屏广告渲染,可能因为超时等原因
-- (void)stopSplashRender;
-@end
 
-NS_ASSUME_NONNULL_END
+/// 展示开屏广告带logo
+- (void)showSplashAdvWithSceneId:(NSString *)sceneId
+                           delay:(NSTimeInterval)delay
+                      bottomView:(UIView *)bottomView
+                        Finished:(LoadSplashAdFinished)finished
+                          failed:(LoadSplashAdFailed)failed;
+
+/// 停止开屏广告渲染,可能因为超时等原因
+- (void)stopSplashRender:(NSString *)sceneId;
+@end

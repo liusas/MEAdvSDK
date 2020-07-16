@@ -1,18 +1,18 @@
 //
 //  MEConfigNetwork.m
 //
-//  Created by 峰 刘 on 2019/11/9
-//  Copyright (c) 2019 __MyCompanyName__. All rights reserved.
+//  Created by 峰 刘 on 2020/7/3
+//  Copyright (c) 2020 __MyCompanyName__. All rights reserved.
 //
 
 #import "MEConfigNetwork.h"
 #import "MEConfigParameter.h"
 
 
-NSString *const kNetworkSdk = @"sdk";
-NSString *const kNetworkOrder = @"order";
-NSString *const kNetworkParameter = @"parameter";
-NSString *const kNetworkName = @"name";
+NSString *const kMEConfigNetworkSdk = @"sdk";
+NSString *const kMEConfigNetworkOrder = @"order";
+NSString *const kMEConfigNetworkParameter = @"parameter";
+NSString *const kMEConfigNetworkName = @"name";
 
 
 @interface MEConfigNetwork ()
@@ -41,10 +41,10 @@ NSString *const kNetworkName = @"name";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
-            self.sdk = [self objectOrNilForKey:kNetworkSdk fromDictionary:dict];
-            self.order = [self objectOrNilForKey:kNetworkOrder fromDictionary:dict];
-            self.parameter = [MEConfigParameter modelObjectWithDictionary:[dict objectForKey:kNetworkParameter]];
-            self.name = [self objectOrNilForKey:kNetworkName fromDictionary:dict];
+            self.sdk = [self objectOrNilForKey:kMEConfigNetworkSdk fromDictionary:dict];
+            self.order = [self objectOrNilForKey:kMEConfigNetworkOrder fromDictionary:dict];
+            self.parameter = [MEConfigParameter modelObjectWithDictionary:[dict objectForKey:kMEConfigNetworkParameter]];
+            self.name = [self objectOrNilForKey:kMEConfigNetworkName fromDictionary:dict];
 
     }
     
@@ -55,10 +55,10 @@ NSString *const kNetworkName = @"name";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
-    [mutableDict setValue:self.sdk forKey:kNetworkSdk];
-    [mutableDict setValue:self.order forKey:kNetworkOrder];
-    [mutableDict setValue:[self.parameter dictionaryRepresentation] forKey:kNetworkParameter];
-    [mutableDict setValue:self.name forKey:kNetworkName];
+    [mutableDict setValue:self.sdk forKey:kMEConfigNetworkSdk];
+    [mutableDict setValue:self.order forKey:kMEConfigNetworkOrder];
+    [mutableDict setValue:[self.parameter dictionaryRepresentation] forKey:kMEConfigNetworkParameter];
+    [mutableDict setValue:self.name forKey:kMEConfigNetworkName];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -82,20 +82,20 @@ NSString *const kNetworkName = @"name";
 {
     self = [super init];
 
-    self.sdk = [aDecoder decodeObjectForKey:kNetworkSdk];
-    self.order = [aDecoder decodeObjectForKey:kNetworkOrder];
-    self.parameter = [aDecoder decodeObjectForKey:kNetworkParameter];
-    self.name = [aDecoder decodeObjectForKey:kNetworkName];
+    self.sdk = [aDecoder decodeObjectForKey:kMEConfigNetworkSdk];
+    self.order = [aDecoder decodeObjectForKey:kMEConfigNetworkOrder];
+    self.parameter = [aDecoder decodeObjectForKey:kMEConfigNetworkParameter];
+    self.name = [aDecoder decodeObjectForKey:kMEConfigNetworkName];
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
 
-    [aCoder encodeObject:_sdk forKey:kNetworkSdk];
-    [aCoder encodeObject:_order forKey:kNetworkOrder];
-    [aCoder encodeObject:_parameter forKey:kNetworkParameter];
-    [aCoder encodeObject:_name forKey:kNetworkName];
+    [aCoder encodeObject:_sdk forKey:kMEConfigNetworkSdk];
+    [aCoder encodeObject:_order forKey:kMEConfigNetworkOrder];
+    [aCoder encodeObject:_parameter forKey:kMEConfigNetworkParameter];
+    [aCoder encodeObject:_name forKey:kMEConfigNetworkName];
 }
 
 - (id)copyWithZone:(NSZone *)zone
