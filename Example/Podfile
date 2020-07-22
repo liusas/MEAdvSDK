@@ -1,6 +1,4 @@
 source 'https://github.com/CocoaPods/Specs.git'
-# 增加私有资源库地址
-source 'https://gitlab.ad-mex.com/app/Module_iOS.git'
 
 platform :ios, '9.0'
 # 消除所有警告

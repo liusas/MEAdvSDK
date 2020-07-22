@@ -26,7 +26,7 @@ Pod::Spec.new do |spec|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = "this is a Mobiexchanger's advertise SDK, and we use it as a module" #
 
-  spec.homepage     = "https://gitlab.ad-mex.com/Liusas/MEAdvSDK.git" #Pod主页
+  spec.homepage     = "https://github.com/liusas/MEAdvSDK.git" #Pod主页
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -79,7 +79,7 @@ Pod::Spec.new do |spec|
   #
 
   #  获取库的地址,可以是 git,可以是 svn 也可以是本地库
-  spec.source       = { :git => "https://gitlab.ad-mex.com/Liusas/MEAdvSDK.git", :tag => spec.version }
+  spec.source       = { :git => "https://github.com/liusas/MEAdvSDK.git", :tag => spec.version_to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
