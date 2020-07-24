@@ -79,7 +79,7 @@
         }
         
         // Facebook
-        if ([info.sdk isEqualToString:@"facebook"]) {
+        if ([info.sdk isEqualToString:@"fb"]) {
             MEAdNetworkModel *model = [MEAdNetworkModel new];
             model.appid = info.appid;
             model.sdk = info.sdk;
