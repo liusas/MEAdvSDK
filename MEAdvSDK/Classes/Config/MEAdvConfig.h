@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, MEAdAgentType) {
     MEAdAgentTypeGDT,   // 广点通
     MEAdAgentTypeBUAD,  // 穿山甲
     MEAdAgentTypeAdmob,  // 谷歌
+    MEAdAgentTypeFacebook,  // Facebook
     MEAdAgentTypeKS,  // 快手
     MEAdAgentTypeValpub, // Valpub,和广点通无法并存
     MEAdAgentTypeMobiSDK,   // Mobipub,自有广告SDK

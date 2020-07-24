@@ -78,6 +78,16 @@
             [sharedInstance.adNetworks addObject:model];
         }
         
+        // Facebook
+        if ([info.sdk isEqualToString:@"facebook"]) {
+            MEAdNetworkModel *model = [MEAdNetworkModel new];
+            model.appid = info.appid;
+            model.sdk = info.sdk;
+            model.agentType = MEAdAgentTypeFacebook;
+            model.adapterClass = NSClassFromString(@"MEFBAdapter");
+            [sharedInstance.adNetworks addObject:model];
+        }
+        
         // Mobipub
         if ([info.sdk isEqualToString:@"mobisdk"]) {
             MEAdNetworkModel *model = [MEAdNetworkModel new];
