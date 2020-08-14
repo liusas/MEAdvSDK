@@ -7,10 +7,12 @@ CACHE_KEYS:
       MEAdvSDK:
         :debug: 90e2b49b9f2e7714cd85b68922d0a8b0
         :release: 90e2b49b9f2e7714cd85b68922d0a8b0
-    CHECKSUM: b8d6410268764e30f3c89fae0179948add760b71
+    CHECKSUM: 5669fbfc98e64f7ce4497c0db16d3f906eb7f8f1
     FILES:
       - "../../LICENSE"
       - "../../MEAdvSDK/Assets/Resource/MEAdvBundle.bundle"
+      - "../../MEAdvSDK/Assets/Resource/MobiPubSDK.bundle"
+      - "../../MEAdvSDK/Assets/Resource/MRAID.bundle"
       - "../../MEAdvSDK/Classes/Config/MEAdNetworkManager.h"
       - "../../MEAdvSDK/Classes/Config/MEAdNetworkManager.m"
       - "../../MEAdvSDK/Classes/Config/MEAdvConfig.h"
@@ -505,13 +507,15 @@ CACHE_KEYS:
       - "../../README.md"
     PROJECT_NAME: MEAdvSDK
     SPECS:
-      - MEAdvSDK (0.1.5)
+      - MEAdvSDK (0.1.6)
   Pods-MEAdvSDK_Example:
     BUILD_SETTINGS_CHECKSUM:
       Debug: 732497e895b1d54f4f4eabda9253cfe2
       Release: 732497e895b1d54f4f4eabda9253cfe2
     FILES:
       - "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MEAdvBundle.bundle"
+      - "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MobiPubSDK.bundle"
+      - "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MRAID.bundle"
   Pods-MEAdvSDK_Tests:
     BUILD_SETTINGS_CHECKSUM:
       Debug: 8af9d1b55d87ef0486f09aedfa546601

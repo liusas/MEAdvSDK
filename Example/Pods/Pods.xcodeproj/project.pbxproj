@@ -12,19 +12,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		12AA1D1DD99F0B7CA2CF5B1EE517CFC4 /* PBXContainerItemProxy */ = {
+		3531AF7C32E468EBC7F52C4E6A610D55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9A2208EDE7F2AE163FC84D3B93CFEED /* Reachability.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = DA1EBD7850A215E94DBD19A247725F9F;
+			remoteInfo = Reachability;
+		};
+		8687246B662F84AA4244875CD617A37A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 96F1405ECA05E32557688EC34166BAD9 /* MEAdvSDK.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 2B1A12BF7022690FC3855E7A43566AAC;
 			remoteInfo = MEAdvSDK;
 		};
-		8124DD18E30E56531E7249FBC778C40C /* PBXContainerItemProxy */ = {
+		AE896A6BA70A91DFC1DC503393E890D8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F9A2208EDE7F2AE163FC84D3B93CFEED /* Reachability.xcodeproj */;
+			containerPortal = B504FB6EDF2972552FB52D8D2328E976 /* Realm.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = DA1EBD7850A215E94DBD19A247725F9F;
-			remoteInfo = Reachability;
+			remoteGlobalIDString = BC4AC9FBD7453D9D72102559C8F6B8AC;
+			remoteInfo = Realm;
 		};
 		EC7F35000778960330B99D98EBC636DF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -32,13 +39,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 488C652C15080781F1E6DC28DD97008B;
 			remoteInfo = "Pods-MEAdvSDK_Example";
-		};
-		F3A95AD21DA0190F458576452ECD514F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B504FB6EDF2972552FB52D8D2328E976 /* Realm.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BC4AC9FBD7453D9D72102559C8F6B8AC;
-			remoteInfo = Realm;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -192,9 +192,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				E3FCC56122F8007CD3077A9FA03283A2 /* PBXTargetDependency */,
-				03D305935EABF69C4ED4487E245E42A7 /* PBXTargetDependency */,
-				389A56AA99D71E0FA67F7A90BECB8450 /* PBXTargetDependency */,
+				B437BFCEEDD810A773D94EC01780CBD7 /* PBXTargetDependency */,
+				76FFADE4727B1899516FD47D21CDD099 /* PBXTargetDependency */,
+				87BCBAED8261F3B4D9FBA3560CD541AD /* PBXTargetDependency */,
 			);
 			name = "Pods-MEAdvSDK_Example";
 			productName = "Pods-MEAdvSDK_Example";
@@ -241,13 +241,13 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProjectRef = 96F1405ECA05E32557688EC34166BAD9 /* MEAdvSDK */;
+				},
+				{
 					ProjectRef = F9A2208EDE7F2AE163FC84D3B93CFEED /* Reachability */;
 				},
 				{
 					ProjectRef = B504FB6EDF2972552FB52D8D2328E976 /* Realm */;
-				},
-				{
-					ProjectRef = 96F1405ECA05E32557688EC34166BAD9 /* MEAdvSDK */;
 				},
 			);
 			projectRoot = "";
@@ -278,15 +278,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		03D305935EABF69C4ED4487E245E42A7 /* PBXTargetDependency */ = {
+		76FFADE4727B1899516FD47D21CDD099 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Reachability;
-			targetProxy = 8124DD18E30E56531E7249FBC778C40C /* PBXContainerItemProxy */;
+			targetProxy = 3531AF7C32E468EBC7F52C4E6A610D55 /* PBXContainerItemProxy */;
 		};
-		389A56AA99D71E0FA67F7A90BECB8450 /* PBXTargetDependency */ = {
+		87BCBAED8261F3B4D9FBA3560CD541AD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Realm;
-			targetProxy = F3A95AD21DA0190F458576452ECD514F /* PBXContainerItemProxy */;
+			targetProxy = AE896A6BA70A91DFC1DC503393E890D8 /* PBXContainerItemProxy */;
 		};
 		9BC501B736D1E3EE5E566F1E08112502 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -294,10 +294,10 @@
 			target = 488C652C15080781F1E6DC28DD97008B /* Pods-MEAdvSDK_Example */;
 			targetProxy = EC7F35000778960330B99D98EBC636DF /* PBXContainerItemProxy */;
 		};
-		E3FCC56122F8007CD3077A9FA03283A2 /* PBXTargetDependency */ = {
+		B437BFCEEDD810A773D94EC01780CBD7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MEAdvSDK;
-			targetProxy = 12AA1D1DD99F0B7CA2CF5B1EE517CFC4 /* PBXContainerItemProxy */;
+			targetProxy = 8687246B662F84AA4244875CD617A37A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

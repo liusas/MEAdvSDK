@@ -98,9 +98,13 @@ EOM
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MEAdvBundle.bundle"
+  install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MobiPubSDK.bundle"
+  install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MRAID.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MEAdvBundle.bundle"
+  install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MobiPubSDK.bundle"
+  install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MRAID.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

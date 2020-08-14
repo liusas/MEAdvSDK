@@ -1,6 +1,6 @@
 {
   "name": "MEAdvSDK",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "summary": "Mobiexchanger's advertise SDK",
   "description": "this is a Mobiexchanger's advertise SDK, and we use it as a module",
   "homepage": "https://github.com/liusas/MEAdvSDK.git",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/liusas/MEAdvSDK.git",
-    "tag": "0.1.5"
+    "tag": "0.1.6"
   },
   "source_files": [
     "Classes",
