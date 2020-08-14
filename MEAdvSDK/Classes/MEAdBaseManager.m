@@ -31,7 +31,7 @@ static dispatch_once_t onceToken;
 @implementation MEAdBaseManager
 
 // MARK: - Public
-
+// 单例初始化
 + (instancetype)sharedInstance {
     dispatch_once(&onceToken, ^{
         baseManager = [[MEAdBaseManager alloc] init];
