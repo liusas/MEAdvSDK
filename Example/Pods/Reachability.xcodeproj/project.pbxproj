@@ -7,18 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		21CC016F9E587F29E5D7D198F7785DE5 /* Reachability-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C302FCFB65C6D86DAF04E1A7D7B6AE7 /* Reachability-dummy.m */; };
-		6DB8BF5DA2C3B5EF32308F08B126AF9D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F19FD13BBA40235F9B5B04FB9F9CC4CA /* Reachability.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		8FDD913002E19410DEDC68335860EFED /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A212BD1DEFE7C81D06ED91161418BD4 /* Reachability.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		21CC016F9E587F29E5D7D198F7785DE5 /* Reachability-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B009DF2172A717B242CB6A92172029B4 /* Reachability-dummy.m */; };
+		6DB8BF5DA2C3B5EF32308F08B126AF9D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 243EFCF5C04F19FC038D1DB411792951 /* Reachability.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		8FDD913002E19410DEDC68335860EFED /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 712D383F2B5832ADA6111D98BD4AEB13 /* Reachability.h */; settings = {ATTRIBUTES = (Project, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5A212BD1DEFE7C81D06ED91161418BD4 /* Reachability.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		660EB74CA59CEF30573CF9A14F451E2D /* Reachability-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Reachability-prefix.pch"; sourceTree = "<group>"; };
-		8C302FCFB65C6D86DAF04E1A7D7B6AE7 /* Reachability-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Reachability-dummy.m"; sourceTree = "<group>"; };
+		01289F803F681C99FBA96B51E6E8B3E3 /* Reachability.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Reachability.release.xcconfig; sourceTree = "<group>"; };
+		243EFCF5C04F19FC038D1DB411792951 /* Reachability.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		712D383F2B5832ADA6111D98BD4AEB13 /* Reachability.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		B009DF2172A717B242CB6A92172029B4 /* Reachability-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Reachability-dummy.m"; sourceTree = "<group>"; };
 		BE66B463A751E094A03532B929111CA5 /* libReachability.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libReachability.a; path = libReachability.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		F19FD13BBA40235F9B5B04FB9F9CC4CA /* Reachability.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		F2EEA97037AEC6A4BB730D2B22C8C89C /* Reachability.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Reachability.xcconfig; sourceTree = "<group>"; };
+		DBC2F13DD39DB96DBC19F5BE6FEFB75B /* Reachability-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Reachability-prefix.pch"; sourceTree = "<group>"; };
+		E55F5D9C2D88CCD01B4C44C2DB04BD5F /* Reachability.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Reachability.debug.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,30 +38,31 @@
 			children = (
 				DA2CB0BBD3722A8F25C8576D9D3D3E61 /* Frameworks */,
 				930930343F8AB1F6A4EC9BC8C5F7B26A /* Products */,
-				6126D5F60DA325BD7019BE39B826A476 /* Reachability */,
+				5228A11851CAF8E05EE551FD906A244F /* Reachability */,
 			);
 			sourceTree = "<group>";
 		};
-		6126D5F60DA325BD7019BE39B826A476 /* Reachability */ = {
+		489B483767695FEA3BCE8D2522771366 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				5A212BD1DEFE7C81D06ED91161418BD4 /* Reachability.h */,
-				F19FD13BBA40235F9B5B04FB9F9CC4CA /* Reachability.m */,
-				750882A45CA5AEBCE0479452A4F43803 /* Support Files */,
-			);
-			name = Reachability;
-			path = Reachability;
-			sourceTree = "<group>";
-		};
-		750882A45CA5AEBCE0479452A4F43803 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				F2EEA97037AEC6A4BB730D2B22C8C89C /* Reachability.xcconfig */,
-				8C302FCFB65C6D86DAF04E1A7D7B6AE7 /* Reachability-dummy.m */,
-				660EB74CA59CEF30573CF9A14F451E2D /* Reachability-prefix.pch */,
+				B009DF2172A717B242CB6A92172029B4 /* Reachability-dummy.m */,
+				DBC2F13DD39DB96DBC19F5BE6FEFB75B /* Reachability-prefix.pch */,
+				E55F5D9C2D88CCD01B4C44C2DB04BD5F /* Reachability.debug.xcconfig */,
+				01289F803F681C99FBA96B51E6E8B3E3 /* Reachability.release.xcconfig */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/Reachability";
+			sourceTree = "<group>";
+		};
+		5228A11851CAF8E05EE551FD906A244F /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				712D383F2B5832ADA6111D98BD4AEB13 /* Reachability.h */,
+				243EFCF5C04F19FC038D1DB411792951 /* Reachability.m */,
+				489B483767695FEA3BCE8D2522771366 /* Support Files */,
+			);
+			name = Reachability;
+			path = Reachability;
 			sourceTree = "<group>";
 		};
 		930930343F8AB1F6A4EC9BC8C5F7B26A /* Products */ = {
@@ -149,9 +151,9 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		256BF8D220B13140AD3F56F91C49C885 /* Debug */ = {
+		18A17284123711F4D4E7E11B39FDD030 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F2EEA97037AEC6A4BB730D2B22C8C89C /* Reachability.xcconfig */;
+			baseConfigurationReference = E55F5D9C2D88CCD01B4C44C2DB04BD5F /* Reachability.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -297,9 +299,9 @@
 			};
 			name = Release;
 		};
-		C192B5A9FD78D5ABD74D39AAD7033235 /* Release */ = {
+		9A7E73F3CD6E85AB26C305F8666ECADA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F2EEA97037AEC6A4BB730D2B22C8C89C /* Reachability.xcconfig */;
+			baseConfigurationReference = 01289F803F681C99FBA96B51E6E8B3E3 /* Reachability.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -328,8 +330,8 @@
 		2832251E20046639F4C5C3A2E57B71B7 /* Build configuration list for PBXNativeTarget "Reachability" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				256BF8D220B13140AD3F56F91C49C885 /* Debug */,
-				C192B5A9FD78D5ABD74D39AAD7033235 /* Release */,
+				18A17284123711F4D4E7E11B39FDD030 /* Debug */,
+				9A7E73F3CD6E85AB26C305F8666ECADA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

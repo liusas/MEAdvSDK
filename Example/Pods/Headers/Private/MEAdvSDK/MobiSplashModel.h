@@ -1,0 +1,1 @@
+../../../../../MEAdvSDK/Classes/Platform/Mobipub/MobipubSDK/Splash/Model/MobiSplashModel.h

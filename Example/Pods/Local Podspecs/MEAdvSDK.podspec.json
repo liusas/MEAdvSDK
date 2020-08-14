@@ -1,9 +1,9 @@
 {
   "name": "MEAdvSDK",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "summary": "Mobiexchanger's advertise SDK",
   "description": "this is a Mobiexchanger's advertise SDK, and we use it as a module",
-  "homepage": "https://gitlab.ad-mex.com/Liusas/MEAdvSDK.git",
+  "homepage": "https://github.com/liusas/MEAdvSDK.git",
   "license": "{ :type => 'MIT', :file => 'LICENSE' }",
   "authors": {
     "刘峰": "liufeng@mobiexchanger.com"
@@ -12,8 +12,8 @@
     "ios": "9.0"
   },
   "source": {
-    "git": "https://gitlab.ad-mex.com/Liusas/MEAdvSDK.git",
-    "tag": "0.1.3"
+    "git": "https://github.com/liusas/MEAdvSDK.git",
+    "tag": "0.1.5"
   },
   "source_files": [
     "Classes",
@@ -26,7 +26,7 @@
 
     ],
     "Realm": [
-
+      "4.4.1"
     ]
   }
 }

@@ -1,0 +1,1 @@
+../../../../../MEAdvSDK/Classes/Platform/Mobipub/MobipubSDK/Interstitial/Model/MobiInterstitialModel.h

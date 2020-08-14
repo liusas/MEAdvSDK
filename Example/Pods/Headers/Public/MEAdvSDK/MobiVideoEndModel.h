@@ -1,0 +1,1 @@
+../../../../../MEAdvSDK/Classes/Platform/Mobipub/MobipubSDK/RewardVideo/Adapter/MobiVideomanager/PlayerUI/MobiVideoEndModel.h
