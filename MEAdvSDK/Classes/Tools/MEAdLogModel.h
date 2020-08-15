@@ -6,6 +6,7 @@
 //
 
 #import <Realm/Realm.h>
+#import "MEAdHelpTool.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -191,12 +191,33 @@
         adapter.isGetForCache = NO;
         adapter.sortType = [[MEConfigManager sharedInstance] getSortTypeFromSceneId:model.sceneId];
         [adapter showSplashWithPosid:model.posid delay:delay bottomView:bottomView];
+        
+        // 请求日志上报
+        [self trackRequestWithSortType:adapter.sortType sceneId:sceneId platformType:model.platformType];
     }
     
     return YES;
 }
 
 // MARK: - Private
+// 追踪请求上报
+- (void)trackRequestWithSortType:(NSInteger)sortType
+                         sceneId:(NSString *)sceneId
+                    platformType:(MEAdAgentType)platformType {
+    // 发送请求数据上报
+    MEAdLogModel *log = [MEAdLogModel new];
+    log.event = AdLogEventType_Request;
+    log.st_t = AdLogAdType_Splash;
+    log.so_t = sortType;
+    log.posid = sceneId;
+    log.network = [MEAdNetworkManager getNetworkNameFromAgentType:platformType];
+    log.tk = [MEAdHelpTool stringMD5:[NSString stringWithFormat:@"%@%ld%@%ld", log.posid, log.so_t, @"mobi", (long)([[NSDate date] timeIntervalSince1970]*1000)]];
+    // 先保存到数据库
+    [MEAdLogModel saveLogModelToRealm:log];
+    // 立即上传
+    [MEAdLogModel uploadImmediately];
+}
+
 
 /// 停止assignResultArr中的adapter,然后删除adapter
 - (void)stopAdapterAndRemoveFromAssignResultArr {

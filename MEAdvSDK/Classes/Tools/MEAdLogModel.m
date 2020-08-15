@@ -8,7 +8,6 @@
 #import "MEAdLogModel.h"
 #import "NBLHTTPManager.h"
 #import "MEConfigManager.h"
-#import "MEAdHelpTool.h"
 
 #define kLimit 5
 #define kLogUploadCount 20

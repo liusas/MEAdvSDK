@@ -38,6 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 // 获取时间戳,以分为单位
 + (NSString *)getTimeStr;
 
++ (NSMutableString *)stringMD5:(NSString *)string;
+
 @end
 
 NS_ASSUME_NONNULL_END
