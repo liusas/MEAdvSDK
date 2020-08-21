@@ -23,9 +23,6 @@
 
 @property (nonatomic, assign) NSInteger requestCount;
 
-/// 是否展示误点按钮
-@property (nonatomic, assign) BOOL showFunnyBtn;
-
 // 只允许回调一次加载成功事件
 @property (nonatomic, assign) BOOL hasSuccessfullyLoaded;
 
@@ -56,17 +53,15 @@
     return self;
 }
 
-/// 展示插屏广告
-- (void)showInterstitialAdvWithSceneId:(NSString *)sceneId
-                          showFunnyBtn:(BOOL)showFunnyBtn
-                        Finished:(LoadInterstitialAdFinished)finished
-                          failed:(LoadInterstitialAdFailed)failed {
+/// 加载插屏页
+- (void)loadInterstitialWithSceneId:(NSString *)sceneId
+                           finished:(LoadInterstitialAdFinished)finished
+                             failed:(LoadInterstitialAdFailed)failed {
     self.finished = finished;
     self.failed = failed;
     
     _requestCount = 0;
     
-    self.showFunnyBtn = showFunnyBtn;
     // 分配广告平台
     if (![self assignAdPlatformAndShow:sceneId platform:MEAdAgentTypeNone]) {
         NSError *error = [NSError errorWithDomain:@"adv assign failed" code:0 userInfo:@{NSLocalizedDescriptionKey: @"分配失败"}];
@@ -79,11 +74,71 @@
         return;
     }
     
-    [self performSelector:@selector(stopAdapterAndRemoveFromAssignResultArr) withObject:nil afterDelay:self.configManger.adRequestTimeout];
+    [self performSelector:@selector(requestTimeout) withObject:nil afterDelay:self.configManger.adRequestTimeout];
+}
+                            
+/// 展示插屏页
+- (void)showInterstitialFromViewController:(UIViewController *)rootVC sceneId:(NSString *)sceneId {
+    if (sceneId == nil) {
+        NSError *error = [NSError errorWithDomain:@"sceneId can not be nil" code:0 userInfo:@{NSLocalizedDescriptionKey: @"插屏弹出失败"}];
+        self.failed(error);
+        return;
+    }
+    
+    for (NSString *posid in self.currentAdapters.allKeys) {
+        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[posid];
+        
+        // 展示视频
+        if (adapter) {
+            // 展示视频
+            [adapter showInterstitialFromViewController:rootVC posid:adapter.posid];
+            return;
+        }
+        
+        // 到这表示没有可用的激励视频
+        NSError *error = [NSError errorWithDomain:@"There are no ads to show" code:0 userInfo:@{NSLocalizedDescriptionKey: @"插屏弹出失败"}];
+        self.failed(error);
+        break;
+    }
 }
 
-- (void)stopInterstitialRender {
-    [self stopAdapterAndRemoveFromAssignResultArr];
+- (void)stopInterstitialRenderWithSceneId:(NSString *)sceneId {
+    if (sceneId == nil) {
+        NSError *error = [NSError errorWithDomain:@"sceneId can not be nil" code:0 userInfo:@{NSLocalizedDescriptionKey: @"插屏关闭失败"}];
+        self.failed(error);
+        return;
+    }
+    
+    for (NSString *posid in self.currentAdapters.allKeys) {
+        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[posid];
+        
+        // 展示视频
+        if (adapter) {
+            // 展示视频
+            [adapter stopInterstitialWithPosid:posid];
+            return;
+        }
+        
+        // 到这表示没有可用的激励视频
+        NSError *error = [NSError errorWithDomain:@"There are no ads to close" code:0 userInfo:@{NSLocalizedDescriptionKey: @"插屏关闭失败"}];
+        self.failed(error);
+        break;
+    }
+}
+
+- (BOOL)hasInterstitialAvailableWithSceneId:(NSString *)sceneId {
+    for (NSString *posid in self.currentAdapters.allKeys) {
+        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[posid];
+        
+        // 展示视频
+        if (adapter) {
+            // 展示视频
+            return [adapter hasInterstitialAvailableWithPosid:posid];
+        }
+        break;
+    }
+    
+    return NO;
 }
 
 // MARK: - MEBaseAdapterInterstitialProtocol
@@ -93,29 +148,34 @@
         return;
     }
     // 只要有一个成功,就停止超时任务的执行
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopAdapterAndRemoveFromAssignResultArr) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(requestTimeout) object:nil];
 
     self.hasSuccessfullyLoaded = YES;
     
     // 添加adapter到当前管理adapter的字典
-    self.currentAdapters[adapter.sceneId] = adapter;
+    self.currentAdapters[adapter.posid] = adapter;
     [self removeAssignResultArrObjectWithAdapter:adapter];
     
     // 停止其他adapter
     [self stopAdapterAndRemoveFromAssignResultArr];
+    
+    // 拉取成功后,置0
+    _requestCount = 0;
+    
+    if (self.finished) {
+        self.finished();
+    }
 }
 
 - (void)adapterInterstitialShowSuccess:(MEBaseAdapter *)adapter {
-    // 拉取成功后,置0
-    _requestCount = 0;
     // 当前广告平台
     self.currentAdPlatform = adapter.platformType;
     
     // 控制广告平台展示频次
     [StrategyFactory changeAdFrequencyWithSceneId:adapter.sceneId];
     
-    if (self.finished) {
-        self.finished();
+    if (self.showFinishBlock) {
+        self.showFinishBlock();
     }
 }
 
@@ -136,11 +196,10 @@
     }
     
     if (self.assignResultArr.count == 0) {
-        _requestCount = 0;
-        
         if (self.failed) {
             self.failed(error);
         }
+        _requestCount = 0;
     }
 }
 
@@ -155,6 +214,8 @@
 
 // 插屏广告关闭完成
 - (void)adapterInterstitialCloseFinished:(MEBaseAdapter *)adapter {
+    self.hasSuccessfullyLoaded = NO;
+    self.needToStop = NO;
     // 当前广告平台
     self.currentAdPlatform = adapter.platformType;
     
@@ -185,7 +246,7 @@
     
     // 数组返回几个适配器就去请求几个平台的广告
     for (StrategyResultModel *model in resultArr) {
-        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[model.sceneId];
+        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[model.posid];
         if ([adapter isKindOfClass:model.targetAdapterClass]) {
             // 若当前有可用的adapter则直接拿来用
         } else {
@@ -209,7 +270,8 @@
         adapter.sceneId = sceneId;
         adapter.isGetForCache = NO;
         adapter.sortType = [[MEConfigManager sharedInstance] getSortTypeFromSceneId:model.sceneId];
-        [adapter showInterstitialViewWithPosid:model.posid showFunnyBtn:self.showFunnyBtn];
+        [adapter loadInterstitialWithPosid:model.posid];
+        
         // 请求日志上报
         [self trackRequestWithSortType:adapter.sortType sceneId:sceneId platformType:model.platformType];
     }
@@ -235,6 +297,14 @@
     // 立即上传
     [MEAdLogModel uploadImmediately];
 }
+
+/// 请求超时
+- (void)requestTimeout {
+    NSError *error = [NSError errorWithDomain:@"request time out" code:0 userInfo:@{NSLocalizedDescriptionKey: @"插屏弹出失败"}];
+    self.failed(error);
+    [self stopAdapterAndRemoveFromAssignResultArr];
+}
+
 /// 停止assignResultArr中的adapter,然后删除adapter
 - (void)stopAdapterAndRemoveFromAssignResultArr {
     self.needToStop = YES;

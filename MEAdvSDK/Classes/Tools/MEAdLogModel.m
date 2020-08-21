@@ -87,7 +87,9 @@ static BOOL logsUploading = NO;
 //根据保存对象
 + (void)saveLogModelToRealm:(MEAdLogModel *)logModel {
     if (!logModel.day) {// 天时间戳
-        logModel.day = [MEAdHelpTool getDayStr];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyy-MM-dd";
+        logModel.day = [formatter stringFromDate:[NSDate date]];
     }
     
     if (!logModel.time) {// 分时间戳

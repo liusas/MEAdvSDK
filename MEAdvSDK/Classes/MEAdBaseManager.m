@@ -20,8 +20,16 @@ static dispatch_once_t onceToken;
 @property (nonatomic, weak) id target;
 @property (nonatomic, strong) MESplashAdManager *splashAdManager;
 @property (nonatomic, strong) MEFeedAdManager *feedAdManager;
+
+
 @property (nonatomic, strong) MERewardedVideoManager *rewardedVideoManager;
+//存放rewardedManager的字典
+@property (nonatomic, strong) NSMutableDictionary *rewardedVideoManagers;
+
 @property (nonatomic, strong) MEInterstitialAdManager *interstitialManager;
+// 存放interstitialManager的字典
+@property (nonatomic, strong) NSMutableDictionary *interstitialManagers;
+
 /// 配置请求成功和广告平台初始化成功的block
 @property (nonatomic, copy) RequestAndInitFinished requestConfigFinished;
 /// 广告平台是否已经初始化
@@ -63,49 +71,49 @@ static dispatch_once_t onceToken;
 }
 
 // MARK: 开屏广告
-/// 展示开屏广告
-- (void)showSplashAdvTarget:(id)target sceneId:(NSString *)sceneId delay:(NSTimeInterval)delay {
-    [self showSplashAdvTarget:target sceneId:sceneId delay:delay showSuccess:nil failed:nil close:nil click:nil dismiss:nil];
-}
-
-- (void)showSplashAdvTarget:(id)target
-                    sceneId:(NSString *)sceneId
-                      delay:(NSTimeInterval)delay
-                showSuccess:(MEBaseSplashAdFinished)finished
-                     failed:(MEBaseSplashAdFailed)failed
-                      close:(MEBaseSplashAdCloseClick)close
-                      click:(MEBaseSplashAdClick)click
-                    dismiss:(MEBaseSplashAdDismiss)dismiss {
-    [self showSplashAdvTarget:target sceneId:sceneId delay:delay bottomView:nil showSuccess:finished failed:failed close:close click:click dismiss:dismiss];
-}
-
-- (void)showSplashAdvTarget:(id)target
-                    sceneId:(NSString *)sceneId
-                      delay:(NSTimeInterval)delay
-                 bottomView:(UIView *)bottomView
-                showSuccess:(MEBaseSplashAdFinished)finished
-                     failed:(MEBaseSplashAdFailed)failed
-                      close:(MEBaseSplashAdCloseClick)close
-                      click:(MEBaseSplashAdClick)click
-                    dismiss:(MEBaseSplashAdDismiss)dismiss {
-    _target = target;
+- (void)preloadSplashWithSceneId:(NSString *)sceneId delegate:(id)delegate {
+    _target = delegate;
     
-    if (target == nil) {
+    if (delegate == nil) {
+        // 需要根据delegate给予action和响应
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    // 遵守代理
+    self.splashDelegate = delegate;
+    
+    //    self.splashAdManager = [MESplashAdManager shareInstance];
+    self.splashAdManager = [[MESplashAdManager alloc] init];
+    
+    [self.splashAdManager preloadSplashWithSceneId:sceneId Finished:^{
+        // 加载成功
+        [weakSelf splashFinishedOperation];
+    } failed:^(NSError *error) {
+        // 加载失败
+        [weakSelf splashFailedOpertion:error];
+    }];
+}
+
+- (void)loadAndShowSplashAdSceneId:(NSString *)sceneId delegate:(id)delegate delay:(NSTimeInterval)delay bottomView:(UIView *)bottomView {
+    _target = delegate;
+    
+    if (delegate == nil) {
         // 需要根据target给予action和响应
         return;
     }
     
     __weak typeof(self) weakSelf = self;
     // 遵守代理
-    self.splashDelegate = target;
+    self.splashDelegate = delegate;
     
     //    self.splashAdManager = [MESplashAdManager shareInstance];
     self.splashAdManager = [[MESplashAdManager alloc] init];
     
-    [self.splashAdManager showSplashAdvWithSceneId:sceneId delay:delay bottomView:bottomView Finished:^{
-        [weakSelf splashFinishedOperationSuccess:finished close:close click:click dismiss:dismiss];
-    } failed:^(NSError * _Nonnull error) {
-        [weakSelf splashFailedOpertion:error failed:failed];
+    [self.splashAdManager loadSplashAdWithSceneId:sceneId delay:delay Finished:^{
+        [weakSelf splashFinishedOperation];
+    } failed:^(NSError *error) {
+        [weakSelf splashFailedOpertion:error];
     }];
 }
 
@@ -115,180 +123,73 @@ static dispatch_once_t onceToken;
 }
 
 // MARK: 插屏广告
-/// 展示插屏广告
-/// @param target 接收代理的类
-/// @param sceneId 场景id
-/// @param showFunnyBtn 是否展示误点按钮
-- (void)showInterstitialAdvWithTarget:(id)target
-                              sceneId:(NSString *)sceneId
-                         showFunnyBtn:(BOOL)showFunnyBtn {
-    [self showInterstitialAdvWithTarget:target sceneId:sceneId showFunnyBtn:showFunnyBtn finished:nil failed:nil close:nil click:nil dismiss:nil];
-}
-
-/// 展示插屏广告
-/// @param target 接收代理的类
-/// @param sceneId 场景id
-/// @param showFunnyBtn 是否展示误点按钮
-/// @param finished 展示成功
-/// @param failed 展示失败
-/// @param close 广告关闭
-/// @param click 广告点击
-/// @param dismiss 插屏广告被点击后,回到应用
-- (void)showInterstitialAdvWithTarget:(id)target
-                              sceneId:(NSString *)sceneId
-                         showFunnyBtn:(BOOL)showFunnyBtn
-                             finished:(MEBaseInterstitialAdFinished)finished
-                               failed:(MEBaseInterstitialAdFailed)failed
-                                close:(MEBaseInterstitialAdCloseClick)close
-                                click:(MEBaseInterstitialAdClick)click
-                              dismiss:(MEBaseInterstitialAdDismiss)dismiss {
-    _target = target;
+- (void)loadInterstitialWithSceneId:(NSString *)sceneId delegate:(id)delegate {
+    _target = delegate;
     
-    if (target == nil) {
+    if (delegate == nil) {
         // 需要根据target给予action和响应
     }
     
     __weak typeof(self) weakSelf = self;
     // 遵守代理
-    self.interstitialDelegate = target;
+    self.interstitialDelegate = delegate;
     
-//    self.interstitialManager = [MEInterstitialAdManager shareInstance];
+    //    self.interstitialManager = [MEInterstitialAdManager shareInstance];
     self.interstitialManager = [[MEInterstitialAdManager alloc] init];
-    [self.interstitialManager showInterstitialAdvWithSceneId:sceneId showFunnyBtn:showFunnyBtn Finished:^{
-        [weakSelf interstitialFinishedOperationFinished:finished close:close click:click dismiss:dismiss];
+    self.interstitialManagers[sceneId] = self.interstitialManager;
+    [self.interstitialManager loadInterstitialWithSceneId:sceneId finished:^{
+        [weakSelf interstitialFinishedOperation];
     } failed:^(NSError * _Nonnull error) {
-        [weakSelf interstitialFailedOpertion:error failed:failed];
+        [weakSelf interstitialFailedOpertion:error];
     }];
 }
 
-// MARK: 信息流广告
-/**
-*  展示信息流广告
-*  @param bgWidth 必填,信息流背景视图的宽度
-*  @param sceneId 场景Id,在MEAdBaseManager.h中可查
-*  @param target 必填,用来承接代理
-*/
-- (void)showFeedAdvWithBgWidth:(CGFloat)bgWidth sceneId:(NSString *)sceneId Target:(id)target {
-    [self showFeedAdvWithBgWidth:bgWidth sceneId:sceneId Target:target finished:nil failed:nil close:nil click:nil];
+- (void)showInterstitialFromViewController:(UIViewController *)rootVC sceneId:(NSString *)sceneId {
+    self.interstitialDelegate = rootVC;
+    MEInterstitialAdManager *adManager = self.interstitialManagers[sceneId];
+
+    if (adManager) {
+        [adManager showInterstitialFromViewController:rootVC sceneId:sceneId];
+        return;
+    }
+    
+    // 没有合适的 adManager 表示当前没有广告可展示
+    if (self.interstitialDelegate && [self.interstitialDelegate respondsToSelector:@selector(interstitialShowFailure:)]) {
+        NSError *error = [NSError errorWithDomain:@"no ads to show" code:0 userInfo:nil];
+        [self.interstitialDelegate interstitialShowFailure:error];
+    }
 }
 
-/// 展示信息流广告
-/// @param bgWidth 信息流广告背景的宽度
-/// @param sceneId 场景id
-/// @param target 必填,用来承接代理
-/// @param finished 广告展示成功
-/// @param failed 广告展示失败
-/// @param close 广告关闭
-/// @param click 点击广告
-- (void)showFeedAdvWithBgWidth:(CGFloat)bgWidth
-                       sceneId:(NSString *)sceneId
-                        Target:(id)target
-                      finished:(MEBaseFeedAdFinished)finished
-                        failed:(MEBaseFeedAdFailed)failed
-                         close:(MEBaseFeedAdCloseClick)close
-                         click:(MEBaseFeedAdClick)click {
-    _target = target;
-    
-    if (self.isPlatformInit == NO) {
-        // 若平台尚未初始化,则不执行
+- (void)stopInterstitialRender:(NSString *)sceneId {
+    if (sceneId == nil) {
         return;
     }
     
-    if (target == nil) {
-        // 需要根据target给予action和响应
+    MEInterstitialAdManager *adManager = self.interstitialManagers[sceneId];
+
+    if (adManager) {
+        [adManager stopInterstitialRenderWithSceneId:sceneId];
         return;
     }
-    
-    __weak typeof(self) weakSelf = self;
-    // 遵守代理
-//    self.feedAdManager = [MEFeedAdManager shareInstance];
-    self.feedAdManager = [[MEFeedAdManager alloc] init];
-    [self.feedAdManager showFeedViewWithWidth:bgWidth sceneId:sceneId finished:^(UIView * _Nonnull feedView) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        strongSelf.feedDelegate = target;
-        [strongSelf feedViewFinishedOperation:feedView finished:finished close:close click:click];
-    } failed:^(NSError * _Nonnull error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        strongSelf.feedDelegate = target;
-        [strongSelf feedViewFailedOpertion:error failed:failed];
-    }];
 }
 
-/// 展示自渲染信息流广告
-/// @param sceneId 场景id
-/// @param target  必填,用来承接代理
-- (void)showRenderFeedAdvWithSceneId:(NSString *)sceneId Target:(id)target {
-    [self showRenderFeedAdvWithSceneId:sceneId Target:target finished:nil failed:nil close:nil click:nil];
-}
+- (BOOL)hasInterstitialAvailableWithSceneId:(NSString *)sceneId {
+    if (sceneId == nil) {
+        return NO;
+    }
+    
+    MEInterstitialAdManager *adManager = self.interstitialManagers[sceneId];
 
-/// 展示自渲染信息流广告
-/// @param sceneId 场景id
-/// @param target  必填,用来承接代理
-/// @param finished 广告展示成功
-/// @param failed 广告展示失败
-/// @param close 广告关闭
-/// @param click 点击广告
-- (void)showRenderFeedAdvWithSceneId:(NSString *)sceneId
-                              Target:(id)target
-                            finished:(MEBaseFeedAdFinished)finished
-                              failed:(MEBaseFeedAdFailed)failed
-                               close:(MEBaseFeedAdCloseClick)close
-                               click:(MEBaseFeedAdClick)click {
-    _target = target;
-    
-    if (self.isPlatformInit == NO) {
-        // 若平台尚未初始化,则不执行
-        return;
+    if (adManager) {
+        return [adManager hasInterstitialAvailableWithSceneId:sceneId];
     }
     
-    if (target == nil) {
-        // 需要根据target给予action和响应
-        return;
-    }
-    
-    __weak typeof(self) weakSelf = self;
-    // 遵守代理
-    self.feedDelegate = target;
-//    self.feedAdManager = [MEFeedAdManager shareInstance];
-    self.feedAdManager = [[MEFeedAdManager alloc] init];
-    
-    [self.feedAdManager showRenderFeedViewWithSceneId:sceneId finished:^(UIView * _Nonnull feedView) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        strongSelf.feedDelegate = target;
-        [strongSelf feedViewFinishedOperation:feedView finished:finished close:close click:click];
-    } failed:^(NSError * _Nonnull error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        strongSelf.feedDelegate = target;
-        [strongSelf feedViewFailedOpertion:error failed:failed];
-    }];
+    return NO;
 }
 
 // MARK: 激励视频广告
-/**
- *  展示激励视频广告
- *  @param sceneId 场景Id,按自己业务场景展示对应业务场景的广告
- *  @param target 必填,接收回调
-*/
-- (void)showRewardedVideoWithSceneId:(NSString *)sceneId target:(id)target {
-    [self showRewardedVideoWithSceneId:sceneId target:target finished:nil failed:nil finishPlay:nil close:nil click:nil];
-}
-
-/// 展示激励视频广告, 目前只有穿山甲激励视频
-/// @param sceneId 场景Id,在MEAdBaseManager.h中可查
-/// @param target 必填,接收回调
-/// @param finished 视频广告展示成功
-/// @param failed 视频广告展示失败
-/// @param finishPlay 视频广告播放完毕
-/// @param close 视频广告关闭
-/// @param click 点击视频广告
-- (void)showRewardedVideoWithSceneId:(NSString *)sceneId
-                              target:(id)target
-                            finished:(MEBaseRewardVideoFinish)finished
-                              failed:(MEBaseRewardVideoFailed)failed
-                          finishPlay:(MEBaseRewardVideoFinishPlay)finishPlay
-                               close:(MEBaseRewardVideoCloseClick)close
-                               click:(MEBaseRewardVideoClick)click {
-    if (target == nil) {
+- (void)loadRewardedVideoWitSceneId:(NSString *)sceneId delegate:(id)delegate {
+    if (delegate == nil) {
         // 需要根据target给予action和响应
         return;
     }
@@ -299,50 +200,115 @@ static dispatch_once_t onceToken;
     }
     
     __weak typeof(self) weakSelf = self;
-    self.rewardVideoDelegate = target;
-//    self.rewardedVideoManager = [MERewardedVideoManager shareInstance];
+    self.rewardVideoDelegate = delegate;
+    //    self.rewardedVideoManager = [MERewardedVideoManager shareInstance];
     self.rewardedVideoManager = [[MERewardedVideoManager alloc] init];
-    [self.rewardedVideoManager showRewardVideoWithSceneId:sceneId Finished:^{
+    self.rewardedVideoManagers[sceneId] = self.rewardedVideoManager;
+    [self.rewardedVideoManager loadRewardedVideoWithSceneId:sceneId finished:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf rewardVideoShowSuccessOperationFinished:finished finishPlay:finishPlay close:close click:click];
+        [strongSelf rewardVideoShowSuccessOperation];
     } failed:^(NSError * _Nonnull error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf rewardVideoFailedOpertion:error failed:failed];
+        [strongSelf rewardVideoFailedOpertion:error];
     }];
 }
 
+- (void)showRewardedVideoFromViewController:(UIViewController *)rootVC sceneId:(NSString *)sceneId {
+    self.rewardVideoDelegate = rootVC;
+    MERewardedVideoManager *adManager = self.rewardedVideoManagers[sceneId];
+
+    if (adManager) {
+        [adManager showRewardedVideoFromViewController:rootVC sceneId:sceneId];
+        return;
+    }
+    
+    // 没有合适的 adManager 表示当前没有广告可展示
+    if (self.rewardVideoDelegate && [self.rewardVideoDelegate respondsToSelector:@selector(rewardVideoShowFailure:)]) {
+        NSError *error = [NSError errorWithDomain:@"no ads to show" code:0 userInfo:nil];
+        [self.rewardVideoDelegate rewardVideoShowFailure:error];
+    }
+}
+
 /// 停止当前播放的视频
-- (void)stopRewardedVideo {
-    [self.rewardedVideoManager stopCurrentVideo];
+- (void)stopRewardedVideo:(NSString *)sceneId {
+    if (sceneId == nil) {
+        return;
+    }
+    MERewardedVideoManager *adManager = self.rewardedVideoManagers[sceneId];
+
+    if (adManager) {
+        [adManager stopCurrentVideoWithSceneId:sceneId];
+        return;
+    }
+}
+
+- (BOOL)hasRewardedVideoAvailableWithSceneId:(NSString *)sceneId {
+    if (sceneId == nil) {
+        return NO;
+    }
+    
+    MERewardedVideoManager *adManager = self.rewardedVideoManagers[sceneId];
+
+    if (adManager) {
+        return [adManager hasRewardedVideoAvailableWithSceneId:sceneId];
+    }
+    
+    return NO;
+}
+
+// MARK: - 信息流广告
+- (void)loadFeedAdWithSize:(CGSize)size sceneId:(NSString *)sceneId delegate:(id)delegate count:(NSInteger)count {
+    _target = delegate;
+    
+    if (self.isPlatformInit == NO) {
+        // 若平台尚未初始化,则不执行
+        return;
+    }
+    
+    if (delegate == nil) {
+        // 需要根据target给予action和响应
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    // 遵守代理
+    //    self.feedAdManager = [MEFeedAdManager shareInstance];
+    self.feedAdManager = [[MEFeedAdManager alloc] init];
+    [self.feedAdManager loadFeedViewWithWidth:size.width sceneId:sceneId count:count finished:^(NSArray<UIView *> *feedViews) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.feedDelegate = delegate;
+        [strongSelf feedViewFinishedOperation:feedViews];
+    } failed:^(NSError * _Nonnull error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.feedDelegate = delegate;
+        [strongSelf feedViewFailedOpertion:error];
+    }];
 }
 
 // MARK: - 信息流广告回调
 /// 信息流广告展示成功后的操作
-- (void)feedViewFinishedOperation:(UIView *)feedView
-                         finished:(MEBaseFeedAdFinished)finished
-                            close:(MEBaseFeedAdCloseClick)close
-                            click:(MEBaseFeedAdClick)click {
+- (void)feedViewFinishedOperation:(NSArray *)feedViews {
     self.currentAdPlatform = self.feedAdManager.currentAdPlatform;
     
     __weak typeof(self) weakSelf = self;
     // 广告加载成功
-    if (self.feedDelegate && [self.feedDelegate respondsToSelector:@selector(feedViewShowSuccess:feedView:)]) {
-        [self.feedDelegate feedViewShowSuccess:self feedView:feedView];
+    if (self.feedDelegate && [self.feedDelegate respondsToSelector:@selector(feedViewShowSuccess:feedViews:)]) {
+        [self.feedDelegate feedViewLoadSuccess:self feedViews:feedViews];
     }
     
-    if (finished) {
-        finished(feedView);
-    }
+    // 广告展示成功
+    self.feedAdManager.showFinished = ^(UIView * _Nonnull feedView) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.feedDelegate && [strongSelf.feedDelegate respondsToSelector:@selector(feedViewShowSuccess:feedView:)]) {
+            [strongSelf.feedDelegate feedViewShowSuccess:strongSelf feedView:feedView];
+        }
+    };
     
     // 点击广告监听
     self.feedAdManager.clickBlock = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf.feedDelegate && [strongSelf.feedDelegate respondsToSelector:@selector(feedViewClicked:)]) {
             [strongSelf.feedDelegate feedViewClicked:strongSelf];
-        }
-        
-        if (click) {
-            click();
         }
     };
     
@@ -352,48 +318,43 @@ static dispatch_once_t onceToken;
         if (strongSelf.feedDelegate && [strongSelf.feedDelegate respondsToSelector:@selector(feedViewCloseClick:)]) {
             [strongSelf.feedDelegate feedViewCloseClick:strongSelf];
         }
-        
-        if (close) {
-            close();
-        }
     };
 }
 
 /// 信息流广告展示失败的操作
-- (void)feedViewFailedOpertion:(NSError *)error failed:(MEBaseFeedAdFailed)failed {
-    if (self.feedDelegate && [self.feedDelegate respondsToSelector:@selector(feedView:showFeedViewFailure:)]) {
-        [self.feedDelegate feedViewShowFeedViewFailure:error];
-    }
-    
-    if (failed) {
-        failed(error);
+- (void)feedViewFailedOpertion:(NSError *)error {
+    if (self.feedDelegate && [self.feedDelegate respondsToSelector:@selector(feedViewShowFailure:)]) {
+        [self.feedDelegate feedViewShowFailure:error];
     }
 }
 
 // MARK: - 激励视频广告回调
-- (void)rewardVideoShowSuccessOperationFinished:(MEBaseRewardVideoFinish)finished
-                                     finishPlay:(MEBaseRewardVideoFinishPlay)finishPlay
-                                          close:(MEBaseRewardVideoCloseClick)close
-                                          click:(MEBaseRewardVideoClick)click {
+- (void)rewardVideoShowSuccessOperation {
     __weak typeof(self) weakSelf = self;
     // 广告加载成功
-    if (self.rewardVideoDelegate && [self.rewardVideoDelegate respondsToSelector:@selector(rewardVideoShowSuccess:)]) {
-        [self.rewardVideoDelegate rewardVideoShowSuccess:self];
+    if (self.rewardVideoDelegate && [self.rewardVideoDelegate respondsToSelector:@selector(rewardVideoLoadSuccess:)]) {
+        [self.rewardVideoDelegate rewardVideoLoadSuccess:self];
     }
     
-    if (finished) {
-        finished();
-    }
+    // 视频展示成功
+    self.rewardedVideoManager.showFinish = ^{
+        if (self.rewardVideoDelegate && [self.rewardVideoDelegate respondsToSelector:@selector(rewardVideoShowSuccess:)]) {
+            [self.rewardVideoDelegate rewardVideoShowSuccess:self];
+        }
+    };
+    
+    // 视频资源缓存成功
+    self.rewardedVideoManager.didDownloadBlock = ^{
+        if (self.rewardVideoDelegate && [self.rewardVideoDelegate respondsToSelector:@selector(rewardVideoDidDownloadSuccess:)]) {
+            [self.rewardVideoDelegate rewardVideoDidDownloadSuccess:self];
+        }
+    };
     
     // 视频播放完毕
     self.rewardedVideoManager.finishPlayBlock = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf.rewardVideoDelegate && [strongSelf.rewardVideoDelegate respondsToSelector:@selector(rewardVideoFinishPlay:)]) {
             [strongSelf.rewardVideoDelegate rewardVideoFinishPlay:strongSelf];
-        }
-        
-        if (finishPlay) {
-            finishPlay();
         }
     };
     
@@ -403,10 +364,6 @@ static dispatch_once_t onceToken;
         if (strongSelf.rewardVideoDelegate && [strongSelf.rewardVideoDelegate respondsToSelector:@selector(rewardVideoClicked:)]) {
             [strongSelf.rewardVideoDelegate rewardVideoClicked:strongSelf];
         }
-        
-        if (click) {
-            click();
-        }
     };
     
     // 关闭广告的监听
@@ -415,50 +372,40 @@ static dispatch_once_t onceToken;
         if (strongSelf.rewardVideoDelegate && [strongSelf.rewardVideoDelegate respondsToSelector:@selector(rewardVideoClose:)]) {
             [strongSelf.rewardVideoDelegate rewardVideoClose:strongSelf];
         }
-        
-        if (close) {
-            close();
-        }
     };
 }
 
 /// 激励视频广告展示失败的操作
-- (void)rewardVideoFailedOpertion:(NSError *)error failed:(MEBaseRewardVideoFailed)failed {
+- (void)rewardVideoFailedOpertion:(NSError *)error {
     if (self.rewardVideoDelegate && [self.rewardVideoDelegate respondsToSelector:@selector(rewardVideoShowFailure:)]) {
         [self.rewardVideoDelegate rewardVideoShowFailure:error];
-    }
-    if (failed) {
-        failed(error);
     }
 }
 
 // MARK: - 开屏广告回调
 /// 开屏广告展示成功后的操作
-- (void)splashFinishedOperationSuccess:(MEBaseSplashAdFinished)finished
-                                 close:(MEBaseSplashAdCloseClick)close
-                                 click:(MEBaseSplashAdClick)click
-                               dismiss:(MEBaseSplashAdDismiss)dismiss {
+- (void)splashFinishedOperation {
     self.currentAdPlatform = self.splashAdManager.currentAdPlatform;
     
     __weak typeof(self) weakSelf = self;
     // 广告加载成功
-    if (self.splashDelegate && [self.splashDelegate respondsToSelector:@selector(splashShowSuccess:)]) {
-        [self.splashDelegate splashShowSuccess:self];
+    if (self.splashDelegate && [self.splashDelegate respondsToSelector:@selector(splashLoadSuccess:)]) {
+        [self.splashDelegate splashLoadSuccess:self];
     }
     
-    if (finished) {
-        finished();
-    }
+    // 展示成功
+    self.splashAdManager.showFinished = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.splashDelegate && [strongSelf.splashDelegate respondsToSelector:@selector(splashShowSuccess:)]) {
+            [strongSelf.splashDelegate splashShowSuccess:strongSelf];
+        }
+    };
     
     // 点击广告监听
     self.splashAdManager.clickBlock = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf.splashDelegate && [strongSelf.splashDelegate respondsToSelector:@selector(splashClicked:)]) {
             [strongSelf.splashDelegate splashClicked:strongSelf];
-        }
-        
-        if (click) {
-            click();
         }
     };
     
@@ -468,9 +415,6 @@ static dispatch_once_t onceToken;
         if (strongSelf.splashDelegate && [strongSelf.splashDelegate respondsToSelector:@selector(splashClosed:)]) {
             [strongSelf.splashDelegate splashClosed:strongSelf];
         }
-        if (close) {
-            close();
-        }
     };
     
     self.splashAdManager.clickThenDismiss = ^{
@@ -478,39 +422,25 @@ static dispatch_once_t onceToken;
         if (strongSelf.splashDelegate && [strongSelf.splashDelegate respondsToSelector:@selector(splashDismiss:)]) {
             [strongSelf.splashDelegate splashDismiss:strongSelf];
         }
-        if (dismiss) {
-            dismiss();
-        }
     };
 }
 
 /// 信息流广告展示失败的操作
-- (void)splashFailedOpertion:(NSError *)error failed:(MEBaseSplashAdFailed)failed {
+- (void)splashFailedOpertion:(NSError *)error {
     if (self.splashDelegate && [self.splashDelegate respondsToSelector:@selector(feedView:showFeedViewFailure:)]) {
         [self.splashDelegate splashShowFailure:error];
-    }
-    
-    if (failed) {
-        failed(error);
     }
 }
 
 // MARK: - 插屏广告回调
 /// 广告展示成功后的操作
-- (void)interstitialFinishedOperationFinished:(MEBaseInterstitialAdFinished)finished
-                                        close:(MEBaseInterstitialAdCloseClick)close
-                                        click:(MEBaseInterstitialAdClick)click
-                                      dismiss:(MEBaseInterstitialAdDismiss)dismiss {
+- (void)interstitialFinishedOperation {
     self.currentAdPlatform = self.interstitialManager.currentAdPlatform;
     
     __weak typeof(self) weakSelf = self;
     // 广告加载成功
-    if (self.interstitialDelegate && [self.interstitialDelegate respondsToSelector:@selector(interstitialShowSuccess:)]) {
-        [self.interstitialDelegate interstitialShowSuccess:self];
-    }
-    
-    if (finished) {
-        finished();
+    if (self.interstitialDelegate && [self.interstitialDelegate respondsToSelector:@selector(interstitialLoadSuccess:)]) {
+        [self.interstitialDelegate interstitialLoadSuccess:self];
     }
     
     // 点击广告监听
@@ -519,9 +449,12 @@ static dispatch_once_t onceToken;
         if (strongSelf.interstitialDelegate && [strongSelf.interstitialDelegate respondsToSelector:@selector(interstitialClicked:)]) {
             [strongSelf.interstitialDelegate interstitialClicked:strongSelf];
         }
-        
-        if (click) {
-            click();
+    };
+    
+    self.interstitialManager.showFinishBlock = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.interstitialDelegate && [strongSelf.interstitialDelegate respondsToSelector:@selector(interstitialShowSuccess:)]) {
+            [strongSelf.interstitialDelegate interstitialShowSuccess:strongSelf];
         }
     };
     
@@ -531,10 +464,6 @@ static dispatch_once_t onceToken;
         if (strongSelf.interstitialDelegate && [strongSelf.interstitialDelegate respondsToSelector:@selector(interstitialClosed:)]) {
             [strongSelf.interstitialDelegate interstitialClosed:strongSelf];
         }
-        
-        if (close) {
-            close();
-        }
     };
     
     self.interstitialManager.clickThenDismiss = ^{
@@ -542,22 +471,30 @@ static dispatch_once_t onceToken;
         if (strongSelf.interstitialDelegate && [strongSelf.interstitialDelegate respondsToSelector:@selector(interstitialDismiss:)]) {
             [strongSelf.interstitialDelegate interstitialDismiss:strongSelf];
         }
-        
-        if (dismiss) {
-            dismiss();
-        }
     };
 }
 
 /// 广告展示失败的操作
-- (void)interstitialFailedOpertion:(NSError *)error failed:(MEBaseInterstitialAdFailed)failed {
+- (void)interstitialFailedOpertion:(NSError *)error {
     if (self.interstitialDelegate && [self.interstitialDelegate respondsToSelector:@selector(interstitialShowFailure:)]) {
         [self.interstitialDelegate interstitialShowFailure:error];
     }
-    
-    if (failed) {
-        failed(error);
+}
+
+
+// MARK: - Getter
+- (NSMutableDictionary *)rewardedVideoManagers {
+    if (!_rewardedVideoManagers) {
+        _rewardedVideoManagers = [NSMutableDictionary dictionary];
     }
+    return _rewardedVideoManagers;
+}
+
+- (NSMutableDictionary *)interstitialManagers {
+    if (!_interstitialManagers) {
+        _interstitialManagers = [NSMutableDictionary dictionary];
+    }
+    return _interstitialManagers;
 }
 
 @end

@@ -13,8 +13,6 @@
 /// 是否需要展示
 @property (nonatomic, assign) BOOL needShow;
 
-/// 是否展示误点按钮
-@property (nonatomic, assign) BOOL showFunnyBtn;
 /// 原生模板广告
 @property (strong, nonatomic) NSMutableArray *expressAdViews;
 
@@ -46,11 +44,15 @@
 }
 
 // MARK: - 开屏广告
-- (BOOL)showSplashWithPosid:(NSString *)posid {
-    return [self showSplashWithPosid:posid delay:3.0f bottomView:nil];
+- (void)preloadSplashWithPosid:(NSString *)posid {
+    [MobiSplash preloadSplashOrderWithPosid:posid];
 }
 
-- (BOOL)showSplashWithPosid:(NSString *)posid delay:(NSTimeInterval)delay bottomView:(UIView *)view {
+- (BOOL)loadAndShowSplashWithPosid:(NSString *)posid {
+    return [self loadAndShowSplashWithPosid:posid delay:3.0f bottomView:nil];
+}
+
+- (BOOL)loadAndShowSplashWithPosid:(NSString *)posid delay:(NSTimeInterval)delay bottomView:(UIView *)view {
     UIViewController *vc = [self topVC];
     if (!vc) {
         return NO;
@@ -74,8 +76,9 @@
 /// @param feedWidth 广告位宽度
 /// @param posId 广告位id
 - (BOOL)showFeedViewWithWidth:(CGFloat)feedWidth
-                        posId:(nonnull NSString *)posId {
-    return [self showFeedViewWithWidth:feedWidth posId:posId withDisplayTime:0];
+                        posId:(nonnull NSString *)posId
+                        count:(NSInteger)count {
+    return [self showFeedViewWithWidth:feedWidth posId:posId count:count withDisplayTime:0];
 }
 
 /// 显示信息流视图
@@ -84,6 +87,7 @@
 /// @param displayTime 展示时长,0表示不限制时长
 - (BOOL)showFeedViewWithWidth:(CGFloat)feedWidth
                         posId:(nonnull NSString *)posId
+                        count:(NSInteger)count
               withDisplayTime:(NSTimeInterval)displayTime {
     // 取消所有请求
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showFeedViewTimeout) object:nil];
@@ -92,6 +96,7 @@
     
     MobiFeedModel *model = [[MobiFeedModel alloc] init];
     model.feedSize = CGSizeMake(feedWidth, 0);
+    model.count = count;
     [MobiFeed loadFeedAdWithPosid:posId feedModel:model];
     [MobiFeed setDelegate:self forPosid:posId];
     
@@ -105,9 +110,21 @@
 }
 
 // MARK: - 插屏
-- (BOOL)showInterstitialViewWithPosid:(NSString *)posid showFunnyBtn:(BOOL)showFunnyBtn {
+- (BOOL)hasInterstitialAvailableWithPosid:(NSString *)posid {
+    if (posid == nil) {
+        return NO;
+    }
+    
+    MPInterstitialAdController *ad = [MPInterstitialAdController interstitialAdControllerForAdUnitId:posid];
+    if (ad) {
+        return ad.ready;
+    }
+    
+    return NO;
+}
+/// 加载插屏页
+- (BOOL)loadInterstitialWithPosid:(NSString *)posid {
     self.posid = posid;
-    self.showFunnyBtn = showFunnyBtn;
     
     if (![self topVC]) {
         return NO;
@@ -122,12 +139,31 @@
     return YES;
 }
 
+/// 展示插屏页
+- (void)showInterstitialFromViewController:(UIViewController *)rootVC posid:(NSString *)posid {
+    // 这里初始化没关系,内部会先从已经存在的实例中拿出对应实例的
+    MPInterstitialAdController *ad = [MPInterstitialAdController interstitialAdControllerForAdUnitId:posid];
+    if (ad.ready == YES) {
+        [ad showFromViewController:[self topVC]];
+    }
+}
+
 - (void)stopInterstitialWithPosid:(NSString *)posid {
     self.needShow = NO;
 }
 
 // MARK: - 激励视频
-- (BOOL)showRewardVideoWithPosid:(NSString *)posid {
+/// 是否有有效的激励视频
+- (BOOL)hasRewardedVideoAvailableWithPosid:(NSString *)posid {
+    if (posid == nil) {
+        return NO;
+    }
+    
+    return [MobiRewardedVideo hasAdAvailableForPosid:posid];
+}
+
+/// 加载激励视频
+- (BOOL)loadRewardVideoWithPosid:(NSString *)posid {
     self.needShow = YES;
     self.posid = posid;
     
@@ -135,15 +171,22 @@
         return NO;
     }
     
-    if (self.isTheVideoPlaying == YES) {
-        // 若当前有视频正在播放,则此次激励视频不播放
-        return YES;
-    }
-    
     [MobiRewardedVideo loadRewardedVideoAdWithPosid:posid rewardedVideoModel:nil];
     [MobiRewardedVideo setDelegate:self forPosid:posid];
     
     return YES;
+}
+
+/// 展示激励视频
+- (void)showRewardedVideoFromViewController:(UIViewController *)rootVC posid:(NSString *)posid {
+    if (posid == nil) {
+        return;
+    }
+    
+    if (self.isTheVideoPlaying == NO && [MobiRewardedVideo hasAdAvailableForPosid:posid]) {
+        self.isTheVideoPlaying = YES;
+        [MobiRewardedVideo showRewardedVideoAdForPosid:posid fromViewController:rootVC withReward:nil];
+    }
 }
 
 /// 结束当前视频
@@ -337,10 +380,6 @@
 // MARK: - MobiFeedDelegate
 - (void)nativeExpressAdSuccessToLoad:(MobiFeed *)nativeExpressAd views:(NSArray<__kindof MobiNativeExpressFeedView *> *)views {
     [views enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (self.feedDelegate && [self.feedDelegate respondsToSelector:@selector(adapterFeedLoadSuccess:feedView:)]) {
-            [self.feedDelegate adapterFeedLoadSuccess:self feedView:obj];
-        }
-        
         // 上报日志
         MEAdLogModel *model = [MEAdLogModel new];
         model.event = AdLogEventType_Load;
@@ -354,6 +393,10 @@
         // 立即上传
         [MEAdLogModel uploadImmediately];
     }];
+    
+    if (self.feedDelegate && [self.feedDelegate respondsToSelector:@selector(adapterFeedLoadSuccess:feedViews:)]) {
+        [self.feedDelegate adapterFeedLoadSuccess:self feedViews:views];
+    }
 }
 
 - (void)nativeExpressAdFailToLoad:(MobiFeed *)nativeExpressAd error:(NSError *)error {
@@ -472,11 +515,6 @@
         [self.videoDelegate adapterVideoLoadSuccess:self];
     }
     
-    if (self.needShow) {
-        self.isTheVideoPlaying = YES;
-        [MobiRewardedVideo showRewardedVideoAdForPosid:self.posid fromViewController:[self topVC] withReward:nil];
-    }
-    
     // 上报日志
     MEAdLogModel *model = [MEAdLogModel new];
     model.event = AdLogEventType_Load;
@@ -492,11 +530,22 @@
 }
 
 /**
+ * 广告资源缓存成功调用此方法
+ * 建议在此方法回调后执行播放视频操作
+ */
+- (void)rewardedVideoAdVideoDidLoad:(MobiRewardedVideo *)rewardedVideo {
+    if (self.videoDelegate && [self.videoDelegate respondsToSelector:@selector(adapterVideoDidDownload:)]) {
+        [self.videoDelegate adapterVideoDidDownload:self];
+    }
+}
+
+/**
  * 激励视频资源加载失败回调此方法
  * @param error NSError类型的错误信息
  */
 - (void)rewardedVideoAdDidFailToLoad:(MobiRewardedVideo *)rewardedVideo error:(NSError *)error {
     if (self.needShow) {
+        self.isTheVideoPlaying = NO;
         if (self.videoDelegate && [self.videoDelegate respondsToSelector:@selector(adapter:videoShowFailure:)]) {
             [self.videoDelegate adapter:self videoShowFailure:error];
         }
@@ -528,6 +577,7 @@
 - (void)rewardedVideoAdDidExpire:(MobiRewardedVideo *)rewardedVideo {
     NSError *error = [NSError errorWithDomain:@"mobipub rewarded video was expired" code:-1012 userInfo:nil];
     if (self.needShow) {
+        self.isTheVideoPlaying = NO;
         if (self.videoDelegate && [self.videoDelegate respondsToSelector:@selector(adapter:videoShowFailure:)]) {
             [self.videoDelegate adapter:self videoShowFailure:error];
         }
@@ -558,6 +608,7 @@
  */
 - (void)rewardedVideoAdDidFailToPlay:(MobiRewardedVideo *)rewardedVideo error:(NSError *)error {
     if (self.needShow) {
+        self.isTheVideoPlaying = NO;
         if (self.videoDelegate && [self.videoDelegate respondsToSelector:@selector(adapter:videoShowFailure:)]) {
             [self.videoDelegate adapter:self videoShowFailure:error];
         }
@@ -587,6 +638,7 @@
  *
  */
 - (void)rewardedVideoAdWillAppear:(MobiRewardedVideo *)rewardedVideo {
+    self.isTheVideoPlaying = YES;
     if (self.videoDelegate && [self.videoDelegate respondsToSelector:@selector(adapterVideoShowSuccess:)]) {
         [self.videoDelegate adapterVideoShowSuccess:self];
     }
@@ -609,7 +661,6 @@
         [self.videoDelegate adapterVideoClose:self];
     }
     self.isTheVideoPlaying = NO;
-    [self.funnyButton removeFromSuperview];
     
     self.needShow = NO;
     [MobiRewardedVideo loadRewardedVideoAdWithPosid:self.posid rewardedVideoModel:nil];
@@ -669,13 +720,6 @@
 - (void)interstitialDidLoadAd:(MPInterstitialAdController *)interstitial {
     if (self.interstitialDelegate && [self.interstitialDelegate respondsToSelector:@selector(adapterInterstitialLoadSuccess:)]) {
         [self.interstitialDelegate adapterInterstitialLoadSuccess:self];
-    }
-    
-    if (self.needShow) {
-        [interstitial showFromViewController:[self topVC]];
-        if (self.interstitialDelegate && [self.interstitialDelegate respondsToSelector:@selector(adapterInterstitialShowSuccess:)]) {
-            [self.interstitialDelegate adapterInterstitialShowSuccess:self];
-        }
     }
     
     // 上报日志
@@ -764,7 +808,6 @@
     
     self.needShow = NO;
     [interstitial loadAd];
-    [self.funnyButton removeFromSuperview];
 }
 
 - (void)interstitialDidDisappear:(MPInterstitialAdController *)interstitial {

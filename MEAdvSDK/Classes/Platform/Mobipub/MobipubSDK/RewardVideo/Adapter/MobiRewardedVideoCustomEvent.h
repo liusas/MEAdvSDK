@@ -68,6 +68,9 @@
 /// @param customEvent 返回子类的`self`,便于上层处理计时等操作
 /// 注意:加载成功后,这个方法必须实现,不执行此方法会终断SDK处理流程,导致广告展示错误
 - (void)rewardedVideoDidLoadAdForCustomEvent:(id<MobiRewardedVideoCustomEvent>)customEvent;
+/// 广告资源缓存成功调用此方法
+/// @param customEvent 返回子类的`self`,便于上层处理计时等操作
+- (void)rewardedVideoAdVideoDidLoadForCustomEvent:(id<MobiRewardedVideoCustomEvent>)customEvent;
 
 /// 广告加载失败后立即调用此方法
 /// @param customEvent 返回子类的`self`,便于上层处理计时等操作

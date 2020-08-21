@@ -167,21 +167,12 @@
         [strongSelf.expirationTimer invalidate];
     }];
     [self.expirationTimer scheduleNow];
-    
-//    if ([customEvent isKindOfClass:[MPVASTInterstitialCustomEvent class]]
-//        || [customEvent isKindOfClass:[MPMoPubRewardedVideoCustomEvent class]]
-//        || [customEvent isKindOfClass:[MPMoPubRewardedPlayableCustomEvent class]]) {
-//        // Set up timer for expiration
-//        __weak __typeof__(self) weakSelf = self;
-//        self.expirationTimer = [[MPRealTimeTimer alloc] initWithInterval:[MPConstants adsExpirationInterval] block:^(MPRealTimeTimer *timer){
-//            __strong __typeof__(weakSelf) strongSelf = weakSelf;
-//            if (strongSelf && !strongSelf.hasTrackedImpression) {
-//                [strongSelf rewardedVideoDidExpireForCustomEvent:strongSelf.rewardedVideoCustomEvent];
-//            }
-//            [strongSelf.expirationTimer invalidate];
-//        }];
-//        [self.expirationTimer scheduleNow];
-//    }
+}
+
+- (void)rewardedVideoAdVideoDidLoadForCustomEvent:(id<MobiRewardedVideoCustomEvent>)customEvent {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(rewardedVideoAdVideoDidLoadForAdapter:)]) {
+        [self.delegate rewardedVideoAdVideoDidLoadForAdapter:self];
+    }
 }
 
 - (void)rewardedVideoDidFailToLoadAdForCustomEvent:(id<MobiRewardedVideoCustomEvent>)customEvent error:(NSError *)error {

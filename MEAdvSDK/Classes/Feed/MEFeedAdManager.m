@@ -25,10 +25,9 @@
 /// 此次信息流管理类分配到的广告平台模型数组,保证一次信息流广告有一个广告平台成功展示
 @property (nonatomic, strong) NSMutableArray <StrategyResultModel *>*assignResultArr;
 
-@property (nonatomic, copy) CacheLoadAdFinished cacheLoadFinished;
-@property (nonatomic, copy) CacheLoadAdFailed cacheLoadFailed;
-@property (nonatomic, copy) LoadAdFinished finished;
+@property (nonatomic, copy) LoadAdFinished loadFinished;
 @property (nonatomic, copy) LoadAdFailed failed;
+
 
 @property (nonatomic, strong) MEAdMemoryCache *adCache;
 
@@ -41,6 +40,8 @@
 @property (nonatomic, assign) BOOL hasSuccessfullyLoaded;
 // 超时计时器
 @property (nonatomic, strong) MEExpirationTimer *expirationTimer;
+
+@property (nonatomic, assign) NSInteger loadAdsCount;
 
 // 广告应该停止请求,可能原因1.超时, 2.已经成功拉取到广告
 @property (nonatomic, assign) BOOL needToStop;
@@ -65,6 +66,7 @@
         self.currentAdapters = [NSMutableDictionary dictionary];
         self.assignResultArr = [NSMutableArray array];
         self.adCache = [[MEAdMemoryCache alloc] init];
+        self.loadAdsCount = 1;//默认 1 个
         _needToStop = NO;
     }
     return self;
@@ -73,55 +75,38 @@
 // MARK: - 信息流
 /// 显示信息流视图
 /// @param feedWidth 信息流背景视图宽度
-- (void)showFeedViewWithWidth:(CGFloat)feedWidth
+- (void)loadFeedViewWithWidth:(CGFloat)feedWidth
                       sceneId:(NSString *)sceneId
+                        count:(NSInteger)count
                      finished:(LoadAdFinished)finished
                        failed:(LoadAdFailed)failed {
-    [self showFeedViewWithWidth:feedWidth sceneId:sceneId withDisplayTime:0 finished:finished failed:failed];
+    [self loadFeedViewWithWidth:feedWidth sceneId:sceneId count:count withDisplayTime:0 finished:finished failed:failed];
 }
 
 /// 显示信息流视图
 /// @param feedWidth 信息流背景视图宽度
 /// @param displayTime 展示时长
-- (void)showFeedViewWithWidth:(CGFloat)feedWidth
+- (void)loadFeedViewWithWidth:(CGFloat)feedWidth
                       sceneId:(NSString *)sceneId
+                        count:(NSInteger)count
               withDisplayTime:(NSTimeInterval)displayTime
                      finished:(LoadAdFinished)finished
                        failed:(LoadAdFailed)failed {
-    self.finished = finished;
+    self.loadFinished = finished;
     self.failed = failed;
     
     _requestCount = 0;
     
     self.currentViewWidth = feedWidth;
     
-    // 分配广告平台
-    if (![self assignAdPlatformAndShowLogic1WithWidth:feedWidth sceneId:sceneId platform:MEAdAgentTypeNone]) {
-        NSError *error = [NSError errorWithDomain:@"adv assign failed" code:0 userInfo:@{NSLocalizedDescriptionKey: @"分配失败"}];
-        failed(error);
-        return;
+    if (self.loadAdsCount >= 1 && self.loadAdsCount <= 3) {
+        self.loadAdsCount = count;
+    } else {
+        self.loadAdsCount = 1;
     }
     
-    // 若超时时间为0,则不处理超时情况
-    if (!self.configManger.adRequestTimeout) {
-        return;
-    }
-    
-    [self performSelector:@selector(stopAdapterAndRemoveFromAssignResultArr) withObject:nil afterDelay:self.configManger.adRequestTimeout];
-}
-
-// MARK: - 信息流自渲染
-/// 显示自渲染的信息流视图
-- (void)showRenderFeedViewWithSceneId:(NSString *)sceneId
-                             finished:(LoadAdFinished)finished
-                               failed:(LoadAdFailed)failed {
-    self.finished = finished;
-    self.failed = failed;
-    
-    _requestCount = 0;
-    
     // 分配广告平台
-    if (![self assignRenderAdPlatformAndShowWithSceneId:sceneId platform:MEAdAgentTypeNone]) {
+    if (![self assignAdPlatformAndShowLogic1WithWidth:feedWidth count:count sceneId:sceneId platform:MEAdAgentTypeNone]) {
         NSError *error = [NSError errorWithDomain:@"adv assign failed" code:0 userInfo:@{NSLocalizedDescriptionKey: @"分配失败"}];
         failed(error);
         return;
@@ -136,8 +121,7 @@
 }
 
 // MARK: - MEBaseAdapterFeedProtocol
-/// 展现FeedView成功
-- (void)adapterFeedShowSuccess:(MEBaseAdapter *)adapter feedView:(nonnull UIView *)feedView {
+- (void)adapterFeedLoadSuccess:(MEBaseAdapter *)adapter feedViews:(NSArray *)feedViews {
     if (self.hasSuccessfullyLoaded) {
         return;
     }
@@ -162,41 +146,18 @@
     // 控制广告平台展示频次
     [StrategyFactory changeAdFrequencyWithSceneId:adapter.sceneId];
     
-    if (self.finished) {
-        self.finished(feedView);
+    if (self.loadFinished) {
+        self.loadFinished(feedViews);
     }
 }
 
-- (void)adapterFeedRenderShowSuccess:(MEBaseAdapter *)adapter feedView:(GDTUnifiedNativeAdView *)feedView {
-    if (self.hasSuccessfullyLoaded) {
-        return;
-    }
-
-    // 只要有一个成功,就停止超时任务的执行
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopAdapterAndRemoveFromAssignResultArr) object:nil];
-    
-    self.hasSuccessfullyLoaded = YES;
-    
-    // 添加adapter到当前管理adapter的字典
-    self.currentAdapters[adapter.sceneId] = adapter;
-    [self removeAssignResultArrObjectWithAdapter:adapter];
-    
-    // 停止其他adapter
-    [self stopAdapterAndRemoveFromAssignResultArr];
-    
-    // 拉取成功后,置0
-    _requestCount = 0;
+/// 展现FeedView成功
+- (void)adapterFeedShowSuccess:(MEBaseAdapter *)adapter feedView:(UIView *)feedView {
     // 当前广告平台
     self.currentAdPlatform = adapter.platformType;
     
-    // 添加adapter到当前管理adapter的字典
-    self.currentAdapters[adapter.sceneId] = adapter;
-    
-    // 控制广告平台展示频次
-    [StrategyFactory changeAdFrequencyWithSceneId:adapter.sceneId];
-    
-    if (self.finished) {
-        self.finished(feedView);
+    if (self.showFinished) {
+        self.showFinished(feedView);
     }
 }
 
@@ -204,6 +165,10 @@
 - (void)adapter:(MEBaseAdapter *)adapter bannerShowFailure:(NSError *)error {
     // 从数组中移除不需要处理的adapter
     [self removeAssignResultArrObjectWithAdapter:adapter];
+    
+    if (self.hasSuccessfullyLoaded) {
+        return;
+    }
     
     _requestCount++;
     // 当前广告平台
@@ -214,21 +179,17 @@
         // 下次选择的广告平台
         MEAdAgentType nextPlatform = [self.configManger nextAdPlatformWithSceneId:adapter.sceneId currentPlatform:adapter.platformType];
 
-        // 自渲染信息流加载失败则再次加载自渲染信息流
-#warning 去掉广点通时隐藏的
-//        if ([adapter isKindOfClass:[MEGDTFeedRenderAdapter class]]) {
-//            [self assignRenderAdPlatformAndShowWithSceneId:adapter.sceneId platform:MEAdAgentTypeGDT];
-//            return;
-//        }
-
         CGFloat feedViewWidth = self.currentViewWidth ? self.currentViewWidth : [UIScreen mainScreen].bounds.size.width-40;
-        [self assignAdPlatformAndShowLogic1WithWidth:feedViewWidth sceneId:adapter.sceneId platform:nextPlatform];
+        [self assignAdPlatformAndShowLogic1WithWidth:feedViewWidth count:self.loadAdsCount sceneId:adapter.sceneId platform:nextPlatform];
         return;
     }
     
-    _requestCount = 0;
-    if (self.failed) {
-        self.failed(error);
+    // 执行完所有策略后依然失败,则返回失败信息
+    if (self.assignResultArr.count == 0) {
+        if (self.failed) {
+            self.failed(error);
+        }
+        _requestCount = 0;
     }
 }
 
@@ -255,7 +216,7 @@
 }
 
 // MARK: 按广告位posid选择广告的逻辑,此次采用
-- (BOOL)assignAdPlatformAndShowLogic1WithWidth:(CGFloat)width sceneId:(NSString *)sceneId platform:(MEAdAgentType)targetPlatform {
+- (BOOL)assignAdPlatformAndShowLogic1WithWidth:(CGFloat)width count:(NSInteger)count sceneId:(NSString *)sceneId platform:(MEAdAgentType)targetPlatform {
     NSArray <StrategyResultModel *>*resultArr = [[StrategyFactory sharedInstance] getPosidBySortTypeWithPlatform:targetPlatform SceneId:sceneId];
     
     if (resultArr == nil || resultArr.count == 0) {
@@ -283,7 +244,7 @@
             }
             
             // 找到下一个广告平台则指定出这个平台的广告
-            return [self assignAdPlatformAndShowLogic1WithWidth:width sceneId:sceneId platform:nextPlatform];
+            return [self assignAdPlatformAndShowLogic1WithWidth:width count:count sceneId:sceneId platform:nextPlatform];
         }
         
         adapter.feedDelegate = self;
@@ -291,57 +252,11 @@
         adapter.sceneId = sceneId;
         adapter.isGetForCache = NO;
         adapter.sortType = [[MEConfigManager sharedInstance] getSortTypeFromSceneId:model.sceneId];
-        [adapter showFeedViewWithWidth:width posId:model.posid];
+        [adapter showFeedViewWithWidth:width posId:model.posid count:count];
         // 请求日志上报
         [self trackRequestWithSortType:adapter.sortType sceneId:sceneId platformType:model.platformType];
     }
     
-    return YES;
-}
-
-/// 为自渲染信息流分配平台
-- (BOOL)assignRenderAdPlatformAndShowWithSceneId:(NSString *)sceneId platform:(MEAdAgentType)targetPlatform {
-    NSArray <StrategyResultModel *>*resultArr = [[StrategyFactory sharedInstance] getPosidBySortTypeWithPlatform:targetPlatform SceneId:sceneId];
-    
-    if (resultArr == nil || resultArr.count == 0) {
-        return NO;
-    }
-    
-    self.assignResultArr = [NSMutableArray arrayWithArray:resultArr];
-    
-    // 数组返回几个适配器就去请求几个平台的广告
-    for (StrategyResultModel *model in resultArr) {
-        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[model.sceneId];
-        if ([adapter isKindOfClass:model.targetAdapterClass]) {
-            // 若当前有可用的adapter则直接拿来用
-        } else {
-            adapter = [model.targetAdapterClass sharedInstance];
-        }
-        
-        // 若此时adapter依然为空,则表示没有相应广告平台的适配器
-        // 若策略是每次只请求一个广告平台,则继续找下一个广告平台
-        if (adapter == nil && resultArr.count == 1) {
-            MEAdAgentType nextPlatform = [self.configManger nextAdPlatformWithSceneId:sceneId currentPlatform:model.platformType];
-            if (nextPlatform == MEAdAgentTypeAll) {
-                // 没有分配到合适广告
-                return NO;
-            }
-            
-            // 找到下一个广告平台则指定出这个平台的广告
-            return [self assignRenderAdPlatformAndShowWithSceneId:sceneId platform:nextPlatform];
-        }
-        
-        adapter.feedDelegate = self;
-        // 场景id
-        adapter.sceneId = sceneId;
-        adapter.isGetForCache = NO;
-        adapter.sortType = [[MEConfigManager sharedInstance] getSortTypeFromSceneId:model.sceneId];
-        [adapter showRenderFeedViewWithPosId:model.posid];
-        
-        // 请求日志上报
-        [self trackRequestWithSortType:adapter.sortType sceneId:sceneId platformType:model.platformType];
-    }
-      
     return YES;
 }
 

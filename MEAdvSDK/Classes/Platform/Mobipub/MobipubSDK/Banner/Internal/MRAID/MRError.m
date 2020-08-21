@@ -8,4 +8,4 @@
 
 #import "MRError.h"
 
-NSString * const MoPubMRAIDAdsSDKDomain = @"com.mopub.iossdk.mraid";
+NSString * const MoPubMRAIDAdsSDKDomain = @"com.mobipub.iossdk.mraid";

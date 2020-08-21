@@ -116,9 +116,6 @@ static NSInteger defaultWaitDataDuration = 3;
         NSURL *pathURL = [MobiVideoAdCache getCacheVideoWithURL:[NSURL URLWithString:configuration.videoNameOrURLString]];
 //        NSURL *pathURL = [NSURL URLWithString:configuration.videoNameOrURLString];
         if(pathURL){
-            if ([self.delegate respondsToSelector:@selector(rewardedVideo:didLoadAdSuccess:)]) {
-                [self.delegate rewardedVideo:self didLoadAdSuccess:pathURL];
-            }
             self.contenURL = pathURL;
             [self presentTopPlayVideoWithController:self.controller];
 //            _adVideoView.contentURL = pathURL;
@@ -126,13 +123,6 @@ static NSInteger defaultWaitDataDuration = 3;
 //            [_adVideoView.videoPlayer.player play];
         }else{
             [[MobiVideoAdDownloader sharedDownloader] downloadVideoWithURL:[NSURL URLWithString:configuration.videoNameOrURLString] progress:^(unsigned long long total, unsigned long long current) {
-//                if ([weakSelf.delegate respondsToSelector:@selector(xhLaunchAd:videoDownLoadProgress:total:current:)]) {
-//                    //[weakSelf.delegate xhLaunchAd:self videoDownLoadProgress:current/(float)total total:total current:current];
-//                }
-                if ([self.delegate respondsToSelector:@selector(rewardedVideo:didLoadAdSuccess:)]) {
-                    [self.delegate rewardedVideo:self didLoadAdSuccess:pathURL];
-                }
-                
             }  completed:^(NSURL * _Nullable location, NSError * _Nullable error){
                 if(!error){
                     if ([self.delegate respondsToSelector:@selector(rewardedVideoShowSuccess:)]) {

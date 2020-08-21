@@ -46,7 +46,8 @@ typedef NS_ENUM(NSUInteger, MEAdType) {
 };
 
 // block回调
-typedef void(^MEBaseSplashAdFinished)(void);                    // 开屏广告展示成功
+typedef void(^MEBaseSplashAdLoadFinished)(void);                // 开屏广告加载成功
+typedef void(^MEBaseSplashAdShowFinished)(void);                // 开屏广告展示成功
 typedef void(^MEBaseSplashAdFailed)(NSError *error);            // 开屏广告展示失败
 typedef void(^MEBaseSplashAdCloseClick)(void);                  // 开屏广告被关闭
 typedef void(^MEBaseSplashAdClick)(void);                       // 开屏广告被点击
@@ -99,6 +100,8 @@ typedef void(^MEBaseRewardVideoCloseClick)(void);               // 视频广告�
 
 @protocol MESplashDelegate <NSObject>
 @optional
+/// 开屏广告加载成功
+- (void)splashLoadSuccess:(MEAdBaseManager *)adManager;
 /// 开屏广告展现成功
 - (void)splashShowSuccess:(MEAdBaseManager *)adManager;
 /// 开屏广告展现失败
@@ -113,6 +116,8 @@ typedef void(^MEBaseRewardVideoCloseClick)(void);               // 视频广告�
 
 @protocol MEInterstitialDelegate <NSObject>
 @optional
+/// 广告加载成功
+- (void)interstitialLoadSuccess:(MEAdBaseManager *)adManager;
 /// 广告展现成功
 - (void)interstitialShowSuccess:(MEAdBaseManager *)adManager;
 /// 广告展现失败
@@ -127,11 +132,12 @@ typedef void(^MEBaseRewardVideoCloseClick)(void);               // 视频广告�
 
 @protocol MEFeedViewDelegate <NSObject>
 @optional
+/// 信息流广告加载成功
+- (void)feedViewLoadSuccess:(MEAdBaseManager *)adManager feedViews:(NSArray *)feedViews;
 /// 信息流广告展现成功
 - (void)feedViewShowSuccess:(MEAdBaseManager *)adManager feedView:(UIView *)feedView;
-
 /// 信息流广告展现失败
-- (void)feedViewShowFeedViewFailure:(NSError *)error;
+- (void)feedViewShowFailure:(NSError *)error;
 
 /// 信息流广告被关闭
 - (void)feedViewCloseClick:(MEAdBaseManager *)adManager;
@@ -143,6 +149,9 @@ typedef void(^MEBaseRewardVideoCloseClick)(void);               // 视频广告�
 
 @protocol MERewardVideoDelegate <NSObject>
 @optional
+- (void)rewardVideoLoadSuccess:(MEAdBaseManager *)adManager;
+/// 为防止播放时卡顿,在此回调后展示激励视频比较好
+- (void)rewardVideoDidDownloadSuccess:(MEAdBaseManager *)adManager;
 /// 展现video成功
 - (void)rewardVideoShowSuccess:(MEAdBaseManager *)adManager;
 

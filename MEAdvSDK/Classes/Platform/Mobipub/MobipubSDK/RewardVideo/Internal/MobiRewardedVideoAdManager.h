@@ -58,6 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol MobiRewardedVideoAdManagerDelegate <NSObject>
 
 - (void)rewardedVideoDidLoadForAdManager:(MobiRewardedVideoAdManager *)manager;
+/// 广告资源缓存成功调用此方法
+- (void)rewardedVideoAdVideoDidLoadForAdManager:(MobiRewardedVideoAdManager *)manager;
 - (void)rewardedVideoDidFailToLoadForAdManager:(MobiRewardedVideoAdManager *)manager error:(NSError *)error;
 - (void)rewardedVideoDidExpireForAdManager:(MobiRewardedVideoAdManager *)manager;
 - (void)rewardedVideoDidFailToPlayForAdManager:(MobiRewardedVideoAdManager *)manager error:(NSError *)error;

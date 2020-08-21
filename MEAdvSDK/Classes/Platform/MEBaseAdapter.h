@@ -30,8 +30,8 @@
 - (void)adapterFeedCacheGetFailed:(NSError *)error;
 @required
 /// 广告加载成功
-- (void)adapterFeedLoadSuccess:(MEBaseAdapter *)adapter feedView:(UIView *)feedView;
-/// 展现FeedView成功
+- (void)adapterFeedLoadSuccess:(MEBaseAdapter *)adapter feedViews:(NSArray *)feedViews;
+/// 展现FeedView成功,在拉取多个 feedview 时会调用多次
 - (void)adapterFeedShowSuccess:(MEBaseAdapter *)adapter feedView:(UIView *)feedView;
 /// 展示自渲染FeedView成功,需要手动设置其各控件的布局
 - (void)adapterFeedRenderShowSuccess:(MEBaseAdapter *)adapter feedView:(GDTUnifiedNativeAdView *)feedView;
@@ -48,7 +48,8 @@
 
 /// 广告加载成功
 - (void)adapterVideoLoadSuccess:(MEBaseAdapter *)adapter;
-
+/// 视频缓存完成,建议在该回调后播放激励视频
+- (void)adapterVideoDidDownload:(MEBaseAdapter *)adapter;
 /// 展现video成功
 - (void)adapterVideoShowSuccess:(MEBaseAdapter *)adapter;
 
@@ -149,13 +150,15 @@
 /// 显示信息流视图
 /// @param feedWidth 广告位宽度
 - (BOOL)showFeedViewWithWidth:(CGFloat)feedWidth
-                        posId:(NSString *)posId;
+                        posId:(NSString *)posId
+                        count:(NSInteger)count;
 
 /// 显示信息流视图
 /// @param feedWidth 广告位宽度
 /// @param displayTime 展示时长
 - (BOOL)showFeedViewWithWidth:(CGFloat)feedWidth
                         posId:(NSString *)posId
+                        count:(NSInteger)count
               withDisplayTime:(NSTimeInterval)displayTime;
 
 /// 移除信息流视图
@@ -173,27 +176,35 @@
 - (void)removeRenderFeedViewWithPosid:(NSString *)posid;
 
 // MARK: - 激励视频广告
-
+/// 激励视频是否有效
+- (BOOL)hasRewardedVideoAvailableWithPosid:(NSString *)posid;
+/// 加载激励视频
+- (BOOL)loadRewardVideoWithPosid:(NSString *)posid;
 /// 展示激励视频
-- (BOOL)showRewardVideoWithPosid:(NSString *)posid;
+- (void)showRewardedVideoFromViewController:(UIViewController *)rootVC posid:(NSString *)posid;
 
 /// 关闭当前视频
 - (void)stopCurrentVideoWithPosid:(NSString *)posid;
 
 // MARK: - 开屏广告
-
+/// 预加载开屏广告
+- (void)preloadSplashWithPosid:(NSString *)posid;
 /// 展示开屏页
-- (BOOL)showSplashWithPosid:(NSString *)posid;
+- (BOOL)loadAndShowSplashWithPosid:(NSString *)posid;
 
 /// 展示带底部logo的开屏页
-- (BOOL)showSplashWithPosid:(NSString *)posid delay:(NSTimeInterval)delay bottomView:(UIView *)view;
+- (BOOL)loadAndShowSplashWithPosid:(NSString *)posid delay:(NSTimeInterval)delay bottomView:(UIView *)view;
 
 /// 停止开屏广告渲染,可能因为超时等原因
 - (void)stopSplashRenderWithPosid:(NSString *)posid;
 
 // MARK: - 插屏广告
+/// 激励视频是否有效
+- (BOOL)hasInterstitialAvailableWithPosid:(NSString *)posid;
+/// 加载插屏页
+- (BOOL)loadInterstitialWithPosid:(NSString *)posid;
 /// 展示插屏页
-- (BOOL)showInterstitialViewWithPosid:(NSString *)posid showFunnyBtn:(BOOL)showFunnyBtn;
+- (void)showInterstitialFromViewController:(UIViewController *)rootVC posid:(NSString *)posid;
 /// 停止插屏
 - (void)stopInterstitialWithPosid:(NSString *)posid;
 

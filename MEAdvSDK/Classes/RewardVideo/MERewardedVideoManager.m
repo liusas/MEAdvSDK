@@ -54,21 +54,15 @@
     }
     return self;
 }
-/// 展示激励视频
-- (void)showRewardVideoWithSceneId:(NSString *)sceneId
-                          Finished:(LoadRewardVideoFinish)finished
-                            failed:(LoadRewardVideoFailed)failed {
+
+/// 加载激励视频
+- (void)loadRewardedVideoWithSceneId:(NSString *)sceneId
+                            finished:(LoadRewardVideoFinish)finished
+                              failed:(LoadRewardVideoFailed)failed {
     self.finished = finished;
     self.failed = failed;
     
     _requestCount = 0;
-    
-    // 若当前正在播放视频,则禁止此次操作
-    for (id <MEBaseAdapterProtocol>adapter in self.currentAdapters.allValues) {
-        if (adapter.isTheVideoPlaying == YES) {
-            return;
-        }
-    }
     
     // 分配广告平台
     if (![self assignAdPlatformAndShowLogic1WithSceneId:sceneId platform:MEAdAgentTypeNone]) {
@@ -82,26 +76,82 @@
         return;
     }
     
-    [self performSelector:@selector(stopAdapterAndRemoveFromAssignResultArr) withObject:nil afterDelay:self.configManger.adRequestTimeout];
+    [self performSelector:@selector(requestTimeout) withObject:nil afterDelay:self.configManger.adRequestTimeout];
+}
+
+/// 展示激励视频
+- (void)showRewardedVideoFromViewController:(UIViewController *)rootVC
+                                    sceneId:(NSString *)sceneId {
+    if (sceneId == nil) {
+        NSError *error = [NSError errorWithDomain:@"sceneId can not be nil" code:0 userInfo:@{NSLocalizedDescriptionKey: @"视频弹出失败"}];
+        self.failed(error);
+        return;
+    }
+    
+    for (NSString *posid in self.currentAdapters.allKeys) {
+        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[posid];
+        
+        if (adapter) {
+            // 若当前正在播放视频,则禁止此次操作
+            if (adapter.isTheVideoPlaying == YES) {
+                return;
+            }
+            
+            // 展示视频
+            [adapter showRewardedVideoFromViewController:rootVC posid:posid];
+            return;
+        }
+        
+        // 到这表示没有可用的激励视频
+        NSError *error = [NSError errorWithDomain:@"There are no ads to show" code:0 userInfo:@{NSLocalizedDescriptionKey: @"视频弹出失败"}];
+        self.failed(error);
+        break;
+    }
 }
 
 /// 关闭当前视频
-- (void)stopCurrentVideo {
+- (void)stopCurrentVideoWithSceneId:(NSString *)sceneId {
+    for (NSString *posid in self.currentAdapters.allKeys) {
+        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[posid];
+        
+        if (adapter) {
+            // 展示视频
+            [adapter stopCurrentVideoWithPosid:posid];
+            return;
+        }
+        
+        // 没有找到相应的 adapter,无法关闭
+        NSError *error = [NSError errorWithDomain:@"There are no ads to close" code:0 userInfo:@{NSLocalizedDescriptionKey: @"视频关闭失败"}];
+        self.failed(error);
+        break;
+    }
+}
+
+- (BOOL)hasRewardedVideoAvailableWithSceneId:(NSString *)sceneId {
+    for (NSString *posid in self.currentAdapters.allKeys) {
+        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[posid];
+        
+        if (adapter) {
+            return [adapter hasRewardedVideoAvailableWithPosid:posid];
+        }
+        break;
+    }
+    
+    return NO;
 }
 
 // MARK: - MEBaseAdapterVideoProtocol
-/// 展现video成功
-- (void)adapterVideoShowSuccess:(MEBaseAdapter *)adapter {
+- (void)adapterVideoLoadSuccess:(MEBaseAdapter *)adapter {
     if (self.hasSuccessfullyLoaded) {
         return;
     }
-
-//    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopAdapterAndRemoveFromAssignResultArr) object:nil];
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(requestTimeout) object:nil];
     
     self.hasSuccessfullyLoaded = YES;
     
     // 添加adapter到当前管理adapter的字典
-    self.currentAdapters[adapter.sceneId] = adapter;
+    self.currentAdapters[adapter.posid] = adapter;
     [self removeAssignResultArrObjectWithAdapter:adapter];
     
     // 停止其他adapter
@@ -110,11 +160,24 @@
     // 拉取成功后,置0
     _requestCount = 0;
     
+    if (self.finished) {
+        self.finished();
+    }
+}
+
+- (void)adapterVideoDidDownload:(MEBaseAdapter *)adapter {
+    if (self.didDownloadBlock) {
+        self.didDownloadBlock();
+    }
+}
+
+/// 展现video成功
+- (void)adapterVideoShowSuccess:(MEBaseAdapter *)adapter {
     // 控制广告平台展示频次
     [StrategyFactory changeAdFrequencyWithSceneId:adapter.sceneId];
     
-    if (self.finished) {
-        self.finished();
+    if (self.showFinish) {
+        self.showFinish();
     }
 }
 
@@ -123,19 +186,27 @@
     // 从数组中移除不需要处理的adapter
     [self removeAssignResultArrObjectWithAdapter:adapter];
     
+    // 只要有成功的,就不报失败信息
+    if (self.hasSuccessfullyLoaded) {
+        return;
+    }
+    
     _requestCount++;
     
-    // 拉取次数小于2次,可以在广告拉取失败的同时再次拉取
+    // 拉取次数小于2次,次数多了就太慢了,可以在广告拉取失败的同时再次拉取
+    // 适用于串行,每次只拉取一个广告的情况,并行大于等于 2 个就不符合以下条件了
     if (_requestCount < 2 && self.assignResultArr.count == 0 && !self.needToStop) {
-        // 下次选择的广告平台
+        // 选择广告位对应的广告平台数组里面的下一个广告平台
         [self assignAdPlatformAndShowLogic1WithSceneId:adapter.sceneId platform:[self.configManger nextAdPlatformWithSceneId:adapter.sceneId currentPlatform:adapter.platformType]];
         return;
     }
     
-    _requestCount = 0;
-    
-    if (self.failed) {
-        self.failed(error);
+    // 执行完所有策略后依然失败,则返回失败信息
+    if (self.assignResultArr.count == 0) {
+        if (self.failed) {
+            self.failed(error);
+        }
+        _requestCount = 0;
     }
 }
 
@@ -155,6 +226,9 @@
 
 /// video关闭事件
 - (void)adapterVideoClose:(MEBaseAdapter *)adapter {
+    self.hasSuccessfullyLoaded = NO;
+    self.needToStop = NO;
+    
     if (self.closeBlock) {
         self.closeBlock();
     }
@@ -170,9 +244,9 @@
     
     self.assignResultArr = [NSMutableArray arrayWithArray:resultArr];
     
-    // 数组返回几个适配器就去请求几个平台的广告
+    // 数组返回几个适配器就去请求几个平台的广告,只有并行请求的策略下,数组中会有多个元素
     for (StrategyResultModel *model in resultArr) {
-        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[model.sceneId];
+        id <MEBaseAdapterProtocol>adapter = self.currentAdapters[model.posid];
         if ([adapter isKindOfClass:model.targetAdapterClass]) {
             // 若当前有可用的adapter则直接拿来用
         } else {
@@ -196,7 +270,7 @@
         adapter.sceneId = sceneId;
         adapter.isGetForCache = NO;
         adapter.sortType = [[MEConfigManager sharedInstance] getSortTypeFromSceneId:model.sceneId];
-        [adapter showRewardVideoWithPosid:model.posid];
+        [adapter loadRewardVideoWithPosid:model.posid];
         // 请求日志上报
         [self trackRequestWithSortType:adapter.sortType sceneId:sceneId platformType:model.platformType];
     }
@@ -221,6 +295,13 @@
     [MEAdLogModel saveLogModelToRealm:log];
     // 立即上传
     [MEAdLogModel uploadImmediately];
+}
+
+/// 请求超时
+- (void)requestTimeout {
+    NSError *error = [NSError errorWithDomain:@"sceneId can not be nil" code:0 userInfo:@{NSLocalizedDescriptionKey: @"视频弹出失败"}];
+    self.failed(error);
+    [self stopAdapterAndRemoveFromAssignResultArr];
 }
 
 /// 停止assignResultArr中的adapter,然后删除adapter

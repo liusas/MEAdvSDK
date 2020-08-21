@@ -260,6 +260,12 @@
     [self.delegate rewardedVideoDidLoadForAdManager:self];
 }
 
+- (void)rewardedVideoAdVideoDidLoadForAdapter:(MobiRewardedVideoAdapter *)adapter {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(rewardedVideoAdVideoDidLoadForAdManager:)]) {
+        [self.delegate rewardedVideoAdVideoDidLoadForAdManager:self];
+    }
+}
+
 - (void)rewardedVideoDidFailToLoadForAdapter:(MobiRewardedVideoAdapter *)adapter error:(NSError *)error {
     // 记录加载失败的时长,并在MobiAdConfigServer中判断选择合适URL上报失败日志
     NSTimeInterval duration = [self.loadStopwatch stop];

@@ -8,13 +8,16 @@
 #import <Foundation/Foundation.h>
 #import "MEConfigManager.h"
 
-typedef void(^LoadSplashAdFinished)(void);   // 广告展示成功
+typedef void(^LoadSplashAdFinished)(void);   // 广告加载成功
+typedef void(^ShowSplashAdFinished)(void);   // 广告展示成功
 typedef void(^LoadSplashAdFailed)(NSError *error);    // 广告展示失败
 typedef void(^LoadSplashAdCloseClick)(void);          // 广告被关闭
 typedef void(^LoadSplashAdClick)(void);               // 广告被点击
 typedef void(^LoadSplashAdDismiss)(void);               // 广告被点击后,回到应用
 @interface MESplashAdManager : NSObject
 
+/// 广告展示完成 block
+@property (nonatomic, copy) ShowSplashAdFinished showFinished;
 /// 广告关闭block
 @property (nonatomic, copy) LoadSplashAdCloseClick closeBlock;
 /// 广告被点击block
@@ -27,14 +30,19 @@ typedef void(^LoadSplashAdDismiss)(void);               // 广告被点击后,�
 
 + (instancetype)shareInstance;
 
+/// 预加载开屏广告,注意:穿山甲和海外广告平台没有开屏广告
+- (void)preloadSplashWithSceneId:(NSString *)sceneId
+                        Finished:(LoadSplashAdFinished)finished
+                          failed:(LoadSplashAdFailed)failed;
+
 /// 展示开屏广告
-- (void)showSplashAdvWithSceneId:(NSString *)sceneId
+- (void)loadSplashAdWithSceneId:(NSString *)sceneId
                            delay:(NSTimeInterval)delay
                         Finished:(LoadSplashAdFinished)finished
                           failed:(LoadSplashAdFailed)failed;
 
 /// 展示开屏广告带logo
-- (void)showSplashAdvWithSceneId:(NSString *)sceneId
+- (void)loadSplashAdWithSceneId:(NSString *)sceneId
                            delay:(NSTimeInterval)delay
                       bottomView:(UIView *)bottomView
                         Finished:(LoadSplashAdFinished)finished

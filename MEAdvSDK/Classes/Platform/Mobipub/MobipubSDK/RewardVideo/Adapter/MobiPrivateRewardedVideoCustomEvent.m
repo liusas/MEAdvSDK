@@ -41,33 +41,28 @@
         return;
     }
     
-//    self.adAvailable = YES;
-//    if ([self.delegate respondsToSelector:@selector(rewardedVideoDidLoadAdForCustomEvent:)]) {
-//        [self.delegate rewardedVideoDidLoadAdForCustomEvent:self];
-//    }
+    if ([self.delegate respondsToSelector:@selector(rewardedVideoDidLoadAdForCustomEvent:)]) {
+        [self.delegate rewardedVideoDidLoadAdForCustomEvent:self];
+    }
     
     [MobiVideoAdManager downLoadVideoAndCacheWithURLArray:[NSArray arrayWithObject:[NSURL URLWithString:nativeVideo.videoUrl]] completed:^(NSArray * _Nonnull completedArray) {
         NSDictionary *dic = completedArray[0];
         if ([dic[@"result"] boolValue]) {
             self.adAvailable = YES;
-            if ([self.delegate respondsToSelector:@selector(rewardedVideoDidLoadAdForCustomEvent:)]) {
-                [self.delegate rewardedVideoDidLoadAdForCustomEvent:self];
+            if ([self.delegate respondsToSelector:@selector(rewardedVideoAdVideoDidLoadForCustomEvent:)]) {
+                [self.delegate rewardedVideoAdVideoDidLoadForCustomEvent:self];
             }
-        }else {
+        } else {
             NSError *error = [NSError rewardVideoErrorWithCode:MobiRewardedVideoAdErrorUnknown localizedDescription:@"广告加载失败"];
             if ([self.delegate respondsToSelector:@selector(rewardedVideoDidFailToLoadAdForCustomEvent:error:)]) {
                 [self.delegate rewardedVideoDidFailToLoadAdForCustomEvent:self error:error];
             }
         }
     }];
-    
 }
 
 - (BOOL)hasAdAvailable{
-    if (!self.configuration.videoConfigData) {
-        return NO;
-    }
-    return YES;
+    return self.adAvailable;
 }
 
 - (void)presentRewardedVideoFromViewController:(UIViewController *)viewController{
@@ -101,12 +96,14 @@
 }
 
 - (void)rewardedVideoDidLoadAdFailed:(MobiVideoAdManager *)videoAd{
+    self.adAvailable = NO;
     if (self.delegate && [self.delegate respondsToSelector:@selector(rewardedVideoDidFailToLoadAdForCustomEvent:error:)]) {
         [self.delegate rewardedVideoDidFailToLoadAdForCustomEvent:self error:nil];
     }
 }
 
 - (void)rewardedVideoShowSuccess:(MobiVideoAdManager *)videoAd{
+    self.adAvailable = NO;
     if (self.delegate && [self.delegate respondsToSelector:@selector(rewardedVideoWillAppearForCustomEvent:)]) {
         [self.delegate rewardedVideoWillAppearForCustomEvent:self];
     }
@@ -117,12 +114,13 @@
 }
 
 - (void)rewardedVideoShowFailed:(MobiVideoAdManager *)videoAd{
+    self.adAvailable = NO;
     if (self.delegate && [self.delegate respondsToSelector:@selector(rewardedVideoDidFailToPlayForCustomEvent:error:)]) {
         [self.delegate rewardedVideoDidFailToPlayForCustomEvent:self error:nil];
     }
 }
 
-- (void)rewardedVideoCloseClick:(MobiVideoAdManager *)videoAd{
+- (void)rewardedVideoCloseClick:(MobiVideoAdManager *)videoAd {
     if (self.delegate && [self.delegate respondsToSelector:@selector(rewardedVideoDidDisappearForCustomEvent:)]) {
         [self.delegate rewardedVideoDidDisappearForCustomEvent:self];
     }

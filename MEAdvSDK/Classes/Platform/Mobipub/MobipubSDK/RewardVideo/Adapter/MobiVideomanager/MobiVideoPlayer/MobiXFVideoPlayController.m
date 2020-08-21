@@ -80,12 +80,8 @@
     
 }
 
-- (void)setContentURL:(NSURL *)contentURL{
-    
-}
-
 - (void)playWithCurrent:(CGFloat)current totalDuration:(CGFloat)tatalDuration playProgress:(CGFloat)playProgress{
-    NSLog(@"current == %.f,,,totalDuration == %.f,,,progress == %.2f",current,tatalDuration,playProgress);
+//    NSLog(@"current == %.f,,,totalDuration == %.f,,,progress == %.2f",current,tatalDuration,playProgress);
     //self.duration = tatalDuration - current;
     //[self.playingView startVideoMobiSkipType:8 countdownTime:5];
     NSString *str = [NSString stringWithFormat:@"%.f",(tatalDuration - current)];

@@ -41,154 +41,65 @@ typedef void(^RequestAndInitFinished)(BOOL success);
 /// @param finished 完成初始化的回调
 + (void)launchWithAppID:(NSString *)appid finished:(RequestAndInitFinished)finished;
 
-// MARK: - 开屏广告
+// MARK: - ---------------------------------v0.1.9版本接口调整---------------------------------
+// MARK: - 开屏
+/// 预加载开屏广告
+- (void)preloadSplashWithSceneId:(NSString *)sceneId delegate:(id)delegate;
 /// 展示开屏广告
-/// @param target 接收代理的类
-/// @param sceneId 场景id
-/// @param delay 开屏广告拉取超时时间,默认 3 秒,注意设置时间少于 3 秒无效
-- (void)showSplashAdvTarget:(id)target
-                    sceneId:(NSString *)sceneId
-                      delay:(NSTimeInterval)delay;
-
-/// 展示开屏广告
-/// @param target 接收代理的类
-/// @param sceneId 场景id
-/// @param delay 开屏广告拉取超时时间,默认 3 秒,注意设置时间少于 3 秒无效
-/// @param finished 展示成功
-/// @param failed 展示失败
-/// @param close 广告关闭
-/// @param click 点击广告
-/// @param dismiss 开屏广告被点击后,回到应用
-- (void)showSplashAdvTarget:(id)target
-                    sceneId:(NSString *)sceneId
-                      delay:(NSTimeInterval)delay
-                showSuccess:(MEBaseSplashAdFinished)finished
-                     failed:(MEBaseSplashAdFailed)failed
-                      close:(MEBaseSplashAdCloseClick)close
-                      click:(MEBaseSplashAdClick)click
-                    dismiss:(MEBaseSplashAdDismiss)dismiss;
-
-/// 展示开屏广告
-/// @param target 接收代理的类
+/// @param delegate 接收代理的类
 /// @param sceneId 场景id
 /// @param delay 开屏广告拉取超时时间,默认 3 秒,注意设置时间少于 3 秒无效
 /// @param bottomView 放置logo的view,建议不要超过屏幕高度的25%
-/// @param finished 展示成功
-/// @param failed 展示失败
-/// @param close 广告关闭
-/// @param click 点击广告
-/// @param dismiss 开屏广告被点击后,回到应用
-- (void)showSplashAdvTarget:(id)target
-                    sceneId:(NSString *)sceneId
-                      delay:(NSTimeInterval)delay
-                 bottomView:(UIView *)bottomView
-                showSuccess:(MEBaseSplashAdFinished)finished
-                     failed:(MEBaseSplashAdFailed)failed
-                      close:(MEBaseSplashAdCloseClick)close
-                      click:(MEBaseSplashAdClick)click
-                    dismiss:(MEBaseSplashAdDismiss)dismiss;
-
+- (void)loadAndShowSplashAdSceneId:(NSString *)sceneId
+                          delegate:(id)delegate
+                             delay:(NSTimeInterval)delay
+                        bottomView:(UIView *)bottomView;
 /// 停止开屏广告渲染,可能因为超时等原因
 - (void)stopSplashRender:(NSString *)sceneId;
 
-// MARK: - 插屏广告
-/// 展示插屏广告
-/// @param target 接收代理的类
-/// @param sceneId 场景id
-/// @param showFunnyBtn 是否展示误点按钮
-- (void)showInterstitialAdvWithTarget:(id)target
-                              sceneId:(NSString *)sceneId
-                         showFunnyBtn:(BOOL)showFunnyBtn;
+// MARK: - 信息流
+/// 展示信息流广告
+/// @param size 信息流广告期望大小,高度可传 0,广告平台会根据宽度自适应信息流高度
+/// @param sceneId 广告位 id,需要在摩邑诚开发者平台注册
+/// @param delegate 必填,用来接收代理
+/// @param count 请求数量,最大值不应超过三个
+- (void)loadFeedAdWithSize:(CGSize)size
+                   sceneId:(NSString *)sceneId
+                  delegate:(id)delegate
+                     count:(NSInteger)count;
 
+// MARK: - 激励视频
+/// 加载激励视频广告
+/// @param sceneId 广告位 id
+/// @param delegate 必填,用来接收代理
+- (void)loadRewardedVideoWitSceneId:(NSString *)sceneId delegate:(id)delegate;
+/// 展示激励视频广告
+/// @param rootVC 用于 present 激励视频 VC
+/// @param sceneId 广告位 id
+- (void)showRewardedVideoFromViewController:(UIViewController *)rootVC sceneId:(NSString *)sceneId;
+/// 停止当前激励视频
+- (void)stopRewardedVideo:(NSString *)sceneId;
+/// 检测广告位下的广告是否有效
+/// @param sceneId 广告位 id
+- (BOOL)hasRewardedVideoAvailableWithSceneId:(NSString *)sceneId;
 
-/// 展示插屏广告
-/// @param target 接收代理的类
-/// @param sceneId 场景id
-/// @param showFunnyBtn 是否展示误点按钮
-/// @param finished 展示成功
-/// @param failed 展示失败
-/// @param close 广告关闭
-/// @param click 广告点击
-/// @param dismiss 插屏广告被点击后,回到应用
-- (void)showInterstitialAdvWithTarget:(id)target
-                              sceneId:(NSString *)sceneId
-                         showFunnyBtn:(BOOL)showFunnyBtn
-                             finished:(MEBaseInterstitialAdFinished)finished
-                               failed:(MEBaseInterstitialAdFailed)failed
-                                close:(MEBaseInterstitialAdCloseClick)close
-                                click:(MEBaseInterstitialAdClick)click
-                              dismiss:(MEBaseInterstitialAdDismiss)dismiss;
+// MARK: - 插屏
+/// 加载插屏广告
+/// @param sceneId 广告位 id
+/// @param delegate 必填,用来接收代理
+- (void)loadInterstitialWithSceneId:(NSString *)sceneId
+                           delegate:(id)delegate;
+/// 展示插屏频广告
+/// @param rootVC 用于 present 插屏 VC
+/// @param sceneId 广告位 id
+- (void)showInterstitialFromViewController:(UIViewController *)rootVC
+                                   sceneId:(NSString *)sceneId;
 
-// MARK: - 信息流广告
-/**
- *  展示信息流广告
- *  @param bgWidth 必填,信息流背景视图的宽度
- *  @param sceneId 场景Id
- *  @param target 必填,用来承接代理
- */
-- (void)showFeedAdvWithBgWidth:(CGFloat)bgWidth sceneId:(NSString *)sceneId Target:(id)target;
+/// 关掉当前的插屏
+/// @param sceneId 广告位 id
+- (void)stopInterstitialRender:(NSString *)sceneId;
 
-/// 展示信息流广告,推荐使用
-/// @param bgWidth 信息流广告背景的宽度
-/// @param sceneId 场景id
-/// @param target 必填,用来承接代理
-/// @param finished 广告展示成功
-/// @param failed 广告展示失败
-/// @param close 广告关闭
-/// @param click 点击广告
-- (void)showFeedAdvWithBgWidth:(CGFloat)bgWidth
-                       sceneId:(NSString *)sceneId
-                        Target:(id)target
-                      finished:(MEBaseFeedAdFinished)finished
-                        failed:(MEBaseFeedAdFailed)failed
-                         close:(MEBaseFeedAdCloseClick)close
-                         click:(MEBaseFeedAdClick)click;
-
-/// 展示自渲染信息流广告
-/// @param sceneId 场景id
-/// @param target  必填,用来承接代理
-- (void)showRenderFeedAdvWithSceneId:(NSString *)sceneId Target:(id)target;
-
-/// 展示自渲染信息流广告,推荐使用
-/// @param sceneId 场景id
-/// @param target  必填,用来承接代理
-/// @param finished 广告展示成功
-/// @param failed 广告展示失败
-/// @param close 广告关闭
-/// @param click 点击广告
-- (void)showRenderFeedAdvWithSceneId:(NSString *)sceneId
-                              Target:(id)target
-                            finished:(MEBaseFeedAdFinished)finished
-                              failed:(MEBaseFeedAdFailed)failed
-                               close:(MEBaseFeedAdCloseClick)close
-                               click:(MEBaseFeedAdClick)click;
-
-// MARK: - 激励视频广告
-/**
- *  展示激励视频广告, 目前只有穿山甲激励视频
- *  @param sceneId 场景Id,在MEAdBaseManager.h中可查
- *  @param target 必填,接收回调
-*/
-- (void)showRewardedVideoWithSceneId:(NSString *)sceneId
-                              target:(id)target;
-
-/// 展示激励视频广告, 目前只有穿山甲激励视频
-/// @param sceneId 场景Id,在MEAdBaseManager.h中可查
-/// @param target 必填,接收回调
-/// @param finished 视频广告展示成功
-/// @param failed 视频广告展示失败
-/// @param finishPlay 视频广告播放完毕
-/// @param close 视频广告关闭
-/// @param click 点击视频广告
-- (void)showRewardedVideoWithSceneId:(NSString *)sceneId
-                              target:(id)target
-                            finished:(MEBaseRewardVideoFinish)finished
-                              failed:(MEBaseRewardVideoFailed)failed
-                          finishPlay:(MEBaseRewardVideoFinishPlay)finishPlay
-                               close:(MEBaseRewardVideoCloseClick)close
-                               click:(MEBaseRewardVideoClick)click;
-
-
-/// 停止当前播放的视频
-- (void)stopRewardedVideo;
+/// 检测广告位下的广告是否有效
+/// @param sceneId 广告位 id
+- (BOOL)hasInterstitialAvailableWithSceneId:(NSString *)sceneId;
 @end

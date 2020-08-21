@@ -19,7 +19,7 @@
 /// 此次信息流管理类分配到的广告平台模型数组,保证一次信息流广告有一个广告平台成功展示
 @property (nonatomic, strong) NSMutableArray <StrategyResultModel *>*assignResultArr;
 
-@property (nonatomic, copy) LoadSplashAdFinished finished;
+@property (nonatomic, copy) LoadSplashAdFinished loadFinished;
 @property (nonatomic, copy) LoadSplashAdFailed failed;
 
 // 只允许回调一次加载成功事件
@@ -52,24 +52,35 @@
     return self;
 }
 
+- (void)preloadSplashWithSceneId:(NSString *)sceneId Finished:(LoadSplashAdFinished)finished failed:(LoadSplashAdFailed)failed {
+    self.loadFinished = finished;
+    self.failed = failed;
+    
+    // 分配广告平台
+    if (![self assignAdPlatformAndShow:sceneId platform:MEAdAgentTypeNone delay:0 bottomView:nil preload:YES]) {
+        NSError *error = [NSError errorWithDomain:@"adv assign failed" code:0 userInfo:@{NSLocalizedDescriptionKey: @"分配失败"}];
+        failed(error);
+    }
+}
+
 /// 展示开屏广告
-- (void)showSplashAdvWithSceneId:(NSString *)sceneId
+- (void)loadSplashAdWithSceneId:(NSString *)sceneId
                            delay:(NSTimeInterval)delay
                         Finished:(LoadSplashAdFinished)finished
                           failed:(LoadSplashAdFailed)failed {
-    [self showSplashAdvWithSceneId:sceneId delay:delay bottomView:nil Finished:finished failed:failed];
+    [self loadSplashAdWithSceneId:sceneId delay:delay bottomView:nil Finished:finished failed:failed];
 }
 
-- (void)showSplashAdvWithSceneId:(NSString *)sceneId
+- (void)loadSplashAdWithSceneId:(NSString *)sceneId
                            delay:(NSTimeInterval)delay
                       bottomView:(UIView *)bottomView
                         Finished:(LoadSplashAdFinished)finished
                           failed:(LoadSplashAdFailed)failed {
-    self.finished = finished;
+    self.loadFinished = finished;
     self.failed = failed;
     
     // 分配广告平台
-    if (![self assignAdPlatformAndShow:sceneId platform:MEAdAgentTypeNone delay:delay bottomView:bottomView]) {
+    if (![self assignAdPlatformAndShow:sceneId platform:MEAdAgentTypeNone delay:delay bottomView:bottomView preload:NO]) {
         NSError *error = [NSError errorWithDomain:@"adv assign failed" code:0 userInfo:@{NSLocalizedDescriptionKey: @"分配失败"}];
         failed(error);
     }
@@ -86,8 +97,8 @@
 }
 
 // MARK: - MEBaseAdapterSplashProtocol
-/// 开屏展示成功
-- (void)adapterSplashShowSuccess:(MEBaseAdapter *)adapter {
+/// 开屏加载成功
+- (void)adapterSplashLoadSuccess:(MEBaseAdapter *)adapter {
     if (self.hasSuccessfullyLoaded) {
         return;
     }
@@ -106,23 +117,41 @@
     // 当前广告平台
     self.currentAdPlatform = adapter.platformType;
     
+    if (self.loadFinished) {
+        self.loadFinished();
+    }
+}
+
+/// 开屏展示成功
+- (void)adapterSplashShowSuccess:(MEBaseAdapter *)adapter {
+    // 当前广告平台
+    self.currentAdPlatform = adapter.platformType;
+    
     // 控制广告平台展示频次
     [StrategyFactory changeAdFrequencyWithSceneId:adapter.sceneId];
     
-    if (self.finished) {
-        self.finished();
+    if (self.showFinished) {
+        self.showFinished();
     }
 }
+
 /// 开屏展现失败
 - (void)adapter:(MEBaseAdapter *)adapter splashShowFailure:(NSError *)error {
     // 从数组中移除不需要处理的adapter
     [self removeAssignResultArrObjectWithAdapter:adapter];
     
+    if (self.hasSuccessfullyLoaded) {
+        return;
+    }
+    
     // 当前广告平台
     self.currentAdPlatform = adapter.platformType;
     
-    if (self.failed) {
-        self.failed(error);
+    // 执行完所有策略后依然失败,则返回失败信息
+    if (self.assignResultArr.count == 0) {
+        if (self.failed) {
+            self.failed(error);
+        }
     }
 }
 /// 开屏被点击
@@ -154,7 +183,7 @@
 }
 
 // MARK: 按广告位posid选择广告的逻辑,此次采用
-- (BOOL)assignAdPlatformAndShow:(NSString *)sceneId platform:(MEAdAgentType)platformType delay:(NSTimeInterval)delay bottomView:(UIView *)bottomView {
+- (BOOL)assignAdPlatformAndShow:(NSString *)sceneId platform:(MEAdAgentType)platformType delay:(NSTimeInterval)delay bottomView:(UIView *)bottomView preload:(BOOL)isPreload {
     NSArray <StrategyResultModel *>*resultArr = [[StrategyFactory sharedInstance] getPosidBySortTypeWithPlatform:platformType SceneId:sceneId];
     
     if (resultArr == nil || resultArr.count == 0) {
@@ -182,15 +211,23 @@
             }
             
             // 找到下一个广告平台则指定出这个平台的广告
-            return [self assignAdPlatformAndShow:sceneId platform:nextPlatform delay:delay bottomView:bottomView];
+            return [self assignAdPlatformAndShow:sceneId platform:nextPlatform delay:delay bottomView:bottomView preload:isPreload];
         }
         
         adapter.splashDelegate = self;
         // 场景id
         adapter.sceneId = sceneId;
-        adapter.isGetForCache = NO;
         adapter.sortType = [[MEConfigManager sharedInstance] getSortTypeFromSceneId:model.sceneId];
-        [adapter showSplashWithPosid:model.posid delay:delay bottomView:bottomView];
+        if (isPreload) {
+            // 预加载
+            adapter.isGetForCache = YES;
+            [adapter preloadSplashWithPosid:model.posid];
+        } else {
+            // 直接加载并展示
+            adapter.isGetForCache = NO;
+            [adapter loadAndShowSplashWithPosid:model.posid delay:delay bottomView:bottomView];
+        }
+        
         
         // 请求日志上报
         [self trackRequestWithSortType:adapter.sortType sceneId:sceneId platformType:model.platformType];

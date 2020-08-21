@@ -9,7 +9,8 @@
 #import "MEConfigManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
-typedef void(^LoadInterstitialAdFinished)(void);            // 广告展示成功
+typedef void(^LoadInterstitialAdFinished)(void);            // 广告加载成功
+typedef void(^ShowInterstitialAdFinished)(void);            // 广告展示成功
 typedef void(^LoadInterstitialAdFailed)(NSError *error);    // 广告展示失败
 typedef void(^LoadInterstitialAdCloseClick)(void);          // 广告被关闭
 typedef void(^LoadInterstitialAdClick)(void);               // 广告被点击
@@ -17,6 +18,7 @@ typedef void(^LoadInterstitialAdDismiss)(void);             // 广告被点击�
 
 @interface MEInterstitialAdManager : NSObject
 
+@property (nonatomic, copy) ShowInterstitialAdFinished showFinishBlock;
 /// 广告关闭block
 @property (nonatomic, copy) LoadInterstitialAdCloseClick closeBlock;
 /// 广告被点击block
@@ -29,15 +31,17 @@ typedef void(^LoadInterstitialAdDismiss)(void);             // 广告被点击�
 
 + (instancetype)shareInstance;
 
-/// 展示开屏广告
-- (void)showInterstitialAdvWithSceneId:(NSString *)sceneId
-                          showFunnyBtn:(BOOL)showFunnyBtn
-                              Finished:(LoadInterstitialAdFinished)finished
-                                failed:(LoadInterstitialAdFailed)failed;
+/// 加载插屏页
+- (void)loadInterstitialWithSceneId:(NSString *)sceneId
+                           finished:(LoadInterstitialAdFinished)finished
+                             failed:(LoadInterstitialAdFailed)failed;
+                            
+/// 展示插屏页
+- (void)showInterstitialFromViewController:(UIViewController *)rootVC sceneId:(NSString *)sceneId;
 
 /// 停止开屏广告渲染,可能因为超时等原因
-- (void)stopInterstitialRender;
-
+- (void)stopInterstitialRenderWithSceneId:(NSString *)sceneId;
+- (BOOL)hasInterstitialAvailableWithSceneId:(NSString *)sceneId;
 @end
 
 NS_ASSUME_NONNULL_END

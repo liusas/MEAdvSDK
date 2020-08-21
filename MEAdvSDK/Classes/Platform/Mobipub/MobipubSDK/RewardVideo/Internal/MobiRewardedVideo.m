@@ -179,6 +179,13 @@ static MobiRewardedVideo *gSharedInstance = nil;
     }
 }
 
+- (void)rewardedVideoAdVideoDidLoadForAdManager:(MobiRewardedVideoAdManager *)manager {
+    id<MobiRewardedVideoDelegate> delegate = [self.delegateTable objectForKey:manager.posid];
+    if ([delegate respondsToSelector:@selector(rewardedVideoAdVideoDidLoad:)]) {
+        [delegate rewardedVideoAdVideoDidLoad:self];
+    }
+}
+
 - (void)rewardedVideoDidFailToLoadForAdManager:(MobiRewardedVideoAdManager *)manager error:(NSError *)error
 {
     id<MobiRewardedVideoDelegate> delegate = [self.delegateTable objectForKey:manager.posid];

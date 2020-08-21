@@ -8,7 +8,7 @@
 
 #import "MPError.h"
 
-NSString * const kNSErrorDomain = @"com.mopub.iossdk";
+NSString * const kNSErrorDomain = @"com.mobipub.iossdk";
 
 @implementation NSError (MoPub)
 

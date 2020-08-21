@@ -66,6 +66,12 @@
 - (void)rewardedVideoAdDidLoad:(MobiRewardedVideo *)rewardedVideo;
 
 /**
+ * 广告资源缓存成功调用此方法
+ * 建议在此方法回调后执行播放视频操作
+ */
+- (void)rewardedVideoAdVideoDidLoad:(MobiRewardedVideo *)rewardedVideo;
+
+/**
  * 激励视频资源加载失败回调此方法
  * @param error NSError类型的错误信息
  */

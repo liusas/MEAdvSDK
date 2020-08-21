@@ -52,6 +52,8 @@
 @protocol MobiRewardedVideoAdapterDelegate <NSObject>
 
 - (void)rewardedVideoDidLoadForAdapter:(MobiRewardedVideoAdapter *)adapter;
+/// 广告资源缓存成功调用此方法
+- (void)rewardedVideoAdVideoDidLoadForAdapter:(MobiRewardedVideoAdapter *)adapter;
 - (void)rewardedVideoDidFailToLoadForAdapter:(MobiRewardedVideoAdapter *)adapter error:(NSError *)error;
 - (void)rewardedVideoDidExpireForAdapter:(MobiRewardedVideoAdapter *)adapter;
 - (void)rewardedVideoDidFailToPlayForAdapter:(MobiRewardedVideoAdapter *)adapter error:(NSError *)error;

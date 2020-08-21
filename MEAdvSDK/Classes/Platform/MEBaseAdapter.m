@@ -74,17 +74,19 @@
 /// 显示信息流视图
 /// @param feedWidth 广告位宽度
 - (BOOL)showFeedViewWithWidth:(CGFloat)feedWidth
-                        posId:(NSString *)posId {return NO;}
-
+                        posId:(NSString *)posId
+                        count:(NSInteger)count {return NO;}
+                        
 /// 显示信息流视图
 /// @param feedWidth 广告位宽度
 /// @param displayTime 展示时长
 - (BOOL)showFeedViewWithWidth:(CGFloat)feedWidth
                         posId:(NSString *)posId
+                        count:(NSInteger)count
               withDisplayTime:(NSTimeInterval)displayTime {return NO;}
 
 /// 移除信息流视图
-- (void)removeFeedView {}
+- (void)removeFeedViewWithPosid:(NSString *)posid {}
 
 // MARK: - 信息流自渲染
 /// 信息流预加载,并存入缓存
@@ -95,24 +97,33 @@
 - (BOOL)showRenderFeedViewWithPosId:(NSString *)posId {return NO;}
 
 /// 移除自渲染信息流视图
-- (void)removeRenderFeedView {}
+- (void)removeRenderFeedViewWithPosid:(NSString *)posid {}
 
 // MARK: - 激励视频广告
+- (BOOL)hasRewardedVideoAvailableWithPosid:(NSString *)posid {return YES;}
+/// 加载激励视频
+- (BOOL)loadRewardVideoWithPosid:(NSString *)posid {return NO;}
 /// 展示激励视频
-- (BOOL)showRewardVideo {return NO;}
-
+- (void)showRewardedVideoFromViewController:(UIViewController *)rootVC posid:(NSString *)posid {}
 /// 关闭当前视频
-- (void)stopCurrentVideo {}
+- (void)stopCurrentVideoWithPosid:(NSString *)posid {}
 
 // MARK: - 开屏广告
+/// 预加载开屏广告
+- (void)preloadSplashWithPosid:(NSString *)posid {}
 /// 展示开屏页
-- (BOOL)showSplashWithPosid:(NSString *)posid {return NO;}
+- (BOOL)loadAndShowSplashWithPosid:(NSString *)posid {return NO;}
 /// 展示带底部logo的开屏页
-- (BOOL)showSplashWithPosid:(NSString *)posid delay:(NSTimeInterval)delay bottomView:(UIView *)view {return NO;}
-/// 停止开屏广告
-- (void)stopSplashRender {}
+- (BOOL)loadAndShowSplashWithPosid:(NSString *)posid delay:(NSTimeInterval)delay bottomView:(UIView *)view {return NO;}
+/// 停止开屏广告渲染,可能因为超时等原因
+- (void)stopSplashRenderWithPosid:(NSString *)posid {}
 
 // MARK: - 插屏广告
+- (BOOL)hasInterstitialAvailableWithPosid:(NSString *)posid {return NO;}
+/// 加载插屏页
+- (BOOL)loadInterstitialWithPosid:(NSString *)posid {return NO;}
 /// 展示插屏页
-- (BOOL)showInterstitialViewWithPosid:(NSString *)posid showFunnyBtn:(BOOL)showFunnyBtn {return NO;}
+- (void)showInterstitialFromViewController:(UIViewController *)rootVC posid:(NSString *)posid {}
+/// 停止插屏
+- (void)stopInterstitialWithPosid:(NSString *)posid {}
 @end
