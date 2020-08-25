@@ -108,6 +108,16 @@
 /// 关闭当前视频
 - (void)stopCurrentVideoWithPosid:(NSString *)posid {}
 
+// MARK: - 全屏视频广告
+/// 全屏视频是否有效
+- (BOOL)hasFullscreenVideoAvailableWithPosid:(NSString *)posid {return NO;}
+/// 加载全屏视频
+- (BOOL)loadFullscreenWithPosid:(NSString *)posid {}
+/// 展示全屏视频
+- (void)showFullscreenVideoFromViewController:(UIViewController *)rootVC posid:(NSString *)posid {}
+/// 关闭当前视频
+- (void)stopFullscreenVideoWithPosid:(NSString *)posid {}
+
 // MARK: - 开屏广告
 /// 预加载开屏广告
 - (void)preloadSplashWithPosid:(NSString *)posid {}

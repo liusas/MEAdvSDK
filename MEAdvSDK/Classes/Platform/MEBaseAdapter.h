@@ -67,6 +67,33 @@
 
 @end
 
+/// 激励视频回调
+@protocol MEBaseAdapterFullscreenVideoProtocol <NSObject>
+
+/// 广告加载成功
+- (void)adapterFullscreenVideoLoadSuccess:(MEBaseAdapter *)adapter;
+/// 视频缓存完成,建议在该回调后播放激励视频
+- (void)adapterFullscreenVideoDidDownload:(MEBaseAdapter *)adapter;
+/// 展现video成功
+- (void)adapterFullscreenVideoShowSuccess:(MEBaseAdapter *)adapter;
+
+/// 展现video失败
+- (void)adapter:(MEBaseAdapter *)adapter fullscreenShowFailure:(NSError *)error;
+
+/// 视频播放完毕回调
+- (void)adapterFullscreenVideoFinishPlay:(MEBaseAdapter *)adapter;
+
+/// video被点击
+- (void)adapterFullscreenVideoClicked:(MEBaseAdapter *)adapter;
+
+/// video关闭事件
+- (void)adapterFullscreenVideoClose:(MEBaseAdapter *)adapter;
+
+/// video 点击跳过
+- (void)adapterFullscreenVideoSkip:(MEBaseAdapter *)adapter;
+
+@end
+
 /// 开屏广告代理回调
 @protocol MEBaseAdapterSplashProtocol <NSObject>
 /// 广告加载成功
@@ -120,6 +147,8 @@
 @property (nonatomic, weak) id<MEBaseAdapterSplashProtocol> splashDelegate;
 /// 插屏 回调代理
 @property (nonatomic, weak) id<MEBaseAdapterInterstitialProtocol> interstitialDelegate;
+/// 全屏 回调代理 
+@property (nonatomic, weak) id<MEBaseAdapterFullscreenVideoProtocol> fullscreenDelegate;
 
 /// 场景id,即自有posid
 @property (nonatomic, copy) NSString *sceneId;
@@ -186,6 +215,16 @@
 /// 关闭当前视频
 - (void)stopCurrentVideoWithPosid:(NSString *)posid;
 
+// MARK: - 全屏视频广告
+/// 全屏视频是否有效
+- (BOOL)hasFullscreenVideoAvailableWithPosid:(NSString *)posid;
+/// 加载全屏视频
+- (BOOL)loadFullscreenWithPosid:(NSString *)posid;
+/// 展示全屏视频
+- (void)showFullscreenVideoFromViewController:(UIViewController *)rootVC posid:(NSString *)posid;
+/// 关闭当前视频
+- (void)stopFullscreenVideoWithPosid:(NSString *)posid;
+
 // MARK: - 开屏广告
 /// 预加载开屏广告
 - (void)preloadSplashWithPosid:(NSString *)posid;
@@ -215,6 +254,14 @@
 /// 当前广告平台类型
 @property (nonatomic, readonly) MEAdAgentType platformType;
 
+/// 展示广告的底层控制器
+@property (nonatomic, weak) UIViewController *topVC;
+/// 误点按钮
+@property (nonatomic, strong) MEFunnyButton *funnyButton;
+
+/// 此次广告的展示类别,有聚合协议传入
+@property (nonatomic, assign) NSInteger sortType;
+
 /// 信息流 回调代理
 @property (nonatomic, weak) id<MEBaseAdapterFeedProtocol> feedDelegate;
 /// 激励视频 回调代理
@@ -223,17 +270,13 @@
 @property (nonatomic, weak) id<MEBaseAdapterSplashProtocol> splashDelegate;
 /// 插屏 回调代理
 @property (nonatomic, weak) id<MEBaseAdapterInterstitialProtocol> interstitialDelegate;
-/// 展示广告的底层控制器
-@property (nonatomic, weak) UIViewController *topVC;
-/// 误点按钮
-@property (nonatomic, strong) MEFunnyButton *funnyButton;
+/// 全屏 回调代理
+@property (nonatomic, weak) id<MEBaseAdapterFullscreenVideoProtocol> fullscreenDelegate;
 
 /// 场景id,即自有posid
 @property (nonatomic, copy) NSString *sceneId;
 /// 广告位id
 @property (nonatomic, copy) NSString *posid;
-/// 此次广告的展示类别,有聚合协议传入
-@property (nonatomic, assign) NSInteger sortType;
 /// 判断是否为拉取广告缓存
 @property (nonatomic, assign) BOOL isGetForCache;
 /// 判断激励视频是否正在播放,防止同时播放两个激励视频

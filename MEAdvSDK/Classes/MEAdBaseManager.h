@@ -25,6 +25,8 @@ typedef void(^RequestAndInitFinished)(BOOL success);
 @property (nonatomic, weak) id<MERewardVideoDelegate> rewardVideoDelegate;
 /// 插屏广告代理
 @property (nonatomic, weak) id<MEInterstitialDelegate> interstitialDelegate;
+/// 全屏广告代理
+@property (nonatomic, weak) id<MEFullscreenVideoDelegate> fullscreenVideoDelegate;
 /// 记录此次返回的广告是哪个平台的
 @property (nonatomic, assign) MEAdAgentType currentAdPlatform;
 /// 广告平台是否已经初始化
@@ -54,6 +56,9 @@ typedef void(^RequestAndInitFinished)(BOOL success);
                           delegate:(id)delegate
                              delay:(NSTimeInterval)delay
                         bottomView:(UIView *)bottomView;
+
+/// 展示开屏广告的 block 回调
+
 /// 停止开屏广告渲染,可能因为超时等原因
 - (void)stopSplashRender:(NSString *)sceneId;
 
@@ -82,6 +87,21 @@ typedef void(^RequestAndInitFinished)(BOOL success);
 /// 检测广告位下的广告是否有效
 /// @param sceneId 广告位 id
 - (BOOL)hasRewardedVideoAvailableWithSceneId:(NSString *)sceneId;
+
+// MARK: - 全屏视频
+/// 加载全屏视频广告
+/// @param sceneId 广告位 id
+/// @param delegate 必填,用来接收代理
+- (void)loadFullscreenVideoWithSceneId:(NSString *)sceneId delegate:(id)delegate;
+/// 展示全屏视频广告
+/// @param rootVC 用于 present 激励视频 VC
+/// @param sceneId 广告位 id
+- (void)showFullscreenVideoFromViewController:(UIViewController *)rootVC sceneId:(NSString *)sceneId;
+/// 关闭全屏视频广告
+/// @param sceneId 广告位 id
+- (void)stopFullscreenVideo:(NSString *)sceneId;
+/// 当前广告位下是否有有效的全屏视频广告
+- (BOOL)hasFullscreenVideoAvailableWithSceneId:(NSString *)sceneId;
 
 // MARK: - 插屏
 /// 加载插屏广告

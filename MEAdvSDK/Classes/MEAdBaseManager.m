@@ -11,6 +11,7 @@
 #import "MEFeedAdManager.h"
 #import "MERewardedVideoManager.h"
 #import "MEInterstitialAdManager.h"
+#import "MEFullscreenManager.h"
 #import <Realm.h>
 
 static  MEAdBaseManager *baseManager;
@@ -26,6 +27,10 @@ static dispatch_once_t onceToken;
 @property (nonatomic, strong) MERewardedVideoManager *rewardedVideoManager;
 //存放rewardedManager的字典
 @property (nonatomic, strong) NSMutableDictionary *rewardedVideoManagers;
+
+@property (nonatomic, strong) MEFullscreenManager *fullscreenManager;
+//存放fullscreenManager的字典
+@property (nonatomic, strong) NSMutableDictionary *fullscreenManagers;
 
 @property (nonatomic, strong) MEInterstitialAdManager *interstitialManager;
 // 存放interstitialManager的字典
@@ -273,6 +278,79 @@ static dispatch_once_t onceToken;
     return NO;
 }
 
+// MARK: - 全屏视频
+/// 加载全屏视频广告
+/// @param sceneId 广告位 id
+/// @param delegate 必填,用来接收代理
+- (void)loadFullscreenVideoWithSceneId:(NSString *)sceneId delegate:(id)delegate {
+    if (delegate == nil) {
+        // 需要根据target给予action和响应
+        return;
+    }
+    
+    if (self.isPlatformInit == NO) {
+        // 若平台尚未初始化,则不执行
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    self.fullscreenVideoDelegate = delegate;
+    self.fullscreenManager = [[MEFullscreenManager alloc] init];
+    self.fullscreenManagers[sceneId] = self.fullscreenManager;
+    [self.fullscreenManager loadFullscreenVideoWithSceneId:sceneId finished:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf fullscreenVideoShowSuccessOperation];
+    } failed:^(NSError * _Nonnull error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf fullscreenVideoFailedOpertion:error];
+    }];
+}
+/// 展示全屏视频广告
+/// @param rootVC 用于 present 激励视频 VC
+/// @param sceneId 广告位 id
+- (void)showFullscreenVideoFromViewController:(UIViewController *)rootVC sceneId:(NSString *)sceneId {
+    self.fullscreenVideoDelegate = rootVC;
+    MEFullscreenManager *adManager = self.fullscreenManagers[sceneId];
+
+    if (adManager) {
+        [adManager showFullscreenVideoFromViewController:rootVC sceneId:sceneId];
+        return;
+    }
+    
+    // 没有合适的 adManager 表示当前没有广告可展示
+    if (self.fullscreenVideoDelegate && [self.fullscreenVideoDelegate respondsToSelector:@selector(fullscreenVideoAdFailed:)]) {
+        NSError *error = [NSError errorWithDomain:@"no ads to show" code:0 userInfo:nil];
+        [self.fullscreenVideoDelegate fullscreenVideoAdFailed:error];
+    }
+}
+/// 关闭全屏视频广告
+/// @param sceneId 广告位 id
+- (void)stopFullscreenVideo:(NSString *)sceneId {
+    if (sceneId == nil) {
+        return;
+    }
+    MEFullscreenManager *adManager = self.fullscreenManagers[sceneId];
+
+    if (adManager) {
+        [adManager stopFullscreenVideoWithSceneId:sceneId];
+        return;
+    }
+}
+/// 当前广告位下是否有有效的全屏视频广告
+- (BOOL)hasFullscreenVideoAvailableWithSceneId:(NSString *)sceneId {
+    if (sceneId == nil) {
+        return NO;
+    }
+    
+    MEFullscreenManager *adManager = self.fullscreenManagers[sceneId];
+
+    if (adManager) {
+        return [adManager hasFullscreenVideoAvailableWithSceneId:sceneId];
+    }
+    
+    return NO;
+}
+
 // MARK: - 信息流广告
 - (void)loadFeedAdWithSize:(CGSize)size sceneId:(NSString *)sceneId delegate:(id)delegate count:(NSInteger)count {
     _target = delegate;
@@ -399,6 +477,68 @@ static dispatch_once_t onceToken;
     }
 }
 
+// MARK: - 全屏视频广告回调
+- (void)fullscreenVideoShowSuccessOperation {
+    __weak typeof(self) weakSelf = self;
+    // 广告加载成功
+    if (self.fullscreenVideoDelegate && [self.fullscreenVideoDelegate respondsToSelector:@selector(fullscreenVideoLoadSuccess:)]) {
+        [self.fullscreenVideoDelegate fullscreenVideoLoadSuccess:self];
+    }
+    
+    // 视频展示成功
+    self.fullscreenManager.showFinish = ^{
+        if (self.fullscreenVideoDelegate && [self.fullscreenVideoDelegate respondsToSelector:@selector(fullscreenShowSuccess:)]) {
+            [self.fullscreenVideoDelegate fullscreenShowSuccess:self];
+        }
+    };
+    
+    // 视频资源缓存成功
+    self.fullscreenManager.didDownloadBlock = ^{
+        if (self.fullscreenVideoDelegate && [self.fullscreenVideoDelegate respondsToSelector:@selector(fullscreenDidDownloadSuccess:)]) {
+            [self.fullscreenVideoDelegate fullscreenDidDownloadSuccess:self];
+        }
+    };
+    
+    // 视频播放完毕
+    self.fullscreenManager.finishPlayBlock = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.fullscreenVideoDelegate && [strongSelf.fullscreenVideoDelegate respondsToSelector:@selector(fullscreenFinishPlay:)]) {
+            [strongSelf.fullscreenVideoDelegate fullscreenFinishPlay:strongSelf];
+        }
+    };
+    
+    // 点击广告监听
+    self.fullscreenManager.clickBlock = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.fullscreenVideoDelegate && [strongSelf.fullscreenVideoDelegate respondsToSelector:@selector(fullscreenClicked:)]) {
+            [strongSelf.fullscreenVideoDelegate fullscreenClicked:strongSelf];
+        }
+    };
+    
+    // 关闭广告的监听
+    self.fullscreenManager.closeBlock = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.fullscreenVideoDelegate && [strongSelf.fullscreenVideoDelegate respondsToSelector:@selector(fullscreenClose:)]) {
+            [strongSelf.fullscreenVideoDelegate fullscreenClose:strongSelf];
+        }
+    };
+    
+    // 点击跳过的监听
+    self.fullscreenManager.skipBlock = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.fullscreenVideoDelegate && [strongSelf.fullscreenVideoDelegate respondsToSelector:@selector(fullscreenClickSkip:)]) {
+            [strongSelf.fullscreenVideoDelegate fullscreenClickSkip:strongSelf];
+        }
+    };
+}
+
+/// 激励视频广告展示失败的操作
+- (void)fullscreenVideoFailedOpertion:(NSError *)error {
+    if (self.fullscreenVideoDelegate && [self.fullscreenVideoDelegate respondsToSelector:@selector(fullscreenVideoAdFailed:)]) {
+        [self.fullscreenVideoDelegate fullscreenVideoAdFailed:error];
+    }
+}
+
 // MARK: - 开屏广告回调
 /// 开屏广告展示成功后的操作
 - (void)splashFinishedOperation {
@@ -505,6 +645,13 @@ static dispatch_once_t onceToken;
         _rewardedVideoManagers = [NSMutableDictionary dictionary];
     }
     return _rewardedVideoManagers;
+}
+
+- (NSMutableDictionary *)fullscreenManagers {
+    if (!_fullscreenManagers) {
+        _fullscreenManagers = [NSMutableDictionary dictionary];
+    }
+    return _fullscreenManagers;
 }
 
 - (NSMutableDictionary *)interstitialManagers {

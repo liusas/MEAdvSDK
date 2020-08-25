@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MEAdvSDK" #库的名称
-  spec.version      = "1.0.0" #库的版本号
+  spec.version      = "1.0.1" #库的版本号
   spec.summary      = "Mobiexchanger's advertise SDK" #pod库的简要概述
 
   # This description is used to generate tags and improve search results.
@@ -138,6 +138,6 @@ Pod::Spec.new do |spec|
 #    spec.dependency "GDTMobSDK", "~> 4.10.19"
 #    spec.dependency "Google-Mobile-Ads-SDK", "~> 7.57.0"
     spec.dependency "Reachability"
-    spec.dependency "Realm", '4.4.1'
+    spec.dependency "Realm", '~> 4.4.1'
 #    spec.dependency 'KSAdSDK', '2.6.1'
 end

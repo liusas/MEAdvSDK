@@ -198,6 +198,16 @@
     }
 }
 
+// MARK: - 全屏视频广告
+/// 全屏视频是否有效
+- (BOOL)hasFullscreenVideoAvailableWithPosid:(NSString *)posid {return NO;}
+/// 加载全屏视频
+- (BOOL)loadFullscreenWithPosid:(NSString *)posid {}
+/// 展示全屏视频
+- (void)showFullscreenVideoFromViewController:(UIViewController *)rootVC posid:(NSString *)posid {}
+/// 关闭当前视频
+- (void)stopFullscreenVideoWithPosid:(NSString *)posid {}
+
 // MARK: - MobiSplashDelegate
 /**
  *  开屏广告成功展示
