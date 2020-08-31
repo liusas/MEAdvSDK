@@ -202,7 +202,7 @@
 /// 全屏视频是否有效
 - (BOOL)hasFullscreenVideoAvailableWithPosid:(NSString *)posid {return NO;}
 /// 加载全屏视频
-- (BOOL)loadFullscreenWithPosid:(NSString *)posid {}
+- (BOOL)loadFullscreenWithPosid:(NSString *)posid {return NO;}
 /// 展示全屏视频
 - (void)showFullscreenVideoFromViewController:(UIViewController *)rootVC posid:(NSString *)posid {}
 /// 关闭当前视频
