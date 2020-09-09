@@ -9,6 +9,7 @@
 #import "MEConfigManager.h"
 #import "MEFunnyButton.h"
 #import "MEAdLogModel.h"
+#import "MEBannerView.h"
 
 @class MEBaseAdapter;
 @class GDTUnifiedNativeAdView;
@@ -134,6 +135,23 @@
 
 @end
 
+@protocol MEBaseAdapterBannerProtocol <NSObject>
+// 返回 bannerView,要及时 addSubview 方法,否则 banner 的内存会释放
+- (void)adapterBannerReturnView:(UIView *)bannerView;
+// 广告加载成功
+- (void)adapterBannerLoadSuccess:(MEBaseAdapter *)adapter;
+
+// 展示成功
+- (void)adapterBannerShowSuccess:(MEBaseAdapter *)adapter;
+
+// 广告加载失败
+- (void)adapter:(MEBaseAdapter *)adapter bannerFailure:(NSError *)error;
+
+// 广告被点击
+- (void)adapterBannerClicked:(MEBaseAdapter *)adapter;
+
+@end
+
 @protocol MEBaseAdapterProtocol <NSObject>
 @required
 /// 当前广告平台类型
@@ -149,7 +167,8 @@
 @property (nonatomic, weak) id<MEBaseAdapterInterstitialProtocol> interstitialDelegate;
 /// 全屏 回调代理 
 @property (nonatomic, weak) id<MEBaseAdapterFullscreenVideoProtocol> fullscreenDelegate;
-
+/// banner 回调代理
+@property (nonatomic, weak) id<MEBaseAdapterBannerProtocol> bannerDelegate;
 /// 场景id,即自有posid
 @property (nonatomic, copy) NSString *sceneId;
 /// 广告位id
@@ -247,6 +266,8 @@
 /// 停止插屏
 - (void)stopInterstitialWithPosid:(NSString *)posid;
 
+// MARK: - banner
+- (void)showBannerViewWithSize:(CGSize)size posid:(NSString *)posid rootVC:(UIViewController *)rootVC refreshInterval:(NSTimeInterval)interval;
 @end
 
 @interface MEBaseAdapter : NSObject<MEBaseAdapterProtocol>
@@ -272,6 +293,8 @@
 @property (nonatomic, weak) id<MEBaseAdapterInterstitialProtocol> interstitialDelegate;
 /// 全屏 回调代理
 @property (nonatomic, weak) id<MEBaseAdapterFullscreenVideoProtocol> fullscreenDelegate;
+/// banner 回调代理
+@property (nonatomic, weak) id<MEBaseAdapterBannerProtocol> bannerDelegate;
 
 /// 场景id,即自有posid
 @property (nonatomic, copy) NSString *sceneId;

@@ -136,4 +136,7 @@
 - (void)showInterstitialFromViewController:(UIViewController *)rootVC posid:(NSString *)posid {}
 /// 停止插屏
 - (void)stopInterstitialWithPosid:(NSString *)posid {}
+
+// MARK: - banner
+- (void)showBannerViewWithSize:(CGSize)size posid:(NSString *)posid rootVC:(UIViewController *)rootVC refreshInterval:(NSTimeInterval)interval {}
 @end

@@ -179,3 +179,17 @@ typedef void(^MEBaseRewardVideoCloseClick)(void);               // 视频广告�
 - (void)fullscreenClickSkip:(MEAdBaseManager *)adManager;
 
 @end
+
+@protocol MEBannerDelegate <NSObject>
+@optional
+/// 广告加载成功
+- (void)bannerLoadSuccess:(MEAdBaseManager *)adManager;
+/// 广告展现成功
+- (void)bannerShowSuccess:(MEAdBaseManager *)adManager;
+/// 广告展现失败
+- (void)bannerLoadFailure:(NSError *)error;
+/// 广告被关闭
+- (void)bannerClosed:(MEAdBaseManager *)adManager;
+/// 广告被点击
+- (void)bannerClicked:(MEAdBaseManager *)adManager;
+@end

@@ -12,6 +12,7 @@
 #import "MERewardedVideoManager.h"
 #import "MEInterstitialAdManager.h"
 #import "MEFullscreenManager.h"
+#import "MEBannerManager.h"
 #import <Realm.h>
 
 static  MEAdBaseManager *baseManager;
@@ -22,7 +23,9 @@ static dispatch_once_t onceToken;
 @property (nonatomic, weak) id target;
 @property (nonatomic, strong) MESplashAdManager *splashAdManager;
 @property (nonatomic, strong) MEFeedAdManager *feedAdManager;
-
+@property (nonatomic, strong) MEBannerManager *bannerManager;
+//存放bannerManager的字典
+@property (nonatomic, strong) NSMutableDictionary *bannerManagers;
 
 @property (nonatomic, strong) MERewardedVideoManager *rewardedVideoManager;
 //存放rewardedManager的字典
@@ -351,6 +354,41 @@ static dispatch_once_t onceToken;
     return NO;
 }
 
+// MARK: - banner 广告
+- (void)showBannerViewWithSize:(CGSize)size
+                       sceneId:(NSString *)sceneId
+                        rootVC:(UIViewController *)rootVC
+               refreshInterval:(NSTimeInterval)interval
+                      delegate:(id)delegate
+                    bannerView:(void (^)(UIView *bannerView))bannerReturnView {
+    if (self.isPlatformInit == NO) {
+        // 若平台尚未初始化,则不执行
+        return;
+    }
+    
+    _target = delegate;
+    
+    if (delegate == nil) {
+        // 需要根据target给予action和响应
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    // 遵守代理
+    self.bannerDelegate = delegate;
+    
+    //    self.interstitialManager = [MEInterstitialAdManager shareInstance];
+    self.bannerManager = [[MEBannerManager alloc] init];
+    self.bannerManagers[sceneId] = self.bannerManager;
+    [self.bannerManager showBannerViewWithSize:size sceneId:sceneId rootVC:rootVC refreshInterval:interval bannerView:^(UIView * _Nonnull bannerView) {
+        bannerReturnView(bannerView);
+    } finished:^{
+        
+    } failed:^(NSError * _Nonnull error) {
+        
+    }];
+}
+
 // MARK: - 信息流广告
 - (void)loadFeedAdWithSize:(CGSize)size sceneId:(NSString *)sceneId delegate:(id)delegate count:(NSInteger)count {
     _target = delegate;
@@ -638,8 +676,59 @@ static dispatch_once_t onceToken;
     }
 }
 
+// MARK: - banner 广告回调
+/// 广告展示成功后的操作
+- (void)bannerFinishedOperation {
+    self.currentAdPlatform = self.interstitialManager.currentAdPlatform;
+    
+    __weak typeof(self) weakSelf = self;
+    // 广告加载成功
+    if (self.bannerDelegate && [self.bannerDelegate respondsToSelector:@selector(bannerLoadSuccess:)]) {
+        [self.bannerDelegate bannerLoadSuccess:self];
+    }
+    
+    // 点击广告监听
+    self.bannerManager.clickBlock = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.bannerDelegate && [strongSelf.bannerDelegate respondsToSelector:@selector(bannerClicked:)]) {
+            [strongSelf.bannerDelegate bannerClicked:strongSelf];
+        }
+    };
+    
+    self.bannerManager.showFinishBlock = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.bannerDelegate && [strongSelf.bannerDelegate respondsToSelector:@selector(bannerShowSuccess:)]) {
+            [strongSelf.bannerDelegate bannerShowSuccess:strongSelf];
+        }
+    };
+    
+    // 关闭广告的监听
+    self.bannerManager.closeBlock = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.bannerDelegate && [strongSelf.bannerDelegate respondsToSelector:@selector(bannerClosed:)]) {
+            [strongSelf.bannerDelegate bannerClosed:strongSelf];
+        }
+    };
+    
+}
+
+/// 广告展示失败的操作
+- (void)bannerFailedOpertion:(NSError *)error {
+    if (self.bannerDelegate && [self.bannerDelegate respondsToSelector:@selector(bannerLoadFailure:)]) {
+        [self.bannerDelegate bannerLoadFailure:error];
+    }
+}
+
 
 // MARK: - Getter
+- (NSMutableDictionary *)bannerManagers {
+    if (!_bannerManagers) {
+        _bannerManagers = [NSMutableDictionary dictionary];
+    }
+    
+    return _bannerManagers;
+}
+
 - (NSMutableDictionary *)rewardedVideoManagers {
     if (!_rewardedVideoManagers) {
         _rewardedVideoManagers = [NSMutableDictionary dictionary];

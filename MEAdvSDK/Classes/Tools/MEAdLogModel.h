@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, AdLogAdType) {
     AdLogAdType_Feed = 3,           // 信息流
     AdLogAdType_RewardVideo = 4,    // 激励视频
     AdLogAdType_FullVideo = 5,      // 全屏
-    
+    AdLogAdType_Banner = 6,         // banner
 };
 
 @interface MEAdLogModel : RLMObject

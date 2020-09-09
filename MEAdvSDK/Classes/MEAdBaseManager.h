@@ -27,6 +27,9 @@ typedef void(^RequestAndInitFinished)(BOOL success);
 @property (nonatomic, weak) id<MEInterstitialDelegate> interstitialDelegate;
 /// 全屏广告代理
 @property (nonatomic, weak) id<MEFullscreenVideoDelegate> fullscreenVideoDelegate;
+/// banner 广告代理
+@property (nonatomic, weak) id<MEBannerDelegate> bannerDelegate;
+
 /// 记录此次返回的广告是哪个平台的
 @property (nonatomic, assign) MEAdAgentType currentAdPlatform;
 /// 广告平台是否已经初始化
@@ -122,4 +125,20 @@ typedef void(^RequestAndInitFinished)(BOOL success);
 /// 检测广告位下的广告是否有效
 /// @param sceneId 广告位 id
 - (BOOL)hasInterstitialAvailableWithSceneId:(NSString *)sceneId;
+
+// MARK: - banner
+/// 展示 banner 广告
+/// @param size 广告容器大小
+/// @param sceneId 广告场景 id
+/// @param rootVC 用于跳转的控制器
+/// @param interval 刷新间隔
+/// @param delegate 代理
+/// @param bannerReturnView 返回的 banner 视图要添加到广告容器中,防止内存释放
+- (void)showBannerViewWithSize:(CGSize)size
+                       sceneId:(NSString *)sceneId
+                        rootVC:(UIViewController *)rootVC
+               refreshInterval:(NSTimeInterval)interval
+                      delegate:(id)delegate
+                    bannerView:(void (^)(UIView *bannerView))bannerReturnView;
+
 @end
