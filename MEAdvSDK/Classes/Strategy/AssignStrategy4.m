@@ -11,27 +11,49 @@
 
 @implementation AssignStrategy4
 
-- (NSArray<StrategyResultModel *> *)getExecuteAdapterModelsWithlistInfo:(MEConfigList *)listInfo
-                                                                      sceneId:(NSString *)sceneId
-                                                                 platformType:(MEAdAgentType)platformType {
+- (NSArray <MobiConfig *>*)getExecuteConfigurationWithListInfo:(MEConfigList *)listInfo sceneId:(NSString *)sceneId adType:(MobiAdType)adType {
     if (![listInfo.posid isEqualToString:sceneId]) {
         return nil;
     }
     
-    // 若指定了广告平台,则直接返回该平台的posid等信息
-    if (platformType > MEAdAgentTypeNone && platformType < MEAdAgentTypeCount) {
-        return [self getExecuteAdapterModelsWithTargetPlatformType:platformType listInfo:listInfo sceneId:sceneId];
-    }
-    
-    // 先看该广告位是否需要控制频次
-    if ([StrategyFactory sharedInstance].sceneIdFrequencyDic[sceneId] && listInfo.sortParameter.count && platformType == MEAdAgentTypeAll && listInfo.sortType.intValue == 4) {
+    NSMutableArray *arr = [NSMutableArray array];
+    // 先看该广告位是否需要控制频次,此处采用策略是,将策略数组中的广告标识按优先级顺序排序,最终返回排序后的 configuration 数组
+    if ([StrategyFactory sharedInstance].sceneIdFrequencyDic[sceneId] && listInfo.orderParameter.count && listInfo.sortType.intValue == 4) {
+        // 如果这里面还是字符串,证明没有按照数组下标重设 orderParameter
+        if ([listInfo.orderParameter.firstObject isKindOfClass:[NSString class]]) {
+            return nil;
+        }
         
-        NSString *platformStr = listInfo.sortParameter[[[StrategyFactory sharedInstance].sceneIdFrequencyDic[sceneId] intValue]];
-        platformType = [MEAdNetworkManager getAgentTypeFromNetworkName:platformStr];
+        // orderParameter 中存储的是对应 listInfo.network 数组的下标,所以我们只需要取出 sceneIdFrequencyDic 的 orderParameter 的下标即可得到 listInfo.network 数组的下标
+        NSInteger currentIndex = [[StrategyFactory sharedInstance].sceneIdFrequencyDic[sceneId] intValue];
+        int i = 0;// 作为循环的次数记录
+        while (i < listInfo.network.count) {
+             NSInteger index = [listInfo.orderParameter[(currentIndex + i) % listInfo.network.count] integerValue];
+            if (index < listInfo.network.count) {
+                MEConfigNetwork *network = listInfo.network[index];
+                MobiConfig *configuration = [[MobiConfig alloc] init];
+                configuration.adUnitId = network.parameter.posid;
+                configuration.sceneId = sceneId;
+                configuration.adType = adType;
+                configuration.sortType = 4;
+                configuration.networkName = network.sdk;
+                id<MobiAdapterConfiguration> adapterProvider = MEAdNetworkManager.sharedInstance.initializedAdapters[network.sdk];
+                configuration.adapterProvider = adapterProvider;
+                
+                if ([self getClassByAdType:adType adapterProvider:adapterProvider] != NULL) {
+                    configuration.customEventClass = [self getClassByAdType:adType adapterProvider:adapterProvider];
+                    [arr addObject:configuration];
+                }
+            }
+            i++;
+        }
     }
     
-    // 至此已经筛选出广告平台了,直接返回该平台的posid等信息
-    return [self getExecuteAdapterModelsWithTargetPlatformType:platformType listInfo:listInfo sceneId:sceneId];;
+    if (arr.count == 0) {
+        return nil;
+    }
+    
+    return arr;
 }
 
 @end

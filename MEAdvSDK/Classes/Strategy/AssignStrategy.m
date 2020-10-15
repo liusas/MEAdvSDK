@@ -7,16 +7,35 @@
 //
 
 #import "AssignStrategy.h"
+#import "MobiConfig.h"
+#import "MobiAdapterConfiguration.h"
 
 @implementation StrategyResultModel
 @end
 
 @implementation AssignStrategy
 
-- (NSArray <StrategyResultModel *>*)getExecuteAdapterModelsWithlistInfo:(MEConfigList *)listInfo
-                                                                sceneId:(NSString *)sceneId
-                                                           platformType:(MEAdAgentType)platformType {
+- (NSArray <MobiConfig *>*)getExecuteConfigurationWithListInfo:(MEConfigList *)listInfo sceneId:(NSString *)sceneId adType:(MobiAdType)adType {
     return nil;
+}
+
+/// 获取各广告平台对应的 custom event 实现类
+- (Class)getClassByAdType:(MobiAdType)adType adapterProvider:(id<MobiAdapterConfiguration>)adapterProvider {
+    if (adType == MobiAdTypeSplash) {
+        return [adapterProvider getSplashCustomEvent];
+    } else if (adType == MobiAdTypeBanner) {
+        return [adapterProvider getBannerCustomEvent];
+    } else if (adType == MobiAdTypeFeed) {
+        return [adapterProvider getFeedCustomEvent];
+    } else if (adType == MobiAdTypeInterstitial) {
+        return [adapterProvider getInterstitialCustomEvent];
+    } else if (adType == MobiAdTypeRewardedVideo) {
+        return [adapterProvider getRewardedVideoCustomEvent];
+    } else if (adType == MobiAdTypeFullScreenVideo) {
+        return [adapterProvider getFullscreenCustomEvent];
+    }
+    
+    return NULL;
 }
 
 /// 当指定了加载广告的平台时,统一调这个方法
@@ -29,15 +48,15 @@
     
     if (platformType > MEAdAgentTypeNone && platformType < MEAdAgentTypeCount) {
         // 若指定了广告平台,则直接返回该平台的posid等信息
-        StrategyResultModel *model = [StrategyResultModel new];
+        MobiConfig *configuration = [[MobiConfig alloc] init];
         for (int i = 0; i < listInfo.network.count; i++) {
             MEConfigNetwork *network = listInfo.network[i];
             if ([network.sdk isEqualToString:[MEAdNetworkManager getNetworkNameFromAgentType:platformType]]) {
-                model.posid = network.parameter.posid;
-                model.sceneId = sceneId;
-                model.platformType = platformType;
-                model.targetAdapterClass = [MEAdNetworkManager getAdapterClassFromAgentType:model.platformType];
-                return @[model];
+                configuration.adUnitId = network.parameter.posid;
+                configuration.sceneId = sceneId;
+                id<MobiAdapterConfiguration> adapterProvider = MEAdNetworkManager.sharedInstance.initializedAdapters[network.sdk];
+//                return [MEAdNetworkManager getAdapterClassFromAgentType:platformType];
+                return @[configuration];
             }
         }
     }

@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MEConfigManager.h"
+#import "MobiGlobalConfig.h"
 #import "MEAdNetworkManager.h"
+#import "MobiConfig.h"
+#import "MobiAdapterConfiguration.h"
 
 @interface StrategyResultModel : NSObject
 
@@ -21,13 +23,14 @@
 
 @protocol AssignStrategy <NSObject>
 
-- (NSArray <StrategyResultModel *>*)getExecuteAdapterModelsWithlistInfo:(MEConfigList *)listInfo
-                                                                sceneId:(NSString *)sceneId
-                                                           platformType:(MEAdAgentType)platformType;
+- (NSArray <MobiConfig *>*)getExecuteConfigurationWithListInfo:(MEConfigList *)listInfo sceneId:(NSString *)sceneId adType:(MobiAdType)adType;
 
 @end
 
 @interface AssignStrategy : NSObject<AssignStrategy>
+
+
+- (Class)getClassByAdType:(MobiAdType)adType adapterProvider:(id<MobiAdapterConfiguration>)adapterProvider;
 
 /// 当上层指定了加载广告的平台时,统一调这个方法
 - (NSArray <StrategyResultModel *>*)getExecuteAdapterModelsWithTargetPlatformType:(MEAdAgentType)platformType

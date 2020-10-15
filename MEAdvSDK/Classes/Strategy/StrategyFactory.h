@@ -10,6 +10,7 @@
 #import "AssignStrategy1.h"
 #import "AssignStrategy4.h"
 #import "AssignStrategy5.h"
+#import "MobiConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,9 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
-/// 根据服务端配置的策略选择执行展示广告的平台
+/// 根据 sceneId 和广告类型获取允许展示的广告平台
 /// @param sceneId 场景id
-- (NSArray <StrategyResultModel *>*)getPosidBySortTypeWithPlatform:(MEAdAgentType)platformType SceneId:(NSString *)sceneId;
+- (NSArray <MobiConfig *>*)getConfigurationsWithAdType:(MobiAdType)adType sceneId:(NSString *)sceneId;
 
 /// 更新广告频次,可在广告配置中配置展示顺序,平台在分配广告时优先按这个顺序分配广告平台
 /// @param sceneId 场景id

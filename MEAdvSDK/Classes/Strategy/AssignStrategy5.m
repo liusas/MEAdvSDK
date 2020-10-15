@@ -10,33 +10,34 @@
 
 @implementation AssignStrategy5
 
-- (NSArray<StrategyResultModel *> *)getExecuteAdapterModelsWithlistInfo:(MEConfigList *)listInfo
-                                                                      sceneId:(NSString *)sceneId
-                                                                 platformType:(MEAdAgentType)platformType {
+- (NSArray <MobiConfig *>*)getExecuteConfigurationWithListInfo:(MEConfigList *)listInfo sceneId:(NSString *)sceneId adType:(MobiAdType)adType {
     if (![listInfo.posid isEqualToString:sceneId]) {
         return nil;
     }
     
-    // 若指定了广告平台,则直接返回该平台的posid等信息
-    if (platformType > MEAdAgentTypeNone && platformType < MEAdAgentTypeCount) {
-        return [self getExecuteAdapterModelsWithTargetPlatformType:platformType listInfo:listInfo sceneId:sceneId];
-    }
-    
-    // 先看该广告位是否需要控制频次
-    if (platformType == MEAdAgentTypeAll && listInfo.sortType.intValue == 5) {
-        NSMutableArray *resultArr = [NSMutableArray array];
-        // 遍历sceneId下的所有广告平台,这些广告平台需要同时加载
+    NSMutableArray *arr = [NSMutableArray array];
+    // 并行策略,则将该数组下的所有 configuration 都返回
+    if (listInfo.network.count) {
         for (int i = 0; i < listInfo.network.count; i++) {
             MEConfigNetwork *network = listInfo.network[i];
-            StrategyResultModel *model = [StrategyResultModel new];
+            MobiConfig *configuration = [[MobiConfig alloc] init];
+            configuration.adUnitId = network.parameter.posid;
+            configuration.sceneId = sceneId;
+            configuration.adType = adType;
+            configuration.sortType = 5;
+            configuration.networkName = network.sdk;
+            id<MobiAdapterConfiguration> adapterProvider = MEAdNetworkManager.sharedInstance.initializedAdapters[network.sdk];
+            configuration.adapterProvider = adapterProvider;
             
-            model.posid = network.parameter.posid;
-            model.sceneId = sceneId;
-            model.platformType = [MEAdNetworkManager getAgentTypeFromNetworkName:network.sdk];
-            model.targetAdapterClass = [MEAdNetworkManager getAdapterClassFromAgentType:model.platformType];
-            [resultArr addObject:model];
+            if ([self getClassByAdType:adType adapterProvider:adapterProvider] != NULL) {
+                configuration.customEventClass = [self getClassByAdType:adType adapterProvider:adapterProvider];
+                [arr addObject:configuration];
+            }
         }
-        return resultArr;
+    }
+    
+    if (arr.count) {
+        return arr;
     }
     
     return nil;

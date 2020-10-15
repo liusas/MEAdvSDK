@@ -10,25 +10,38 @@
 
 @implementation AssignStrategy1
 
-- (NSArray <StrategyResultModel *>*)getExecuteAdapterModelsWithlistInfo:(MEConfigList *)listInfo
-                                                                      sceneId:(NSString *)sceneId
-                                                                 platformType:(MEAdAgentType)platformType {
+- (NSArray <MobiConfig *>*)getExecuteConfigurationWithListInfo:(MEConfigList *)listInfo sceneId:(NSString *)sceneId adType:(MobiAdType)adType {
     if (![listInfo.posid isEqualToString:sceneId]) {
         return nil;
     }
     
-    if (platformType > MEAdAgentTypeNone && platformType < MEAdAgentTypeCount) {
-        // 若指定了广告平台,则直接返回该平台的posid等信息
-        return [self getExecuteAdapterModelsWithTargetPlatformType:platformType listInfo:listInfo sceneId:sceneId];
-    }
-    
-    // 按顺序选择优先级最高的,即第1个
+    NSMutableArray *arr = [NSMutableArray array];
+    // 串行顺序,先将数组按优先级排序后,返回整个数组
     if (listInfo.network.count) {
-        MEConfigNetwork *network = listInfo.network[0];
-        platformType = [MEAdNetworkManager getAgentTypeFromNetworkName:network.sdk];
+        for (int i = 0; i < listInfo.network.count; i++) {
+            MEConfigNetwork *network = listInfo.network[i];
+            MobiConfig *configuration = [[MobiConfig alloc] init];
+            configuration.adUnitId = network.parameter.posid;
+            configuration.sceneId = sceneId;
+            configuration.adType = adType;
+            configuration.sortType = 1;
+            configuration.networkName = network.sdk;
+            id<MobiAdapterConfiguration> adapterProvider = MEAdNetworkManager.sharedInstance.initializedAdapters[network.sdk];
+            configuration.adapterProvider = adapterProvider;
+            
+            // 若有执行广告的 custom event,则添加 configuration 到数组
+            if ([self getClassByAdType:adType adapterProvider:adapterProvider] != NULL) {
+                configuration.customEventClass = [self getClassByAdType:adType adapterProvider:adapterProvider];
+                [arr addObject:configuration];
+            }
+        }
     }
     
-    return [self getExecuteAdapterModelsWithTargetPlatformType:platformType listInfo:listInfo sceneId:sceneId];
+    if (arr.count) {
+        return arr;
+    }
+    
+    return nil;
 }
 
 @end
