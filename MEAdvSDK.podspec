@@ -39,7 +39,7 @@ Pod::Spec.new do |spec|
 
   spec.license      = "{ :type => 'MIT', :file => 'LICENSE' }"
   # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
-
+  spec.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
