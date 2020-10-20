@@ -12,7 +12,9 @@
 #import "NSMutableArray+MPAdditions.h"
 #import "NSDate+MPAdditions.h"
 #import "NSError+MPAdditions.h"
+#import "MPError.h"
 #import "MPStopwatch.h"
+#import "MPLogging.h"
 #import "MobiRewardedVideoError.h"
 #import "MobiAdServerURLBuilder.h"
 #import "StrategyFactory.h"
@@ -71,7 +73,13 @@
  * @param targeting 精准广告投放的一些参数,可为空
  */
 - (void)loadRewardedVideoAdWithUserId:(NSString *)userId targeting:(MobiAdTargeting *)targeting {
-//    MPLogAdEvent(MPLogEvent.adLoadAttempt, self.posid);
+    self.playedAd = NO;
+
+    if (self.loading) {
+        MPLogEvent([MPLogEvent error:NSError.adAlreadyLoading message:nil]);
+        return;
+    }
+    
     // 若视频广告已经准备好展示了,我们就告诉上层加载完毕;若当前ad manager正在展示视频广告,则继续请求视频广告资源
     if (self.ready && !self.playedAd) {
         // 若已经有广告了,就不需要再绑定userid了,因为有可能这个广告已经绑定了旧的userid.

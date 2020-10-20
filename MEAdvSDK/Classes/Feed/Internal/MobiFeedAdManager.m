@@ -12,6 +12,8 @@
 #import "NSMutableArray+MPAdditions.h"
 #import "NSDate+MPAdditions.h"
 #import "NSError+MPAdditions.h"
+#import "MPError.h"
+#import "MPLogging.h"
 #import "MPStopwatch.h"
 #import "MobiFeedError.h"
 #import "MobiAdServerURLBuilder.h"
@@ -26,7 +28,6 @@
 @property (nonatomic, strong) NSMutableArray<MobiNativeExpressFeedView *> *nativeExpressFeedViews;
 @property (nonatomic, strong) NSURL *mostRecentlyLoadedURL;  // ADF-4286: avoid infinite ad reloads
 @property (nonatomic, assign) BOOL loading;
-@property (nonatomic, assign) BOOL playedAd;
 @property (nonatomic, assign) BOOL ready;
 /// 从广告开始加载到加载成功或加载失败的时间间隔
 @property (nonatomic, strong) MPStopwatch *loadStopwatch;
@@ -57,6 +58,11 @@
 * @param targeting 精准广告投放的一些参数,可为空
 */
 - (void)loadFeedAdWithUserId:(NSString *)userId targeting:(MobiAdTargeting *)targeting {
+    if (self.loading) {
+        MPLogEvent([MPLogEvent error:NSError.adAlreadyLoading message:nil]);
+        return;
+    }
+    
     // 这里设置userid会覆盖我们之前设置的userid,在其他广告展示时我们会用这个新的userid
     self.userId = userId;
     self.targeting = targeting;
@@ -64,7 +70,7 @@
     // 获取 MEConfig 类型的数组,其中包含具体平台的广告位 id 和响应 network 的 custom event 执行类
     NSArray *configurations = [[StrategyFactory sharedInstance] getConfigurationsWithAdType:MobiAdTypeFeed sceneId:self.adUnitId];
     if (configurations.count) {
-        [self assignCofigurationToPlay:configurations count:self.count];
+        [self assignCofigurationToPlay:configurations targeting:targeting count:self.count];
     } else {
         // 若分配失败,则提示错误
         NSString *errorDescription = [NSString stringWithFormat:@"assign network error"];
@@ -81,11 +87,6 @@
 - (BOOL)hasAdAvailable {
     // 广告未准备好,或已经过期
     if (!self.ready) {
-        return NO;
-    }
-    
-    // 若正在展示广告,则返回No,因为我们不允许同时播放两个视频广告
-    if (self.playedAd) {
         return NO;
     }
     
@@ -106,8 +107,6 @@
 
 // MARK: - Private
 - (void)loadAdWithURL:(NSURL *)URL {
-    self.playedAd = NO;
-
     if (self.loading) {
 //        MPLogEvent([MPLogEvent error:NSError.adAlreadyLoading message:nil]);
         return;
@@ -182,8 +181,14 @@
 
 // MARK: - MobiAdConfigServerDelegate
 /// 分配广告平台去展示广告
-- (void)assignCofigurationToPlay:(NSArray<MobiConfig *> *)configurations count:(NSInteger)count {
+- (void)assignCofigurationToPlay:(NSArray<MobiConfig *> *)configurations targeting:(MobiAdTargeting *)targeting count:(NSInteger)count {
     self.remainingConfigurations = [configurations mutableCopy];
+    
+    // 将用户期望的 FeedSize 大小传入 configuration
+    for (MobiConfig *config in self.remainingConfigurations) {
+        config.feedSize = targeting.feedSize;
+    }
+    
     self.configuration = [self.remainingConfigurations removeFirst];
 
     //将信息流广告尺寸赋值给config，经config传递到custom event
@@ -313,7 +318,6 @@
  */
 - (void)nativeExpressAdViewClosedForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
     self.ready = NO;
-    self.playedAd = YES;
     
 //    MPLogAdEvent(MPLogEvent.adDidDisappear, self.adUnitId);
     [self.delegate nativeExpressAdViewClosedForAdManager:self views:nativeExpressAdView];

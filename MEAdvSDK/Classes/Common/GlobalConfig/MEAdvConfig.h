@@ -13,13 +13,9 @@
 
 @class MEAdBaseManager;
 
-#if DEBUG
-#define kBaseRequestURL @"http://dev.findwxapp.com/flow-mediation/v1/ad"
-#else
 #define kBaseRequestURL @"http://proto.findwxapp.com/flow-mediation/v1/ad"
-#endif
 
-#define kSDKVersion @"1.0.0"
+#define kSDKVersion @"1.0.1"
 
 
 /// 广告平台

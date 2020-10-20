@@ -94,6 +94,11 @@
 {
     MPLogAdEvent(MPLogEvent.adLoadAttempt, ID);
 
+    if (self.loading) {
+        MPLogEvent([MPLogEvent error:NSError.adAlreadyLoading message:nil]);
+        return;
+    }
+    
     if (self.ready) {
         [self.delegate managerDidLoadInterstitial:self];
     } else {
