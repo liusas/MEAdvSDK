@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>tt</key>
+	<string>MEBUADAdapter</string>
+	<key>gdt</key>
+	<string>MEGDTAdapter</string>
+	<key>ks</key>
+	<string>MEKSAdapter</string>
+	<key>gdt2</key>
+	<string>MEValpubAdapter</string>
+	<key>admob</key>
+	<string>MEAdombAdapter</string>
+	<key>fb</key>
+	<string>MEFBAdapter</string>
+	<key>mobisdk</key>
+	<string>MEMobipubAdapter</string>
+</dict>
+</plist>

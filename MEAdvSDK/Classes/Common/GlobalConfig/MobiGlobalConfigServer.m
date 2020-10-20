@@ -14,6 +14,7 @@
 #import "MEAdNetworkManager.h"
 #import "MEConfigBaseClass.h"
 #import "MPError.h"
+#import "MPLogging.h"
 #import "StrategyFactory.h"
 
 @interface MobiGlobalConfigServer ()
@@ -87,6 +88,8 @@
     NSString *urlConfig = [NSString stringWithFormat:@"%@?media_id=%@&idfa=%@&platform=ios&sdkv=%@", self.adReuqestUrl, configuration.appid, [MPDeviceInformation idfa], kSDKVersion];
     
     MobiURLRequest * request = [MobiURLRequest requestWithURL:[NSURL URLWithString:urlConfig]];
+    
+    DLog(@"%@", urlConfig);
     
     // 请求配置
     __weak __typeof__(self) weakSelf = self;
@@ -193,6 +196,8 @@
     // 将磁盘缓存中存储的信息保存在内存中,因为MEConfigMnager类是个单例,所以在程序使用期间不会释放
     self.timeConfig = [NSDate date].timeIntervalSince1970;
     self.timeOut = configModel.config.timeout.doubleValue * 1000.f;
+    
+    DLog(@"%@", [MobiGlobalConfig sharedInstance].configDic);
     
     MobiGlobalConfig *config = [MobiGlobalConfig sharedInstance];
     config.adRequestTimeout = configModel.config.adAdkReqTimeout.doubleValue / 1000.f;
