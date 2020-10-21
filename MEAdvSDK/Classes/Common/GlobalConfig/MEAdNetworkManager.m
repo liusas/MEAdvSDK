@@ -8,21 +8,9 @@
 
 #import "MEAdNetworkManager.h"
 #import "MEConfigInfo.h"
-#import "MobiAdapterConfiguration.h"
+#import "MobiBaseAdapterConfiguration.h"
 #import "NSBundle+MPAdditions.h"
 #import "MPLogging.h"
-
-#if __has_include(<MEBUADAdapter/MEBUADAdapter.h>)
-#import <MEBUADAdapter/MEBUADAdapter.h>
-#endif
-
-#if __has_include(<MEGDTAdapter/MEGDTAdapter.h>)
-#import <MEGDTAdapter/MEGDTAdapter.h>
-#endif
-
-#if __has_include(<MEKSAdapter/MEKSAdapter.h>)
-#import <MEKSAdapter/MEKSAdapter.h>
-#endif
 
 static NSString * kAdaptersFile     = @"MobiAdapters";
 static NSString * kAdaptersFileType = @"plist";
@@ -84,6 +72,8 @@ static NSString * kAdaptersFileType = @"plist";
             model.sdk = info.sdk;
             model.adapterClass = sharedInstance.certifiedAdapterClasses[info.sdk];
             [sharedInstance.adNetworks addObject:model];
+            
+            DLog(@"MEAdNetworkModel = %@", model);
         }
     }
 }
@@ -199,6 +189,7 @@ static NSString * kAdaptersFileType = @"plist";
     for (int i = 0; i < adapterClassNameDic.allKeys.count; i++) {
         NSString *networkAdapterName = adapterClassNameDic.allValues[i];
         Class adapterClass = NSClassFromString(networkAdapterName);
+        DLog(@"Class = %@---------------", NSStringFromClass(adapterClass));
         if (adapterClass != Nil && [adapterClass conformsToProtocol:@protocol(MobiAdapterConfiguration)]) {
             adapters[adapterClassNameDic.allKeys[i]] = adapterClass;
         }
