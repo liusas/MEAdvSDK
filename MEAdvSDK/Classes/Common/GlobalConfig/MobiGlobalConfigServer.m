@@ -195,6 +195,8 @@
     self.timeConfig = [NSDate date].timeIntervalSince1970;
     self.timeOut = configModel.config.timeout.doubleValue * 1000.f;
     
+    DLog(@"configDic = %@+++++++++++++++++", [MobiGlobalConfig sharedInstance].configDic);
+    
     MobiGlobalConfig *config = [MobiGlobalConfig sharedInstance];
     config.adRequestTimeout = configModel.config.adAdkReqTimeout.doubleValue / 1000.f;
     config.adLogUrl = configModel.config.reportUrl;

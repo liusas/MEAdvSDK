@@ -12,6 +12,18 @@
 #import "NSBundle+MPAdditions.h"
 #import "MPLogging.h"
 
+#if __has_include(<MEBUADAdapter/MEBUADAdapter.h>)
+#import <MEBUADAdapter/MEBUADAdapter.h>
+#endif
+
+#if __has_include(<MEGDTAdapter/MEGDTAdapter.h>)
+#import <MEGDTAdapter/MEGDTAdapter.h>
+#endif
+
+#if __has_include(<MEKSAdapter/MEKSAdapter.h>)
+#import <MEKSAdapter/MEKSAdapter.h>
+#endif
+
 static NSString * kAdaptersFile     = @"MobiAdapters";
 static NSString * kAdaptersFileType = @"plist";
 
@@ -99,6 +111,8 @@ static NSString * kAdaptersFileType = @"plist";
         
         MEAdNetworkManager.sharedInstance.initializedAdapters[model.sdk] = adapterProvider;
     }
+    
+    DLog(@"%@====================", MEAdNetworkManager.sharedInstance.initializedAdapters);
     
     return YES;
 }
