@@ -187,13 +187,14 @@
     // 将用户期望的 FeedSize 大小传入 configuration
     for (MobiConfig *config in self.remainingConfigurations) {
         config.feedSize = targeting.feedSize;
+        config.count = self.count;
     }
     
     self.configuration = [self.remainingConfigurations removeFirst];
 
     //将信息流广告尺寸赋值给config，经config传递到custom event
-    self.configuration.feedSize = self.targeting.feedSize;
-    self.configuration.count = self.count;
+//    self.configuration.feedSize = self.targeting.feedSize;
+//    self.configuration.count = self.count;
     
     // 若分配的平台是自有平台,则在此请求新内容
     if ([self.configuration.adapterProvider isKindOfClass:NSClassFromString(@"MEMobipubAdapter")]) {
