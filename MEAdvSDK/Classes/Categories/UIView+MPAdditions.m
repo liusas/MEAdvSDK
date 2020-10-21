@@ -30,6 +30,22 @@
     return self.frame.size.height;
 }
 
+- (CGFloat)mb_maxX {
+    return CGRectGetMaxX(self.frame);
+}
+
+- (CGFloat)mb_maxY {
+    return CGRectGetMaxY(self.frame);
+}
+
+- (CGFloat)mb_centerX {
+    return self.center.x;
+}
+
+- (CGFloat)mb_centerY {
+    return self.center.y;
+}
+
 - (void)setMp_x:(CGFloat)mp_x
 {
     [self setX:mp_x andY:self.frame.origin.y];
@@ -59,6 +75,30 @@
     CGRect frame = self.frame;
     frame.size.height = mp_height;
     self.frame = frame;
+}
+
+- (void)setMp_maxX:(CGFloat)maxX {
+    // 1.必须通过结构体赋值.直接赋值,涉及到计算时会出错.
+    // 2.必须将x,y,当做已知条件;宽,高当做未知条件.涉及到计算时,才能正确计算出在父控件中的位置.
+    // ❌错误方法 frame.origin.x = maxX - frame.size.width;
+    // 错误原因:可能此时的宽度还没有值,所以计算出来的值是错误的.
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, maxX - self.frame.origin.x, self.frame.size.height);
+}
+
+- (void)setMp_maxY:(CGFloat)maxY {
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, maxY - self.frame.origin.y);
+}
+
+- (void)setMp_centerX:(CGFloat)centerX {
+    CGPoint center = self.center;
+    center.x = centerX;
+    self.center = center;
+}
+
+- (void)setMp_centerY:(CGFloat)centerY {
+    CGPoint center = self.center;
+    center.y = centerY;
+    self.center = center;
 }
 
 - (UIView *)mp_snapshotView

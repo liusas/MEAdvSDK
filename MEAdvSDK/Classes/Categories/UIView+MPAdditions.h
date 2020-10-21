@@ -14,6 +14,14 @@
 @property (nonatomic) CGFloat mp_y;
 @property (nonatomic) CGFloat mp_height;
 @property (nonatomic) CGFloat mp_width;
+/** 坐标 maxX */
+@property (nonatomic, assign) CGFloat mb_maxX;
+/** 坐标 maxY */
+@property (nonatomic, assign) CGFloat mb_maxY;
+/** 坐标 centerX */
+@property (nonatomic, assign) CGFloat mb_centerX;
+/** 坐标 centerY */
+@property (nonatomic, assign) CGFloat mb_centerY;
 
 - (void)setMp_x:(CGFloat)mp_x;
 - (void)setMp_y:(CGFloat)mp_y;

@@ -8,7 +8,7 @@
 
 #import "MobiVideoEndView.h"
 #import "MobiVideoAppConfig.h"
-#import "UIView+MobiFrame.h"
+#import "UIView+MPAdditions.h"
 #import "UIColor+MobiBaseFramework.h"
 #import "MobiLaunchAdImageView.h"
 #import "MobiGlobal.h"
@@ -55,7 +55,7 @@
     [self addSubview:logo];
     self.appIcon = logo;
     //decribe
-    UILabel *topLb = [[UILabel alloc] initWithFrame:CGRectMake(kCurrentWidth(41), logo.maxY+kCurrentWidth(39), kCurrentWidth(293), kCurrentWidth(53))];
+    UILabel *topLb = [[UILabel alloc] initWithFrame:CGRectMake(kCurrentWidth(41), logo.mb_maxY+kCurrentWidth(39), kCurrentWidth(293), kCurrentWidth(53))];
     topLb.text = @"这回真是瞎了血本了赶紧下载啊啊我要凑够两行…";
     topLb.textColor = [UIColor whiteColor];
     topLb.font = [UIFont fontWithName:MediumFontName size:kCurrentWidth(18)];
@@ -65,7 +65,7 @@
     self.appDescribe = topLb;
     
     //detail describe
-    UILabel *detailLb = [[UILabel alloc] initWithFrame:CGRectMake(kCurrentWidth(41), topLb.maxY+kCurrentWidth(9), kCurrentWidth(293), kCurrentWidth(25))];
+    UILabel *detailLb = [[UILabel alloc] initWithFrame:CGRectMake(kCurrentWidth(41), topLb.mb_maxY+kCurrentWidth(9), kCurrentWidth(293), kCurrentWidth(25))];
     detailLb.text = @"据说这个游戏能发财，朋友们赶紧来玩啊！";
     detailLb.textColor = [UIColor whiteColor];
     detailLb.font = [UIFont fontWithName:RegularFontName size:kCurrentWidth(14)];
@@ -75,7 +75,7 @@
     
     for (int i = 0; i < 5; i ++) {
         UIImageView *img = [[UIImageView alloc] init];
-        img.frame = CGRectMake(kCurrentWidth(62) + kCurrentWidth(14 + 39) * i, kCurrentWidth(104) + detailLb.maxY, kCurrentWidth(39), kCurrentWidth(37));
+        img.frame = CGRectMake(kCurrentWidth(62) + kCurrentWidth(14 + 39) * i, kCurrentWidth(104) + detailLb.mb_maxY, kCurrentWidth(39), kCurrentWidth(37));
         //img.backgroundColor = [UIColor orangeColor];
         img.image = [UIImage imageNamed:@"星形"];
         [self addSubview:img];
@@ -85,7 +85,7 @@
     UIButton *downloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, kCurrentWidth(467) + iPhoneStatusBarAndNavigationBarHeight, kCurrentWidth(261), kCurrentWidth(55))];
     [downloadBtn setTitle:@"下载" forState:UIControlStateNormal];
     downloadBtn.backgroundColor = [UIColor colorWithHexString:@"#1789FF"];
-    downloadBtn.centerX = self.centerX;
+    downloadBtn.mb_centerX = self.mb_centerX;
     downloadBtn.layer.cornerRadius = kCurrentWidth(55/2);
     downloadBtn.clipsToBounds = YES;
     [self addSubview:downloadBtn];

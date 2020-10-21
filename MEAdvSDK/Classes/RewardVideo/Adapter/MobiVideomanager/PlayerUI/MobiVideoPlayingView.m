@@ -8,7 +8,7 @@
 
 #import "MobiVideoPlayingView.h"
 #import "MobiVideoAppConfig.h"
-#import "UIView+MobiFrame.h"
+#import "UIView+MPAdditions.h"
 #import "UIColor+MobiBaseFramework.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MobiGlobal.h"
@@ -75,7 +75,7 @@
     [speakerBtn addTarget:self action:@selector(speakClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UIView *backV = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kCurrentWidth(122), kCurrentWidth(343), kCurrentWidth(102))];
-    backV.centerX = self.centerX;
+    backV.mb_centerX = self.mb_centerX;
     backV.backgroundColor = [UIColor whiteColor];
     backV.layer.cornerRadius = kCurrentWidth(19);
     backV.clipsToBounds = YES;
@@ -90,7 +90,7 @@
     self.bottomImgV = logo2;
     
     //app name
-    UILabel *nameLb = [[UILabel alloc] initWithFrame:CGRectMake(kCurrentWidth(13) + logo2.maxX, kCurrentWidth(27), kCurrentWidth(100), kCurrentWidth(25))];
+    UILabel *nameLb = [[UILabel alloc] initWithFrame:CGRectMake(kCurrentWidth(13) + logo2.mb_maxX, kCurrentWidth(27), kCurrentWidth(100), kCurrentWidth(25))];
     nameLb.text = @"小黄儿";
     nameLb.textColor = [UIColor colorWithHexString:@"333333"];
     nameLb.font = [UIFont fontWithName:MediumFontName size:kCurrentWidth(18)];
@@ -98,7 +98,7 @@
     self.appNameLb = nameLb;
     
     //detail describe
-    UILabel *detailLb = [[UILabel alloc] initWithFrame:CGRectMake(nameLb.x, nameLb.maxY+kCurrentWidth(4), kCurrentWidth(140), kCurrentWidth(20))];
+    UILabel *detailLb = [[UILabel alloc] initWithFrame:CGRectMake(nameLb.mp_x, nameLb.mb_maxY+kCurrentWidth(4), kCurrentWidth(140), kCurrentWidth(20))];
     detailLb.text = @"这回真是瞎了血本了…";
     detailLb.textColor = [UIColor colorWithHexString:@"333333"];
     detailLb.font = [UIFont fontWithName:RegularFontName size:kCurrentWidth(14)];
@@ -106,7 +106,7 @@
     self.appDescribeLb = detailLb;
     
     //立即下载按钮
-    UIButton *downloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(backV.maxX-17-16-86, kCurrentWidth(28), kCurrentWidth(86), kCurrentWidth(39))];
+    UIButton *downloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(backV.mb_maxX-17-16-86, kCurrentWidth(28), kCurrentWidth(86), kCurrentWidth(39))];
     [downloadBtn setTitle:@"下载" forState:UIControlStateNormal];
     downloadBtn.backgroundColor = [UIColor colorWithHexString:@"#1789FF"];
     downloadBtn.layer.cornerRadius = kCurrentWidth(39/2);
