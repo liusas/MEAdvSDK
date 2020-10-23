@@ -1,28 +1,15 @@
 PODS:
-  - MEAdvSDK (0.1.6):
-    - Reachability
-    - Realm (= 4.4.1)
-  - Reachability (3.2)
-  - Realm (4.4.1):
-    - Realm/Headers (= 4.4.1)
-  - Realm/Headers (4.4.1)
+  - MEAdvSDK (1.0.12)
 
 DEPENDENCIES:
   - MEAdvSDK (from `../`)
-
-SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Reachability
-    - Realm
 
 EXTERNAL SOURCES:
   MEAdvSDK:
     :path: "../"
 
 SPEC CHECKSUMS:
-  MEAdvSDK: 5669fbfc98e64f7ce4497c0db16d3f906eb7f8f1
-  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  Realm: 4eb04d7487bd43c0581256f40b424eafb711deff
+  MEAdvSDK: e6361a2ec0e50ad807d02d1889b6a06a6ee830bd
 
 PODFILE CHECKSUM: 38f8ae54e1235ec968392780674b260639de748d
 

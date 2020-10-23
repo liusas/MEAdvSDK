@@ -1,1 +1,0 @@
-../../../../../MEAdvSDK/Classes/Platform/Mobipub/MobipubSDK/Common/VAST/MPVASTTrackingEvent.h

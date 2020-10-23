@@ -349,12 +349,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MEAdvSDK_Example/Pods-MEAdvSDK_Example-resources.sh",
+				"${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MobiAdapters.plist",
 				"${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MEAdvBundle.bundle",
 				"${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MobiPubSDK.bundle",
 				"${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MRAID.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MobiAdapters.plist",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MEAdvBundle.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MobiPubSDK.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MRAID.bundle",

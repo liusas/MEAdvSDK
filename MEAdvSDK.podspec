@@ -92,7 +92,7 @@ Pod::Spec.new do |spec|
 
   spec.source_files  = "Classes", "MEAdvSDK/Classes/**/*.{h,m}"
   spec.exclude_files = "Classes/Exclude"
-#  spec.vendored_framework = 'MEAdvSDK-1.0.8/ios/*.framework'
+#  spec.vendored_framework = 'MEAdvSDK-1.0.12/ios/*.framework'
 
   # spec.public_header_files = "Classes/**/*.h"
 

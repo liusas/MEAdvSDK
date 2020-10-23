@@ -337,13 +337,13 @@ static MobiSplash *gSharedInstance = nil;
 }
 
 - (void)dismissMaskView {
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        for (UIView *view in self.window.rootViewController.view.subviews) {
-//            if ([view isKindOfClass:[MobiLaunchImageView class]]) {
-//                [view removeFromSuperview];
-//            }
-//        }
-//    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (UIView *view in self.window.rootViewController.view.subviews) {
+            if ([view isKindOfClass:[MobiLaunchImageView class]]) {
+                [view removeFromSuperview];
+            }
+        }
+    });
 }
 
 @end

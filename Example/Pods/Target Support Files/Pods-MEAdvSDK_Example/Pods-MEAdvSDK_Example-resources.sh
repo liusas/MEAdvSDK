@@ -97,11 +97,13 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MobiAdapters.plist"
   install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MEAdvBundle.bundle"
   install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MobiPubSDK.bundle"
   install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MRAID.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MobiAdapters.plist"
   install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MEAdvBundle.bundle"
   install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MobiPubSDK.bundle"
   install_resource "${PODS_ROOT}/../../MEAdvSDK/Assets/Resource/MRAID.bundle"

@@ -1,1 +1,0 @@
-../../../../../MEAdvSDK/Classes/Platform/Mobipub/MobipubSDK/Interstitial/Interstitials/MPInterstitialAdControllerDelegate.h
