@@ -134,7 +134,7 @@ static MobiSplash *gSharedInstance = nil;
     
     [adManager loadSplashAdWithUserId:model.userId targeting:targeting];
     
-    if (model.needSetBackground) {
+    if (model.needSetBackground == YES || model == nil) {
         /** 添加launchImageView */
         [window.rootViewController.view addSubview:[[MobiLaunchImageView alloc] initWithSourceType:MobiSourceTypeLaunchImage]];
     }
