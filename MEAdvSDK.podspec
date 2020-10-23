@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MEAdvSDK" #库的名称
-  spec.version      = "1.0.12" #库的版本号
+  spec.version      = "1.0.13" #库的版本号
   spec.summary      = "Mobiexchanger's advertise SDK" #pod库的简要概述
 
   # This description is used to generate tags and improve search results.
