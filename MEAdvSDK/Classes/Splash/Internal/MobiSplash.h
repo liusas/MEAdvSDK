@@ -48,10 +48,6 @@
 /// @param posid 广告位id
 + (BOOL)hasAdAvailableForPosid:(NSString *)posid;
 
-/// 预加载闪屏广告接口
-/// @param posid 广告位ID
-+ (void)preloadSplashOrderWithPosid:(NSString *)posid;
-
 @end
 
 @protocol MobiSplashDelegate <NSObject>

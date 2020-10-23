@@ -129,7 +129,12 @@
  * 停止开屏广告
  */
 - (void)stopSplashAdWithPosid:(NSString *)posid {
+    if (self.loadStopwatch.isRunning) {
+        [self.loadStopwatch stop];
+    }
+    
     self.ready = NO;
+    self.loading = NO;
 }
 
 - (void)handleAdPlayedForCustomEventNetwork {

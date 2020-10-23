@@ -19,14 +19,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger fetchDelay;
 
 /**
+ *  是否需要在开屏之前设置过渡背景图片,默认为 YES
+ */
+@property (nonatomic, assign) BOOL needSetBackground;
+
+/**
  *  开屏广告的背景图片
- *  可以设置背景图片作为开屏加载时的默认背景
+ *  可以设置背景图片作为开屏加载时的默认背景图片
  */
 @property (nonatomic, strong) UIImage *backgroundImage;
 
 /**
  *  开屏广告的背景色
- *  可以设置开屏图片来作为开屏加载时的默认图片
+ *  可以设置开屏图片来作为开屏加载时的默认背景色
  */
 @property (nonatomic, copy) UIColor *backgroundColor;
 

@@ -134,8 +134,10 @@ static MobiSplash *gSharedInstance = nil;
     
     [adManager loadSplashAdWithUserId:model.userId targeting:targeting];
     
-    /** 添加launchImageView */
-    [window.rootViewController.view addSubview:[[MobiLaunchImageView alloc] initWithSourceType:MobiSourceTypeLaunchImage]];
+    if (model.needSetBackground) {
+        /** 添加launchImageView */
+        [window.rootViewController.view addSubview:[[MobiLaunchImageView alloc] initWithSourceType:MobiSourceTypeLaunchImage]];
+    }
 }
 
 + (void)stopSplashAdWithPosid:(NSString *)posid {
@@ -151,12 +153,6 @@ static MobiSplash *gSharedInstance = nil;
     MobiSplashAdManager *adManager = sharedInstance.splashAdManagers[posid];
 
     return [adManager hasAdAvailable];
-}
-
-/// 预加载闪屏广告接口
-/// @param posid 广告位ID
-+ (void)preloadSplashOrderWithPosid:(NSString *)posid {
-    
 }
 
 // MARK: private

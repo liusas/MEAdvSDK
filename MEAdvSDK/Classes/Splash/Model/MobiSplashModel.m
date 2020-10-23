@@ -9,4 +9,13 @@
 
 @implementation MobiSplashModel
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _needSetBackground = YES;
+    }
+    return self;
+}
+
 @end
