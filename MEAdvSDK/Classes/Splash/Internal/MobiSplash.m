@@ -105,6 +105,9 @@ static MobiSplash *gSharedInstance = nil;
     }
     
     if (!window) {
+        NSError *error = [NSError errorWithDomain:MobiSplashAdsSDKDomain code:MobiSplashAdErrorInvalidPosid userInfo:nil];
+        id<MobiSplashDelegate> delegate = [sharedInstance.delegateTable objectForKey:posid];
+        [delegate splashAdFailToPresent:sharedInstance withError:error];
         return;
     }
     
@@ -334,13 +337,13 @@ static MobiSplash *gSharedInstance = nil;
 }
 
 - (void)dismissMaskView {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        for (UIView *view in self.window.rootViewController.view.subviews) {
-            if ([view isKindOfClass:[MobiLaunchImageView class]]) {
-                [view removeFromSuperview];
-            }
-        }
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        for (UIView *view in self.window.rootViewController.view.subviews) {
+//            if ([view isKindOfClass:[MobiLaunchImageView class]]) {
+//                [view removeFromSuperview];
+//            }
+//        }
+//    });
 }
 
 @end

@@ -20,10 +20,16 @@
         switch (sourceType) {
             case MobiSourceTypeLaunchScreen:{
                 self.image = [self imageFromLaunchScreen];
+                if (!self.image) {
+                    self.image = [self imageFromLaunchImage];
+                }
             }
                 break;
             case MobiSourceTypeLaunchImage:{
                 self.image = [self imageFromLaunchImage];
+                if (!self.image) {
+                    self.image = [self imageFromLaunchScreen];
+                }
             }
                 break;
             default:

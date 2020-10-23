@@ -12,6 +12,7 @@ typedef enum {
 
     MobiSplashAdErrorTimeout = -1000, /*超时错误*/
     MobiSplashAdErrorAdUnitWarmingUp = -1001, /*广告单元正在预热,请稍后重试*/
+    MobiSplashAdErrorNoWindowAvaliable = -1002, /*没有承载开屏的窗口*/
     MobiSplashAdErrorNoAdsAvailable = -1100, /*没有有效广告*/
     MobiSplashAdErrorInvalidCustomEvent = -1200, /*无效的激励视频执行工具*/
     MobiSplashAdErrorMismatchingAdTypes = -1300, /*广告类型不匹配*/
@@ -19,7 +20,6 @@ typedef enum {
     MobiSplashAdErrorNoAdReady = -1401, /*广告没有准备好,无法播放*/
     MobiSplashAdErrorInvalidPosid = -1500, /*无效的广告位id*/
     MobiSplashAdErrorInvalidReward = -1600, /*无效的奖励*/
-    MobiSplashAdErrorNoRewardSelected = -1601, /*没有奖励*/
 } MobiSplashErrorCode;
 
 /// extern关键字用来声明一个变量,表示定义在别的地方,不在这里
