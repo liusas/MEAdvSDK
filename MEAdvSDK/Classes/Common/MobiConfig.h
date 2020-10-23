@@ -36,6 +36,11 @@ typedef NS_ENUM(NSInteger, MobiAdType) {
 /// 广告平台名
 @property (nonatomic, copy) NSString *networkName;
 
+///信息流广告尺寸，必须传入宽度，高度自适应，否则无法展示信息流
+@property (nonatomic, assign) CGSize feedSize;
+/// 信息流的数量
+@property (nonatomic, assign) NSInteger count;
+
 /// 该配置下的广告类型
 @property (nonatomic, assign) MobiAdType adType;
 /// 用于执行具体广告的customEvent类
@@ -83,10 +88,6 @@ typedef NS_ENUM(NSInteger, MobiAdType) {
 @property (nonatomic, strong) NSArray<NSURL *> * startInstallTrackingURLs;
 /// 安卓需要,iOS不需要,安装完成
 @property (nonatomic, strong) NSArray<NSURL *> * finishInstallTrackingURLs;
-///信息流广告尺寸，必须传入宽度，高度自适应，否则无法展示信息流
-@property (nonatomic, assign) CGSize feedSize;
-/// 信息流的数量
-@property (nonatomic, assign) NSInteger count;
 
 /*******************点击上报**********************/
 // 手指按下的 x,y

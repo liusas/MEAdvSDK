@@ -17,6 +17,7 @@
 #import "MobiTimer.h"
 #import "MobiRealTimeTimer.h"
 #import "MELogTracker.h"
+#import "MobiLaunchImageView.h"
 
 @interface MobiSplashAdapter () <MobiSplashCustomEventDelegate>
 
@@ -79,7 +80,12 @@
     self.splashCustomEvent = customEvent;
     [self startTimeoutTimer];
     
-    [self.splashCustomEvent requestSplashWithCustomEventInfo:@{@"adunit":configuration.adUnitId} adMarkup:nil];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"adunit"] = configuration.adUnitId;
+    dict[@"bottomView"] = targeting.bottomView;
+    dict[@"delay"] = @(targeting.delay);
+    dict[@"backImageView"] = [[MobiLaunchImageView alloc] initWithSourceType:MobiSourceTypeLaunchImage];
+    [self.splashCustomEvent requestSplashWithCustomEventInfo:dict adMarkup:nil];
 }
 
 /**

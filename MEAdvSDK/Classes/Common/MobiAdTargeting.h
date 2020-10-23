@@ -35,6 +35,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGSize feedSize;
 
 /**
+ 开屏底部 logo 区域
+ */
+@property (nonatomic, strong) UIView *bottomView;
+
+/**
+ 超时时间
+ */
+@property (nonatomic, assign) NSInteger delay;
+
+/**
  初始化AdTargeting
  @param size 广告容器允许的最大安全尺寸
  */

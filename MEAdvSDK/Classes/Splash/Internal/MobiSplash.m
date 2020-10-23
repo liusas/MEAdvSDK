@@ -132,8 +132,7 @@ static MobiSplash *gSharedInstance = nil;
     [adManager loadSplashAdWithUserId:model.userId targeting:targeting];
     
     /** 添加launchImageView */
-//    [window addSubview:[[MobiLaunchImageView alloc] initWithSourceType:MobiSourceTypeLaunchImage]];
-    
+    [window.rootViewController.view addSubview:[[MobiLaunchImageView alloc] initWithSourceType:MobiSourceTypeLaunchImage]];
 }
 
 + (void)stopSplashAdWithPosid:(NSString *)posid {
@@ -171,19 +170,15 @@ static MobiSplash *gSharedInstance = nil;
         [delegate splashAdDidLoad:self];
     }
     [splashAd presentSplashAdFromWindow:self.window];
+    
+    [self dismissMaskView];
 }
 
 /**
  *  开屏广告展示失败
  */
 - (void)splashAdFailToPresentForManager:(MobiSplashAdManager *)splashAd withError:(NSError *)error {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        for (UIView *view in self.window.subviews) {
-            if ([view isKindOfClass:[MobiLaunchImageView class]]) {
-                [view removeFromSuperview];
-            }
-        }
-    });
+    [self dismissMaskView];
     
     id<MobiSplashDelegate> delegate = [self.delegateTable objectForKey:splashAd.posid];
     if ([delegate respondsToSelector:@selector(splashAdFailToPresent:withError:)]) {
@@ -247,6 +242,8 @@ static MobiSplash *gSharedInstance = nil;
  *  开屏广告将要关闭回调
  */
 - (void)splashAdWillClosedForManager:(MobiSplashAdManager *)splashAd {
+    [self dismissMaskView];
+    
     id<MobiSplashDelegate> delegate = [self.delegateTable objectForKey:splashAd.posid];
     if ([delegate respondsToSelector:@selector(splashAdWillClosed:)]) {
         [delegate splashAdWillClosed:self];
@@ -334,6 +331,16 @@ static MobiSplash *gSharedInstance = nil;
     });
 
     return gSharedInstance;
+}
+
+- (void)dismissMaskView {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (UIView *view in self.window.rootViewController.view.subviews) {
+            if ([view isKindOfClass:[MobiLaunchImageView class]]) {
+                [view removeFromSuperview];
+            }
+        }
+    });
 }
 
 @end

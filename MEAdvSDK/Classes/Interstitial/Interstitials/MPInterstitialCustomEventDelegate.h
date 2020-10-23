@@ -51,6 +51,10 @@
 - (void)interstitialCustomEvent:(MPInterstitialCustomEvent *)customEvent
                       didLoadAd:(id)ad;
 
+- (void)interstitialCustomEventRenderSuccess:(MPInterstitialCustomEvent *)customEvent;
+
+- (void)interstitialCustomEvent:(MPInterstitialCustomEvent *)customEvent renderFailed:(NSError *)error;
+
 /**
  * Call this method immediately after an ad fails to load.
  *
