@@ -50,4 +50,22 @@
     return string;
 }
 
+/// 从文件中读取 json 字符串并转成字典
+/// fileType: 文件类型
+- (NSDictionary *)dicFromFileWithType:(NSString *)fileType {
+    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:self ofType:fileType];
+    NSData * data = [NSData dataWithContentsOfFile:filePath];
+    NSString * chapterContent = @"";
+    BOOL lossy = NO;
+    NSArray * enccList = @[@(NSUTF8StringEncoding),@(enc)];
+    NSStringEncoding encc = [NSString stringEncodingForData:data
+                                            encodingOptions:@{NSStringEncodingDetectionSuggestedEncodingsKey:enccList}
+                                            convertedString:&chapterContent  usedLossyConversion:&lossy];
+
+    NSData * resData = [[NSData alloc]initWithData:[chapterContent dataUsingEncoding:NSUTF8StringEncoding]];
+    NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+    return responseObject;
+}
+
 @end

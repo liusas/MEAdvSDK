@@ -16,6 +16,21 @@
 #import "MPError.h"
 #import "MPLogging.h"
 #import "StrategyFactory.h"
+#import "NSString+MPAdditions.h"
+#import "NSDictionary+MPAdditions.h"
+
+static NSString *_defaultConfigName = @"mb_config";
+static NSString *_defaultConfigFileType = @"txt";
+
+static dispatch_queue_t file_access_creation_queue() {
+    static dispatch_queue_t file_access_creation_queue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        file_access_creation_queue = dispatch_queue_create("com.mobiexchanger.fileaccess.queue", DISPATCH_QUEUE_SERIAL);
+    });
+    
+    return file_access_creation_queue;
+}
 
 @interface MobiGlobalConfigServer ()
 
@@ -91,8 +106,10 @@
     
     // 请求配置
     __weak __typeof__(self) weakSelf = self;
+//    NSLog(@"请求开始=============%f", CACurrentMediaTime());
     self.task = [MobiHTTPNetworkSession startTaskWithHttpRequest:request responseHandler:^(NSData * _Nonnull data, NSHTTPURLResponse * _Nonnull response) {
         __typeof__(self) strongSelf = weakSelf;
+//        NSLog(@"请求结束=============%f", CACurrentMediaTime());
         [strongSelf didFinishLoadingWithData:data];
     } errorHandler:^(NSError * _Nonnull error) {
         __typeof__(self) strongSelf = weakSelf;
@@ -121,7 +138,15 @@
         return;
     }
 
-    [responseObject writeToFile:FilePath_AllConfig atomically:YES];
+    dispatch_sync(file_access_creation_queue(), ^{
+        [responseObject mb_toJsonSaveWithFilename:_defaultConfigName fileType:_defaultConfigFileType];
+    });
+    
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSDictionary *asd = [_defaultConfigName dicFromFileWithType:_defaultConfigFileType];
+        NSLog(@"asd = %@", asd);
+    });
     [self dispatchConfigDicWithResponseObj:responseObject];
     if ([MobiGlobalConfig sharedInstance].isInit == false) {
         [self assignPlatform];
@@ -132,7 +157,8 @@
 // MARK: - Private
 // 读取磁盘缓存
 - (void)readDiskCache {
-    NSDictionary *responseObject = [NSMutableDictionary dictionaryWithContentsOfFile:FilePath_AllConfig];
+//    NSDictionary *responseObject = [NSMutableDictionary dictionaryWithContentsOfFile:FilePath_AllConfig];
+    NSDictionary *responseObject = [_defaultConfigName dicFromFileWithType:_defaultConfigFileType];
     
     if (responseObject == nil) {
     } else {
@@ -194,8 +220,6 @@
     // 将磁盘缓存中存储的信息保存在内存中,因为MEConfigMnager类是个单例,所以在程序使用期间不会释放
     self.timeConfig = [NSDate date].timeIntervalSince1970;
     self.timeOut = configModel.config.timeout.doubleValue * 1000.f;
-    
-    DLog(@"configDic = %@+++++++++++++++++", [MobiGlobalConfig sharedInstance].configDic);
     
     MobiGlobalConfig *config = [MobiGlobalConfig sharedInstance];
     config.adRequestTimeout = configModel.config.adAdkReqTimeout.doubleValue / 1000.f;

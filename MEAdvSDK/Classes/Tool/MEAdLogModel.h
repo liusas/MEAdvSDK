@@ -61,6 +61,7 @@ typedef NS_ENUM(NSInteger, AdLogAdType) {
 @property (nonatomic, assign) NSInteger so_t;
 /// 追踪用户的一次请求，然后可以进行一次广告请求的连起来分析，策略暂时是根据：posid+sortType+"mobi"+当前时间戳  hash（算法是md5）的一个值
 @property (nonatomic, copy) NSString *tk;
+@property (nonatomic, copy) NSString *nt_name;
 /// 错误类型：如：10000 （取消）10001（超时）10002（普通错误）
 @property (nonatomic, assign) NSInteger type;
 /// 出错的code，默认为0，为三方sdk报错出现的

@@ -15,7 +15,7 @@ typedef enum {
     MobiFeedAdErrorNoAdsAvailable = -1100, /*没有有效广告*/
     MobiFeedAdErrorInvalidCustomEvent = -1200, /*无效的信息流执行工具*/
     MobiFeedAdErrorMismatchingAdTypes = -1300, /*广告类型不匹配*/
-    MobiFeedAdErrorAdAlreadyPlayed = -1400, /*激励视频正在播放*/
+    MobiFeedAdErrorNoRootVC = -1400, /*没有设置根视图*/
     MobiFeedAdErrorNoAdReady = -1401, /*广告没有准备好,无法播放*/
     MobiFeedAdErrorInvalidPosid = -1500, /*无效的广告位id*/
     MobiFeedAdErrorInvalidReward = -1600, /*无效的奖励*/

@@ -15,6 +15,7 @@ typedef enum {
     MobiBannerAdErrorNoAdsAvailable = -1100, /*没有有效广告*/
     MobiBannerAdErrorInvalidCustomEvent = -1200, /*无效的信息流执行工具*/
     MobiBannerAdErrorMismatchingAdTypes = -1300, /*广告类型不匹配*/
+    MobiBannerAdErrorNoRootVC = -1400, /*广告没有根视图*/
     MobiBannerAdErrorNoAdReady = -1401, /*广告没有准备好,无法展示*/
     MobiBannerAdErrorInvalidPosid = -1500, /*无效的广告位id*/
 } MobiBannerErrorCode;

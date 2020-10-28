@@ -84,7 +84,7 @@
     dict[@"adunit"] = configuration.adUnitId;
     dict[@"bottomView"] = targeting.bottomView;
     dict[@"delay"] = @(targeting.delay);
-    dict[@"backImageView"] = [[MobiLaunchImageView alloc] initWithSourceType:MobiSourceTypeLaunchImage];
+//    dict[@"backImageView"] = [[MobiLaunchImageView alloc] initWithSourceType:MobiSourceTypeLaunchImage];
     [self.splashCustomEvent requestSplashWithCustomEventInfo:dict adMarkup:nil];
 }
 

@@ -217,7 +217,7 @@ safe_block(block, __VA_ARGS__); \
     }
 
     // 至此,回调请求成功的信息
-    safe_block(taskData.responseHandler, taskData.responseData, httpResponse);
+    main_queue_block(taskData.responseHandler, taskData.responseData, httpResponse);
 }
 
 // MARK: - NSURLSessionTaskDelegate

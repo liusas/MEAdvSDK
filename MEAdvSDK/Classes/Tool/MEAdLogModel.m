@@ -253,6 +253,9 @@
         if (logModel.posid) {
             dicM[@"posid"] = logModel.posid;
         }
+        if (logModel.nt_name) {
+            dicM[@"nt_name"] = logModel.nt_name;
+        }
         if (logModel.network) {
             dicM[@"network"] = logModel.network;
         }

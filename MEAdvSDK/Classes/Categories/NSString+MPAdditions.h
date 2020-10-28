@@ -26,4 +26,8 @@
 
 /// base64 解码
 - (NSString *)dencode:(NSString *)base64String;
+
+/// 从文件中读取 json 字符串并转成字典
+/// fileType: 文件类型
+- (NSDictionary *)dicFromFileWithType:(NSString *)fileType;
 @end

@@ -8,6 +8,7 @@
 
 #import "StrategyFactory.h"
 #import "MobiGlobalConfig.h"
+#import "MobiGlobalConfigServer.h"
 
 @implementation StrategyFactory
 

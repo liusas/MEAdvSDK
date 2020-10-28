@@ -23,4 +23,9 @@
 - (float)mp_floatForKey:(id)key;
 - (float)mp_floatForKey:(id)key defaultValue:(float)defaultVal;
 
+/// 字典转 json 串后,存入指定文件
+- (BOOL)mb_toJsonSaveWithFilename:(NSString *)filename fileType:(NSString *)filetype;
+/// 字典转 json 串
+- (NSString *)mb_turnToJsonStr;
+
 @end
