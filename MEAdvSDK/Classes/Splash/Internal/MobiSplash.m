@@ -131,6 +131,7 @@ static MobiSplash *gSharedInstance = nil;
     targeting.keywords = model.keywords;
     targeting.localExtras = model.localExtras;
     targeting.userDataKeywords = model.userDataKeywords;
+    targeting.bottomView = bottomView;
     
     [adManager loadSplashAdWithUserId:model.userId targeting:targeting];
     
@@ -165,7 +166,7 @@ static MobiSplash *gSharedInstance = nil;
  */
 - (void)splashAdDidLoadForManager:(MobiSplashAdManager *)splashAd {
     id<MobiSplashDelegate> delegate = [self.delegateTable objectForKey:splashAd.posid];
-    if ([delegate respondsToSelector:@selector(splashAdDidLoadForManager:)]) {
+    if ([delegate respondsToSelector:@selector(splashAdDidLoad:)]) {
         [delegate splashAdDidLoad:self];
     }
     [splashAd presentSplashAdFromWindow:self.window];
