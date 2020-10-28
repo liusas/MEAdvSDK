@@ -226,7 +226,7 @@
         [self trackImpression];
     }
 
-    [self.delegate splashAdSuccessPresentScreenForAdapter:self];
+    [self.delegate splashAdExposuredForAdapter:self];
     
     // 上报日志
     MEAdLogModel *model = [MEAdLogModel new];
