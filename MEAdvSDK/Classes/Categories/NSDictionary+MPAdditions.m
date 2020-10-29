@@ -98,8 +98,10 @@
 - (BOOL)mb_toJsonSaveWithFilename:(NSString *)filename fileType:(NSString *)filetype {
     NSString *json = [self mb_turnToJsonStr];
     NSString *filePath = [[NSBundle mainBundle] pathForResource:filename ofType:filetype];
+    
     if (filePath != nil) {
-        return [json writeToFile:filePath atomically:YES];
+        BOOL result = [json writeToFile:filePath atomically:YES];
+        return result;
     }
     
     return NO;

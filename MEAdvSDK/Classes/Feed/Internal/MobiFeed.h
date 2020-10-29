@@ -75,7 +75,7 @@
 - (void)nativeExpressAdViewClicked:(MobiNativeExpressFeedView *)nativeExpressAdView;
 
 /**
- * 原生模板广告被关闭
+ * 原生模板广告关闭按钮被点击
  */
 - (void)nativeExpressAdViewClosed:(MobiNativeExpressFeedView *)nativeExpressAdView;
 

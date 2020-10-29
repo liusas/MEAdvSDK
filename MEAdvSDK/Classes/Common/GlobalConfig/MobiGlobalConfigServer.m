@@ -21,6 +21,7 @@
 
 static NSString *_defaultConfigName = @"mb_config";
 static NSString *_defaultConfigFileType = @"txt";
+static NSString *_getConfigBefore = @"_getConfigBefore";
 
 static dispatch_queue_t file_access_creation_queue() {
     static dispatch_queue_t file_access_creation_queue;
@@ -139,14 +140,13 @@ static dispatch_queue_t file_access_creation_queue() {
     }
 
     dispatch_sync(file_access_creation_queue(), ^{
-        [responseObject mb_toJsonSaveWithFilename:_defaultConfigName fileType:_defaultConfigFileType];
+//        [responseObject mb_toJsonSaveWithFilename:_defaultConfigName fileType:_defaultConfigFileType];
+        BOOL result = [responseObject writeToFile:FilePath_AllConfig atomically:YES];
+        if (result) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:_getConfigBefore];
+        }
     });
     
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSDictionary *asd = [_defaultConfigName dicFromFileWithType:_defaultConfigFileType];
-        NSLog(@"asd = %@", asd);
-    });
     [self dispatchConfigDicWithResponseObj:responseObject];
     if ([MobiGlobalConfig sharedInstance].isInit == false) {
         [self assignPlatform];
@@ -157,8 +157,12 @@ static dispatch_queue_t file_access_creation_queue() {
 // MARK: - Private
 // 读取磁盘缓存
 - (void)readDiskCache {
-//    NSDictionary *responseObject = [NSMutableDictionary dictionaryWithContentsOfFile:FilePath_AllConfig];
-    NSDictionary *responseObject = [_defaultConfigName dicFromFileWithType:_defaultConfigFileType];
+    NSDictionary *responseObject = nil;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:_getConfigBefore] == YES) {
+        responseObject = [NSMutableDictionary dictionaryWithContentsOfFile:FilePath_AllConfig];
+    } else {
+        responseObject = [_defaultConfigName dicFromFileWithType:_defaultConfigFileType];
+    }
     
     if (responseObject == nil) {
     } else {

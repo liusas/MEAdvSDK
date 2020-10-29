@@ -108,11 +108,6 @@
 - (void)nativeExpressAdViewDidPresentScreenForCustomEvent:(UIView *)nativeExpressAdView;
 
 /**
- * 信息流广告关闭
- */
-- (void)nativeExpressAdViewDidClosedCustomEvent:(UIView *)nativeExpressAdView;
-
-/**
  * 全屏广告页将要关闭
  */
 - (void)nativeExpressAdViewWillDissmissScreenForCustomEvent:(UIView *)nativeExpressAdView;
