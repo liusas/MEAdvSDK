@@ -140,7 +140,6 @@ static dispatch_queue_t file_access_creation_queue() {
     }
 
     dispatch_sync(file_access_creation_queue(), ^{
-//        [responseObject mb_toJsonSaveWithFilename:_defaultConfigName fileType:_defaultConfigFileType];
         BOOL result = [responseObject writeToFile:FilePath_AllConfig atomically:YES];
         if (result) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:_getConfigBefore];
