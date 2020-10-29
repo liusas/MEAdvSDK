@@ -82,7 +82,7 @@ static NSTimeInterval const kDefaultRequiredSecondsInViewForImpression = 0.0;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     dict[@"adunit"] = configuration.adUnitId;
     if (CGSizeEqualToSize(size, CGSizeZero) == NO) {
-        dict[@"whRatio"] = @(600*90);
+        dict[@"whRatio"] = @(size.width/size.height);
     }
     dict[@"interval"] = @(configuration.refreshInterval);
     

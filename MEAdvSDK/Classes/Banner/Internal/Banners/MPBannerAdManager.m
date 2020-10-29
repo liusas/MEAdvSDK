@@ -126,13 +126,13 @@
 
 - (void)forceRefreshAd
 {
-    [self loadAdWithURL:nil];
+    [self loadAdWithTargeting:self.targeting];
 }
 
 - (void)applicationWillEnterForeground
 {
     if (self.automaticallyRefreshesContents && self.hasRequestedAtLeastOneAd) {
-        [self loadAdWithURL:nil];
+        [self loadAdWithTargeting:self.targeting];
     }
 }
 
