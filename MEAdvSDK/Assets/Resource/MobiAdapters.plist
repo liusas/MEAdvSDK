@@ -16,5 +16,7 @@
 	<string>MEFBAdapter</string>
 	<key>mobisdk</key>
 	<string>MEMobipubAdapter</string>
+	<key>donews</key>
+	<string>MEDoNewsAdapter</string>
 </dict>
 </plist>

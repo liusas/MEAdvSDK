@@ -82,6 +82,7 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     dict[@"adunit"] = configuration.adUnitId;
     dict[@"width"] = @(configuration.feedSize.width);
+    dict[@"height"] = @(configuration.feedSize.height);
     if (configuration.count > 0) {
         dict[@"count"] = @(configuration.count);
     } else {

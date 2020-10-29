@@ -295,7 +295,7 @@
 //    [self.communicator sendAfterLoadUrlWithConfiguration:self.configuration adapterLoadDuration:duration adapterLoadResult:MPAfterLoadResultAdLoaded];
 
 //    MPLogAdEvent(MPLogEvent.adDidLoad, self.adUnitId);
-    [self.delegate fullscreenVideoAdVideoDidLoadForAdManager:self];
+    [self.delegate fullscreenVideoDidLoadForAdManager:self];
 }
 
 - (void)fullscreenVideoAdVideoDidLoadForAdAdapter:(MobiFullscreenAdapter *)adapter {

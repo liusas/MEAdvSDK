@@ -13,8 +13,9 @@
 
 @class MEAdBaseManager;
 
-#define kBaseRequestURL @"http://proto.findwxapp.com/flow-mediation/v1/ad"
-//#define kBaseRequestURL @"http://dev.findwxapp.com/flow-mediation/v1/ad"
+//#define kBaseRequestURL @"http://proto.findwxapp.com/flow-mediation/v1/ad"
+#warning 替换掉
+#define kBaseRequestURL @"http://dev.findwxapp.com/flow-mediation/v1/ad"
 
 #define kSDKVersion @"1.0.1"
 
