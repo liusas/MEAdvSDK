@@ -196,8 +196,8 @@
 }
 
 - (void)fullscreenVideoAdVideoDidLoadForCustomEvent:(id<MobiFullscreenVideoCustomEvent>)customEvent {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(fullscreenVideoDidLoadForAdAdapter:)]) {
-        [self.delegate fullscreenVideoDidLoadForAdAdapter:self];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(fullscreenVideoAdVideoDidLoadForAdAdapter:)]) {
+        [self.delegate fullscreenVideoAdVideoDidLoadForAdAdapter:self];
     }
 }
 
