@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MEAdvSDK" #库的名称
-  spec.version      = "1.0.31" #库的版本号
+  spec.version      = "1.0.31.1" #库的版本号
   spec.summary      = "Mobiexchanger's advertise SDK" #pod库的简要概述
 
   # This description is used to generate tags and improve search results.
@@ -90,9 +90,9 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-#  spec.source_files  = "Classes", "MEAdvSDK/Classes/**/*.{h,m}"
-#  spec.exclude_files = "Classes/Exclude"
-  spec.vendored_framework = 'MEAdvSDK-1.0.30.1/ios/*.framework'
+  spec.source_files  = "Classes", "MEAdvSDK/Classes/**/*.{h,m}"
+  spec.exclude_files = "Classes/Exclude"
+#  spec.vendored_framework = 'MEAdvSDK-1.0.30.1/ios/*.framework'
 
   # spec.public_header_files = "Classes/**/*.h"
 
