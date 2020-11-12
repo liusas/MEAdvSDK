@@ -36,6 +36,7 @@ typedef NS_ENUM(NSInteger, AdLogAdType) {
     AdLogAdType_RewardVideo = 4,    // 激励视频
     AdLogAdType_FullVideo = 5,      // 全屏
     AdLogAdType_Banner = 6,         // banner
+    AdLogAdType_DrawView = 7,       // Draw 信息流
 };
 
 @interface MEAdLogModel : NSObject

@@ -10,6 +10,8 @@
 #import "MobiGlobalConfig.h"
 #import "MobiGlobalConfigServer.h"
 
+static const NSString *kSceneIdFrequency = @"sceneIdFrequency";
+
 @implementation StrategyFactory
 
 + (instancetype)sharedInstance {
@@ -17,8 +19,14 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         factory = [[StrategyFactory alloc] init];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listenEnterBground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     });
     return factory;
+}
+
++ (void)listenEnterBground {
+    [[NSUserDefaults standardUserDefaults] setObject:[StrategyFactory sharedInstance].sceneIdFrequencyDic forKey:kSceneIdFrequency];
 }
 
 /// 根据 sceneId 和广告类型获取允许展示的广告平台
@@ -74,7 +82,12 @@
 // MARK: - Getter
 - (NSMutableDictionary *)sceneIdFrequencyDic {
     if (!_sceneIdFrequencyDic) {
-        _sceneIdFrequencyDic = [NSMutableDictionary dictionary];
+        NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:kSceneIdFrequency];
+        if (dict != nil) {
+            _sceneIdFrequencyDic = [NSMutableDictionary dictionaryWithDictionary:dict];
+        } else {
+            _sceneIdFrequencyDic = [NSMutableDictionary dictionary];
+        }
     }
     return _sceneIdFrequencyDic;
 }

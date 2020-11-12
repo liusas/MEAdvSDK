@@ -200,9 +200,11 @@ static dispatch_queue_t file_access_creation_queue() {
                 [MobiGlobalConfig sharedInstance].configDic[listInfo.posid] = listInfo;
                 // 需要变频的视图附上下标初始值0
                 if (listInfo.sortType.intValue == 4) {
-                    // 将 orderParameter 变成存放数组下标的形式
-                    [StrategyFactory sharedInstance].sceneIdFrequencyDic[listInfo.posid] = @(0 % listInfo.orderParameter.count);
-                    
+                    // 因为第一次会尝试从磁盘中读取 sceneIdFrequencyDic,若 sceneIdFrequencyDic 中有值,就不需要给它赋初始值了
+                    if ([StrategyFactory sharedInstance].sceneIdFrequencyDic[listInfo.posid] == nil) {
+                        // 将 orderParameter 变成存放数组下标的形式
+                        [StrategyFactory sharedInstance].sceneIdFrequencyDic[listInfo.posid] = @(0 % listInfo.orderParameter.count);
+                    }
                     if ([self orderParameterWithListInfo:listInfo] != nil) {
                         listInfo.orderParameter = [NSArray arrayWithArray:[self orderParameterWithListInfo:listInfo]];
                     }

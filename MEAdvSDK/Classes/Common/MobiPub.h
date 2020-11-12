@@ -14,6 +14,7 @@
 #import "MobiSplash.h"
 #import "MobiFullscreen.h"
 #import "MPAdView.h"
+#import "MobiDrawAd.h"
 #import "MobiBaseAdapterConfiguration.h"
 
 
@@ -23,10 +24,12 @@
 #import "MobiSplashCustomEvent.h"
 #import "MobiRewardedVideoCustomEvent.h"
 #import "MobiFeedCustomEvent.h"
+#import "MobiDrawViewCustomEvent.h"
 
 #import "MPLogging.h"
 #import "MobiBannerError.h"
 #import "MobiFeedError.h"
+#import "MobiDrawViewError.h"
 #import "MobiFullscreenError.h"
 #import "MobiInterstitialError.h"
 #import "MobiRewardedVideoError.h"

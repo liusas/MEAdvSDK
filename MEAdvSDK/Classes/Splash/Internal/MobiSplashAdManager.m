@@ -18,6 +18,7 @@
 #import "MobiSplashError.h"
 #import "MobiAdServerURLBuilder.h"
 #import "StrategyFactory.h"
+#import "MELogTracker.h"
 
 @interface MobiSplashAdManager ()<MobiAdConfigServerDelegate, MobiSplashAdapterDelegate>
 
@@ -61,28 +62,21 @@
         return;
     }
     
-//    MPLogAdEvent(MPLogEvent.adLoadAttempt, self.posid);
-    // 若视频广告已经准备好展示了,我们就告诉上层加载完毕;若当前ad manager正在展示视频广告,则继续请求视频广告资源
-    if (self.ready && !self.playedAd) {
-        // 若已经有广告了,就不需要再绑定userid了,因为有可能这个广告已经绑定了旧的userid.
-        [self.delegate splashAdDidLoadForManager:self];
+    // 这里设置userid会覆盖我们之前设置的userid,在其他广告展示时我们会用这个新的userid
+    self.userId = userId;
+    self.targeting = targeting;
+    
+    // 获取 MEConfig 类型的数组,其中包含具体平台的广告位 id 和响应 network 的 custom event 执行类
+    NSArray *configurations = [[StrategyFactory sharedInstance] getConfigurationsWithAdType:MobiAdTypeSplash sceneId:self.posid];
+    if (configurations.count) {
+        [self assignCofigurationToPlay:configurations];
     } else {
-        // 这里设置userid会覆盖我们之前设置的userid,在其他广告展示时我们会用这个新的userid
-        self.userId = userId;
-        self.targeting = targeting;
-        
-        // 获取 MEConfig 类型的数组,其中包含具体平台的广告位 id 和响应 network 的 custom event 执行类
-        NSArray *configurations = [[StrategyFactory sharedInstance] getConfigurationsWithAdType:MobiAdTypeSplash sceneId:self.posid];
-        if (configurations.count) {
-            [self assignCofigurationToPlay:configurations];
-        } else {
-            // 若分配失败,则提示错误
-            NSString *errorDescription = [NSString stringWithFormat:@"assign network error"];
-            NSError * clearResponseError = [NSError errorWithDomain:MobiSplashAdsSDKDomain
-                                                               code:MobiSplashAdErrorUnknown
-                                                           userInfo:@{NSLocalizedDescriptionKey: errorDescription}];
-            [self.delegate splashAdFailToPresentForManager:self withError:clearResponseError];
-        }
+        // 若分配失败,则提示错误
+        NSString *errorDescription = [NSString stringWithFormat:@"assign network error"];
+        NSError * clearResponseError = [NSError errorWithDomain:MobiSplashAdsSDKDomain
+                                                           code:MobiSplashAdErrorUnknown
+                                                       userInfo:@{NSLocalizedDescriptionKey: errorDescription}];
+        [self.delegate splashAdFailToPresentForManager:self withError:clearResponseError];
     }
 }
 
@@ -378,6 +372,19 @@
         return;
     }
 
+    // 上报日志
+    MEAdLogModel *model = [MEAdLogModel new];
+    model.event = AdLogEventType_Load;
+    model.st_t = AdLogAdType_Splash;
+    model.so_t = self.configuration.sortType;
+    model.posid = self.configuration.adUnitId;
+    model.network = self.configuration.networkName;
+    model.nt_name = self.configuration.ntName;
+    model.tk = [MEAdHelpTool stringMD5:[NSString stringWithFormat:@"%@%ld%@%ld", model.posid, model.so_t, @"mobi", (long)([[NSDate date] timeIntervalSince1970]*1000)]];
+    
+    // 立即上传
+    [MELogTracker uploadImmediatelyWithLogModels:@[model]];
+    
     [self fetchAdWithConfiguration:self.configuration];
 }
 

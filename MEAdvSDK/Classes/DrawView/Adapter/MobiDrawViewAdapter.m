@@ -1,15 +1,15 @@
 //
-//  MobiFeedAdapter.m
+//  MobiDrawViewAdapter.m
 //  MobiPubSDK
 //
 //  Created by 刘峰 on 2020/6/17.
 //
 
-#import "MobiFeedAdapter.h"
-#import "MobiFeed.h"
+#import "MobiDrawViewAdapter.h"
+#import "MobiDrawAd.h"
 #import "MobiConfig.h"
 #import "MobiAdTargeting.h"
-#import "MobiFeedCustomEvent.h"
+#import "MobiDrawViewCustomEvent.h"
 #import "MPConstants.h"
 #import "MPError.h"
 #import "MobiAnalyticsTracker.h"
@@ -18,9 +18,9 @@
 #import "MobiRealTimeTimer.h"
 #import "MELogTracker.h"
 
-@interface MobiFeedAdapter ()<MobiFeedCustomEventDelegate>
+@interface MobiDrawViewAdapter ()<MobiDrawViewCustomEventDelegate>
 
-@property (nonatomic, strong) id<MobiFeedCustomEvent> feedCustomEvent;
+@property (nonatomic, strong) id<MobiDrawViewCustomEvent> drawViewCustomEvent;
 @property (nonatomic, strong) MobiConfig *configuration;
 /// 广告加载超时计时器,超过指定时长后,回调上层广告请求超时而失败,并置delegate=nil,即使custom event回调回来,也不回调给上层
 @property (nonatomic, strong) MobiTimer *timeoutTimer;
@@ -37,9 +37,9 @@
 
 @end
 
-@implementation MobiFeedAdapter
+@implementation MobiDrawViewAdapter
 
-- (instancetype)initWithDelegate:(id<MobiFeedAdapterDelegate>)delegate {
+- (instancetype)initWithDelegate:(id<MobiDrawViewAdapterDelegate>)delegate {
     if (self = [super init]) {
         _delegate = delegate;
     }
@@ -49,7 +49,7 @@
 
 - (void)dealloc {
     // 为防止custom event无法释放,在此处告诉custom event,我们不再需要你了,让它自行处理是否释放其他内存
-    [_feedCustomEvent handleCustomEventInvalidated];
+    [_drawViewCustomEvent handleCustomEventInvalidated];
     // 释放timer
     [_timeoutTimer invalidate];
 
@@ -66,9 +66,9 @@
 - (void)getAdWithConfiguration:(MobiConfig *)configuration targeting:(MobiAdTargeting *)targeting {
 //    MPLogInfo(@"Looking for custom event class named %@.", configuration.customEventClass);
     self.configuration = configuration;
-    id<MobiFeedCustomEvent> customEvent = [[configuration.customEventClass alloc] init];
-    if (![customEvent conformsToProtocol:@protocol(MobiFeedCustomEvent)]) {
-        NSError * error = [NSError customEventClass:configuration.customEventClass doesNotInheritFrom:MobiFeedCustomEvent.class];
+    id<MobiDrawViewCustomEvent> customEvent = [[configuration.customEventClass alloc] init];
+    if (![customEvent conformsToProtocol:@protocol(MobiDrawViewCustomEvent)]) {
+        NSError * error = [NSError customEventClass:configuration.customEventClass doesNotInheritFrom:MobiDrawViewCustomEvent.class];
 //        MPLogEvent([MPLogEvent error:error message:nil]);
         [self.delegate nativeExpressAdFailToLoadForAdapter:self error:error];
         return;
@@ -76,7 +76,7 @@
     customEvent.delegate = self;
     customEvent.localExtras = targeting.localExtras;
     
-    self.feedCustomEvent = customEvent;
+    self.drawViewCustomEvent = customEvent;
     [self startTimeoutTimer];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -89,14 +89,14 @@
         dict[@"count"] = @1;
     }
     
-    [self.feedCustomEvent requestFeedWithCustomEventInfo:dict adMarkup:nil];
+    [self.drawViewCustomEvent requestDrawViewWithCustomEventInfo:dict adMarkup:nil];
 }
 
 /**
  * 判断现在是否有可用的广告可供展示
  */
 - (BOOL)hasAdAvailable {
-    return [self.feedCustomEvent hasAdAvailable];
+    return [self.drawViewCustomEvent hasAdAvailable];
 }
 
 /**
@@ -104,7 +104,7 @@
  * 当然广告失效后需要回调`[-nativeExpressAdDidExpireForAdapter:]`方法告诉用户这个广告已不再有效
 */
 - (void)handleAdPlayedForCustomEventNetwork {
-    [self.feedCustomEvent handleAdPlayedForCustomEventNetwork];
+    [self.drawViewCustomEvent handleAdPlayedForCustomEventNetwork];
 }
 
 #pragma mark - Private
@@ -143,11 +143,11 @@
     [[MobiAnalyticsTracker sharedTracker] trackClickForConfiguration:self.configuration];
 }
 
-#pragma mark - MobiFeedCustomEventDelegate
+#pragma mark - MobiDrawViewCustomEventDelegate
 /**
  * 拉取原生模板广告成功
  */
-- (void)nativeExpressAdSuccessToLoadForCustomEvent:(MobiFeedCustomEvent *)customEvent views:(NSArray<__kindof MobiNativeExpressFeedView *> *)views {
+- (void)nativeExpressAdSuccessToLoadForCustomEvent:(MobiDrawViewCustomEvent *)customEvent views:(NSArray<__kindof MobiNativeExpressDrawView *> *)views {
     // 不能多次回调加载成功,有时custom event在后台缓存加载成功了也走这个回调
     if (self.hasSuccessfullyLoaded) {
         return;
@@ -163,7 +163,7 @@
     self.expirationTimer = [[MobiRealTimeTimer alloc] initWithInterval:[MPConstants adsExpirationInterval] block:^(MobiRealTimeTimer *timer){
         __strong __typeof__(weakSelf) strongSelf = weakSelf;
         if (strongSelf && !strongSelf.hasTrackedImpression) {
-            [strongSelf nativeExpressAdDidExpireForCustomEvent:strongSelf.feedCustomEvent];
+            [strongSelf nativeExpressAdDidExpireForCustomEvent:strongSelf.drawViewCustomEvent];
         }
         [strongSelf.expirationTimer invalidate];
     }];
@@ -173,7 +173,7 @@
     // 上报日志
     MEAdLogModel *model = [MEAdLogModel new];
     model.event = AdLogEventType_Load;
-    model.st_t = AdLogAdType_Feed;
+    model.st_t = AdLogAdType_DrawView;
     model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;
     model.network = self.configuration.networkName;
@@ -187,10 +187,10 @@
 /**
  * 拉取原生模板广告失败
  */
-- (void)nativeExpressAdFailToLoadForCustomEvent:(MobiFeedCustomEvent *)customEvent error:(NSError *)error {
+- (void)nativeExpressAdFailToLoadForCustomEvent:(MobiDrawViewCustomEvent *)customEvent error:(NSError *)error {
     // 让custom event和adapter断开连接,这个方法的作用于,有别的对象强引用了custom event,为了不再使用custom event后,custom event能够释放掉,从而调用这个方法,如果能保证custom event一定能释放掉,甚至不必调用这个方法
-    [self.feedCustomEvent handleCustomEventInvalidated];
-    self.feedCustomEvent = nil;
+    [self.drawViewCustomEvent handleCustomEventInvalidated];
+    self.drawViewCustomEvent = nil;
     // 停止加载计时
     [self didStopLoading];
     // 回调上层,广告加载失败
@@ -199,7 +199,7 @@
     // 上报日志
     MEAdLogModel *model = [MEAdLogModel new];
     model.event = AdLogEventType_Fault;
-    model.st_t = AdLogAdType_Feed;
+    model.st_t = AdLogAdType_DrawView;
     model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;
     model.network = self.configuration.networkName;
@@ -217,13 +217,13 @@
 /**
  * 原生模板广告渲染成功, 此时的 nativeExpressAdView.size.height 根据 size.width 完成了动态更新。
  */
-- (void)nativeExpressAdViewRenderSuccessForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewRenderSuccessForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewRenderSuccessForAdapter:nativeExpressAdView];
     
     // 上报日志
     MEAdLogModel *model = [MEAdLogModel new];
     model.event = AdLogEventType_Show;
-    model.st_t = AdLogAdType_Feed;
+    model.st_t = AdLogAdType_DrawView;
     model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;
     model.network = self.configuration.networkName;
@@ -236,15 +236,15 @@
 /**
  * 原生模板广告渲染失败
  */
-- (void)nativeExpressAdViewRenderFailForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
-    [self.feedCustomEvent handleCustomEventInvalidated];
-    self.feedCustomEvent = nil;
+- (void)nativeExpressAdViewRenderFailForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
+    [self.drawViewCustomEvent handleCustomEventInvalidated];
+    self.drawViewCustomEvent = nil;
     [self.delegate nativeExpressAdViewRenderFailForAdapter:nativeExpressAdView];
     
     // 上报日志
     MEAdLogModel *model = [MEAdLogModel new];
     model.event = AdLogEventType_Fault;
-    model.st_t = AdLogAdType_Feed;
+    model.st_t = AdLogAdType_DrawView;
     model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;
     model.network = self.configuration.networkName;
@@ -259,9 +259,9 @@
 /**
  * 原生模板广告曝光回调
  */
-- (void)nativeExpressAdViewExposureForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewExposureForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     // 若允许自动上报广告曝光,则在页面展示出来时上报
-    if ([self.feedCustomEvent enableAutomaticImpressionAndClickTracking] && !self.hasTrackedImpression) {
+    if ([self.drawViewCustomEvent enableAutomaticImpressionAndClickTracking] && !self.hasTrackedImpression) {
         [self trackImpression];
     }
     
@@ -271,9 +271,9 @@
 /**
  * 原生模板广告点击回调
  */
-- (void)nativeExpressAdViewClickedForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewClickedForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     // 若允许自动上报点击事件,则在此处上报点击
-    if ([self.feedCustomEvent enableAutomaticImpressionAndClickTracking] && !self.hasTrackedClick) {
+    if ([self.drawViewCustomEvent enableAutomaticImpressionAndClickTracking] && !self.hasTrackedClick) {
         self.hasTrackedClick = YES;
         [self trackClick];
     }
@@ -284,7 +284,7 @@
     // 上报日志
     MEAdLogModel *model = [MEAdLogModel new];
     model.event = AdLogEventType_Click;
-    model.st_t = AdLogAdType_Feed;
+    model.st_t = AdLogAdType_DrawView;
     model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;
     model.network = self.configuration.networkName;
@@ -297,14 +297,14 @@
 /**
  * 原生模板广告被关闭
  */
-- (void)nativeExpressAdViewClosedForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewClosedForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewClosedForAdapter:nativeExpressAdView];
 }
 
 /**
  * 当一个posid加载完的开屏广告资源失效时(过期),回调此方法
  */
-- (void)nativeExpressAdDidExpireForCustomEvent:(MobiFeedCustomEvent *)customEvent {
+- (void)nativeExpressAdDidExpireForCustomEvent:(MobiDrawViewCustomEvent *)customEvent {
     // 只提示一次广告过期
     if (self.hasExpired) {
         return;
@@ -317,70 +317,70 @@
 /**
  * 点击原生模板广告以后即将弹出全屏广告页
  */
-- (void)nativeExpressAdViewWillPresentScreenForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewWillPresentScreenForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewWillPresentScreenForAdapter:nativeExpressAdView];
 }
 
 /**
  * 点击原生模板广告以后弹出全屏广告页
  */
-- (void)nativeExpressAdViewDidPresentScreenForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewDidPresentScreenForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewDidPresentScreenForAdapter:nativeExpressAdView];
 }
 
 /**
  * 全屏广告页将要关闭
  */
-- (void)nativeExpressAdViewWillDissmissScreenForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewWillDissmissScreenForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewWillDissmissScreenForAdapter:nativeExpressAdView];
 }
 
 /**
  * 全屏广告页将要关闭
  */
-- (void)nativeExpressAdViewDidDissmissScreenForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewDidDissmissScreenForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewDidDissmissScreenForAdapter:nativeExpressAdView];
 }
 
 /**
  * 详解:当点击应用下载或者广告调用系统程序打开时调用
  */
-- (void)nativeExpressAdViewApplicationWillEnterBackgroundForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewApplicationWillEnterBackgroundForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewApplicationWillEnterBackgroundForAdapter:nativeExpressAdView];
 }
 
 /**
  * 原生模板视频广告 player 播放状态更新回调
  */
-- (void)nativeExpressAdViewForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView playerStatusChanged:(MobiMediaPlayerStatus)status {
+- (void)nativeExpressAdViewForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView playerStatusChanged:(MobiMediaPlayerStatus)status {
     [self.delegate nativeExpressAdViewForAdapter:nativeExpressAdView playerStatusChanged:status];
 }
 
 /**
  * 原生视频模板详情页 WillPresent 回调
  */
-- (void)nativeExpressAdViewWillPresentVideoVCForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewWillPresentVideoVCForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewWillPresentVideoVCForAdapter:nativeExpressAdView];
 }
 
 /**
  * 原生视频模板详情页 DidPresent 回调
  */
-- (void)nativeExpressAdViewDidPresentVideoVCForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewDidPresentVideoVCForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewDidPresentVideoVCForAdapter:nativeExpressAdView];
 }
 
 /**
  * 原生视频模板详情页 WillDismiss 回调
  */
-- (void)nativeExpressAdViewWillDismissVideoVCForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewWillDismissVideoVCForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewWillDismissVideoVCForAdapter:nativeExpressAdView];
 }
 
 /**
  * 原生视频模板详情页 DidDismiss 回调
  */
-- (void)nativeExpressAdViewDidDismissVideoVCForCustomEvent:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewDidDismissVideoVCForCustomEvent:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewDidDismissVideoVCForAdapter:nativeExpressAdView];
 }
 

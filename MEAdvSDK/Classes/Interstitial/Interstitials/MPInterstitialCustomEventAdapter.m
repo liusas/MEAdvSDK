@@ -125,6 +125,7 @@
      model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;
     model.network = self.configuration.networkName;
+    model.nt_name = self.configuration.ntName;
     model.tk = [MEAdHelpTool stringMD5:[NSString stringWithFormat:@"%@%ld%@%ld", model.posid, model.so_t, @"mobi", (long)([[NSDate date] timeIntervalSince1970]*1000)]];
      
      
@@ -145,6 +146,7 @@
      model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;
     model.network = self.configuration.networkName;
+    model.nt_name = self.configuration.ntName;
     model.type = AdLogFaultType_Normal;
     model.code = error.code;
     if (error.localizedDescription != nil || error.localizedDescription.length > 0) {
@@ -176,6 +178,7 @@
      model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;
     model.network = self.configuration.networkName;
+    model.nt_name = self.configuration.ntName;
     model.tk = [MEAdHelpTool stringMD5:[NSString stringWithFormat:@"%@%ld%@%ld", model.posid, model.so_t, @"mobi", (long)([[NSDate date] timeIntervalSince1970]*1000)]];
      
      
@@ -222,6 +225,7 @@
      model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;
     model.network = self.configuration.networkName;
+    model.nt_name = self.configuration.ntName;
     model.tk = [MEAdHelpTool stringMD5:[NSString stringWithFormat:@"%@%ld%@%ld", model.posid, model.so_t, @"mobi", (long)([[NSDate date] timeIntervalSince1970]*1000)]];
      
      

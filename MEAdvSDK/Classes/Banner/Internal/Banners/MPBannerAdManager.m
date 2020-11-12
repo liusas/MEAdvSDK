@@ -22,6 +22,7 @@
 #import "NSError+MPAdditions.h"
 #import "StrategyFactory.h"
 #import "MobiBannerError.h"
+#import "MELogTracker.h"
 
 @interface MPBannerAdManager ()
 
@@ -310,6 +311,19 @@
         [self.delegate managerDidFailToLoadAdWithError:error];
         return;
     }
+    
+    // 上报日志
+    MEAdLogModel *model = [MEAdLogModel new];
+    model.event = AdLogEventType_Load;
+    model.st_t = AdLogAdType_Banner;
+    model.so_t = self.requestingConfiguration.sortType;
+    model.posid = self.requestingConfiguration.adUnitId;
+    model.network = self.requestingConfiguration.networkName;
+    model.nt_name = self.requestingConfiguration.ntName;
+    model.tk = [MEAdHelpTool stringMD5:[NSString stringWithFormat:@"%@%ld%@%ld", model.posid, model.so_t, @"mobi", (long)([[NSDate date] timeIntervalSince1970]*1000)]];
+    
+    // 立即上传
+    [MELogTracker uploadImmediatelyWithLogModels:@[model]];
 
     [self fetchAdWithConfiguration:self.requestingConfiguration];
 }

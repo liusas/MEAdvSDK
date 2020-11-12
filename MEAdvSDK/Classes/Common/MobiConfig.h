@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, MobiAdType) {
     MobiAdTypeFullScreenVideo = 104, // 全屏视频
     MobiAdTypeInterstitial = 105, // 插屏
     MobiAdTypeSplash = 106, // 开屏
+    MobiAdTypeDrawView = 107, // DrawView
     MobiAdTypeUnknown, // 未知
 };
 
@@ -35,6 +36,8 @@ typedef NS_ENUM(NSInteger, MobiAdType) {
 @property (nonatomic, copy) NSString *sceneId;
 /// 广告平台名
 @property (nonatomic, copy) NSString *networkName;
+/// 平台用于区分广告平台+广告位的名称,一般是 (networkName)_(数字)
+@property (nonatomic, copy) NSString *ntName;
 
 ///信息流广告尺寸，必须传入宽度，高度自适应，否则无法展示信息流
 @property (nonatomic, assign) CGSize feedSize;

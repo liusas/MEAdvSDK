@@ -33,6 +33,8 @@
         return [adapterProvider getRewardedVideoCustomEvent];
     } else if (adType == MobiAdTypeFullScreenVideo) {
         return [adapterProvider getFullscreenCustomEvent];
+    } else if (adType == MobiAdTypeDrawView) {
+        return [adapterProvider getDrawViewCustomEvent];
     }
     
     return NULL;

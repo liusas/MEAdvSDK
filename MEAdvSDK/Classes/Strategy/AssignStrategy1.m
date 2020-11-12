@@ -26,6 +26,7 @@
             configuration.adType = adType;
             configuration.sortType = 1;
             configuration.networkName = network.sdk;
+            configuration.ntName = network.ntName;
             id<MobiAdapterConfiguration> adapterProvider = MEAdNetworkManager.sharedInstance.initializedAdapters[network.sdk];
             configuration.adapterProvider = adapterProvider;
             

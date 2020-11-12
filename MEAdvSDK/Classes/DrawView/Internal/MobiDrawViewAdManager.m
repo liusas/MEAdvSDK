@@ -1,12 +1,12 @@
 //
-//  MobiFeedAdManager.m
+//  MobiDrawViewAdManager.m
 //  MobiPubSDK
 //
 //  Created by 刘峰 on 2020/6/17.
 //
 
-#import "MobiFeedAdManager.h"
-#import "MobiFeedAdapter.h"
+#import "MobiDrawViewAdManager.h"
+#import "MobiDrawViewAdapter.h"
 #import "MobiAdConfigServer.h"
 #import "MobiConfig.h"
 #import "NSMutableArray+MPAdditions.h"
@@ -15,19 +15,19 @@
 #import "MPError.h"
 #import "MPLogging.h"
 #import "MPStopwatch.h"
-#import "MobiFeedError.h"
+#import "MobiDrawViewError.h"
 #import "MobiAdServerURLBuilder.h"
 #import "StrategyFactory.h"
 
 #import "MELogTracker.h"
 
-@interface MobiFeedAdManager ()<MobiAdConfigServerDelegate, MobiFeedAdapterDelegate>
+@interface MobiDrawViewAdManager ()<MobiAdConfigServerDelegate, MobiDrawViewAdapterDelegate>
 
-@property (nonatomic, strong) MobiFeedAdapter *adapter;
+@property (nonatomic, strong) MobiDrawViewAdapter *adapter;
 @property (nonatomic, strong) MobiAdConfigServer *communicator;
 @property (nonatomic, strong) MobiConfig *configuration;
 @property (nonatomic, strong) NSMutableArray<MobiConfig *> *remainingConfigurations;
-@property (nonatomic, strong) NSMutableArray<MobiNativeExpressFeedView *> *nativeExpressFeedViews;
+@property (nonatomic, strong) NSMutableArray<MobiNativeExpressDrawView *> *nativeExpressDrawViews;
 @property (nonatomic, strong) NSURL *mostRecentlyLoadedURL;  // ADF-4286: avoid infinite ad reloads
 @property (nonatomic, assign) BOOL loading;
 @property (nonatomic, assign) BOOL ready;
@@ -36,9 +36,9 @@
 
 @end
 
-@implementation MobiFeedAdManager
+@implementation MobiDrawViewAdManager
 
-- (instancetype)initWithPosid:(NSString *)posid delegate:(id<MobiFeedAdManagerDelegate>)delegate {
+- (instancetype)initWithPosid:(NSString *)posid delegate:(id<MobiDrawViewAdManagerDelegate>)delegate {
     if (self = [super init]) {
         _posid = [posid copy];
         _communicator = [[MobiAdConfigServer alloc] initWithDelegate:self];
@@ -59,7 +59,7 @@
 * @param userId 用户的唯一标识
 * @param targeting 精准广告投放的一些参数,可为空
 */
-- (void)loadFeedAdWithUserId:(NSString *)userId targeting:(MobiAdTargeting *)targeting {
+- (void)loadDrawViewAdWithUserId:(NSString *)userId targeting:(MobiAdTargeting *)targeting {
     if (self.loading) {
         MPLogEvent([MPLogEvent error:NSError.adAlreadyLoading message:nil]);
         return;
@@ -70,14 +70,14 @@
     self.targeting = targeting;
     
     // 获取 MEConfig 类型的数组,其中包含具体平台的广告位 id 和响应 network 的 custom event 执行类
-    NSArray *configurations = [[StrategyFactory sharedInstance] getConfigurationsWithAdType:MobiAdTypeFeed sceneId:self.adUnitId];
+    NSArray *configurations = [[StrategyFactory sharedInstance] getConfigurationsWithAdType:MobiAdTypeDrawView sceneId:self.adUnitId];
     if (configurations.count) {
         [self assignCofigurationToPlay:configurations targeting:targeting count:self.count];
     } else {
         // 若分配失败,则提示错误
         NSString *errorDescription = [NSString stringWithFormat:@"assign network error"];
-        NSError * clearResponseError = [NSError errorWithDomain:MobiFeedAdsSDKDomain
-                                                           code:MobiFeedAdErrorUnknown
+        NSError * clearResponseError = [NSError errorWithDomain:MobiDrawViewAdsSDKDomain
+                                                           code:MobiDrawViewAdErrorUnknown
                                                        userInfo:@{NSLocalizedDescriptionKey: errorDescription}];
         [self.delegate nativeExpressAdFailToLoadForAdManager:self error:clearResponseError];
     }
@@ -125,7 +125,7 @@
     if (configuration.adUnitWarmingUp) {
 //        MPLogInfo(kMPWarmingUpErrorLogFormatWithAdUnitID, self.adUnitId);
         self.loading = NO;
-        NSError *error = [NSError errorWithDomain:MobiFeedAdsSDKDomain code:MobiFeedAdErrorAdUnitWarmingUp userInfo:nil];
+        NSError *error = [NSError errorWithDomain:MobiDrawViewAdsSDKDomain code:MobiDrawViewAdErrorAdUnitWarmingUp userInfo:nil];
         [self.delegate nativeExpressAdFailToLoadForAdManager:self error:error];
         return;
     }
@@ -133,7 +133,7 @@
     if (configuration.adType == MobiAdTypeUnknown) {
 //        MPLogInfo(kMPClearErrorLogFormatWithAdUnitID, self.adUnitId);
         self.loading = NO;
-        NSError *error = [NSError errorWithDomain:MobiFeedAdsSDKDomain code:MobiFeedAdErrorNoAdsAvailable userInfo:nil];
+        NSError *error = [NSError errorWithDomain:MobiDrawViewAdsSDKDomain code:MobiDrawViewAdErrorNoAdsAvailable userInfo:nil];
         [self.delegate nativeExpressAdFailToLoadForAdManager:self error:error];
         return;
     }
@@ -144,11 +144,11 @@
     // 开始加载计时
     [self.loadStopwatch start];
 
-    MobiFeedAdapter *adapter = [[MobiFeedAdapter alloc] initWithDelegate:self];
+    MobiDrawViewAdapter *adapter = [[MobiDrawViewAdapter alloc] initWithDelegate:self];
 
     if (adapter == nil) {
         // 提示应用未知错误
-        NSError *error = [NSError errorWithDomain:MobiFeedAdsSDKDomain code:MobiFeedAdErrorUnknown userInfo:nil];
+        NSError *error = [NSError errorWithDomain:MobiDrawViewAdsSDKDomain code:MobiDrawViewAdErrorUnknown userInfo:nil];
         [self.delegate nativeExpressAdFailToLoadForAdManager:self error:error];
         return;
     }
@@ -173,8 +173,8 @@
         self.ready = NO;
         self.loading = NO;
         NSString *errorDescription = [NSString stringWithFormat:@"There are no ads of this posid = %@", self.adUnitId];
-        NSError * clearResponseError = [NSError errorWithDomain:MobiFeedAdsSDKDomain
-                                                           code:MobiFeedAdErrorNoAdsAvailable
+        NSError * clearResponseError = [NSError errorWithDomain:MobiDrawViewAdsSDKDomain
+                                                           code:MobiDrawViewAdErrorNoAdsAvailable
                                                        userInfo:@{NSLocalizedDescriptionKey: errorDescription}];
 //        MPLogAdEvent([MPLogEvent adFailedToLoadWithError:clearResponseError], self.adUnitId);
         [self.delegate nativeExpressAdFailToLoadForAdManager:self error:error];
@@ -208,7 +208,7 @@
     if (self.remainingConfigurations.count == 0 && self.configuration == nil) {
 //        MPLogInfo(kMPClearErrorLogFormatWithAdUnitID, self.adUnitId);
         self.loading = NO;
-        NSError *error = [NSError errorWithDomain:MobiFeedAdsSDKDomain code:MobiFeedAdErrorNoAdsAvailable userInfo:nil];
+        NSError *error = [NSError errorWithDomain:MobiDrawViewAdsSDKDomain code:MobiDrawViewAdErrorNoAdsAvailable userInfo:nil];
         [self.delegate nativeExpressAdFailToLoadForAdManager:self error:error];
         return;
     }
@@ -216,7 +216,7 @@
     // 上报日志
     MEAdLogModel *model = [MEAdLogModel new];
     model.event = AdLogEventType_Load;
-    model.st_t = AdLogAdType_Feed;
+    model.st_t = AdLogAdType_DrawView;
     model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;
     model.network = self.configuration.networkName;
@@ -245,7 +245,7 @@
     if (self.remainingConfigurations.count == 0 && self.configuration == nil) {
 //        MPLogInfo(kMPClearErrorLogFormatWithAdUnitID, self.adUnitId);
         self.loading = NO;
-        NSError *error = [NSError errorWithDomain:MobiFeedAdsSDKDomain code:MobiFeedAdErrorNoAdsAvailable userInfo:nil];
+        NSError *error = [NSError errorWithDomain:MobiDrawViewAdsSDKDomain code:MobiDrawViewAdErrorNoAdsAvailable userInfo:nil];
         [self.delegate nativeExpressAdFailToLoadForAdManager:self error:error];
         return;
     }
@@ -270,7 +270,7 @@
 /**
  * 拉取原生模板广告成功
  */
-- (void)nativeExpressAdSuccessToLoadForAdapter:(MobiFeedAdapter *)adapter views:(NSArray<__kindof MobiNativeExpressFeedView *> *)views {
+- (void)nativeExpressAdSuccessToLoadForAdapter:(MobiDrawViewAdapter *)adapter views:(NSArray<__kindof MobiNativeExpressDrawView *> *)views {
     self.remainingConfigurations = nil;
     self.ready = YES;
     self.loading = NO;
@@ -280,7 +280,7 @@
 //    [self.communicator sendAfterLoadUrlWithConfiguration:self.configuration adapterLoadDuration:duration adapterLoadResult:MPAfterLoadResultAdLoaded];
     
     // 数组中新增信息流视图
-    [self.nativeExpressFeedViews addObjectsFromArray:views];
+    [self.nativeExpressDrawViews addObjectsFromArray:views];
     
     //    MPLogAdEvent(MPLogEvent.adDidLoad, self.adUnitId);
     [self.delegate nativeExpressAdSuccessToLoadForAdManager:self views:views];
@@ -289,7 +289,7 @@
 /**
  * 拉取原生模板广告失败
  */
-- (void)nativeExpressAdFailToLoadForAdapter:(MobiFeedAdapter *)adapter error:(NSError *)error {
+- (void)nativeExpressAdFailToLoadForAdapter:(MobiDrawViewAdapter *)adapter error:(NSError *)error {
     // 记录加载失败的时长,并在MobiAdConfigServer中判断选择合适URL上报失败日志
     NSTimeInterval duration = [self.loadStopwatch stop];
 //    MPAfterLoadResult result = (error.isAdRequestTimedOutError ? MPAfterLoadResultTimeout : (adapter == nil ? MPAfterLoadResultMissingAdapter : MPAfterLoadResultError));
@@ -301,7 +301,7 @@
 /**
  * 原生模板广告渲染成功, 此时的 nativeExpressAdView.size.height 根据 size.width 完成了动态更新。
  */
-- (void)nativeExpressAdViewRenderSuccessForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewRenderSuccessForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewRenderSuccessForAdManager:self views:nativeExpressAdView];
     
     // 更改广告展示的频率
@@ -311,28 +311,28 @@
 /**
  * 原生模板广告渲染失败
  */
-- (void)nativeExpressAdViewRenderFailForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewRenderFailForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewRenderFailForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 原生模板广告曝光回调
  */
-- (void)nativeExpressAdViewExposureForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewExposureForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewExposureForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 原生模板广告点击回调
  */
-- (void)nativeExpressAdViewClickedForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewClickedForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewClickedForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 原生模板广告被关闭
  */
-- (void)nativeExpressAdViewClosedForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewClosedForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     self.ready = NO;
     
 //    MPLogAdEvent(MPLogEvent.adDidDisappear, self.adUnitId);
@@ -342,7 +342,7 @@
 /**
  * 当一个posid加载完的广告资源失效时(过期),回调此方法
  */
-- (void)nativeExpressAdDidExpireForAdapter:(MobiFeedAdapter *)adapter {
+- (void)nativeExpressAdDidExpireForAdapter:(MobiDrawViewAdapter *)adapter {
     self.ready = NO;
     
 //    MPLogAdEvent([MPLogEvent adExpiredWithTimeInterval:MPConstants.adsExpirationInterval], self.adUnitId);
@@ -352,70 +352,70 @@
 /**
  * 点击原生模板广告以后即将弹出全屏广告页
  */
-- (void)nativeExpressAdViewWillPresentScreenForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewWillPresentScreenForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewWillPresentScreenForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 点击原生模板广告以后弹出全屏广告页
  */
-- (void)nativeExpressAdViewDidPresentScreenForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewDidPresentScreenForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewDidPresentScreenForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 全屏广告页将要关闭
  */
-- (void)nativeExpressAdViewWillDissmissScreenForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewWillDissmissScreenForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewWillDissmissScreenForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 全屏广告页将要关闭
  */
-- (void)nativeExpressAdViewDidDissmissScreenForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewDidDissmissScreenForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewDidDissmissScreenForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 详解:当点击应用下载或者广告调用系统程序打开时调用
  */
-- (void)nativeExpressAdViewApplicationWillEnterBackgroundForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewApplicationWillEnterBackgroundForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewApplicationWillEnterBackgroundForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 原生模板视频广告 player 播放状态更新回调
  */
-- (void)nativeExpressAdViewForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView playerStatusChanged:(MobiMediaPlayerStatus)status {
+- (void)nativeExpressAdViewForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView playerStatusChanged:(MobiMediaPlayerStatus)status {
     [self.delegate nativeExpressAdViewForAdManager:self views:nativeExpressAdView playerStatusChanged:status];
 }
 
 /**
  * 原生视频模板详情页 WillPresent 回调
  */
-- (void)nativeExpressAdViewWillPresentVideoVCForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewWillPresentVideoVCForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewWillPresentVideoVCForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 原生视频模板详情页 DidPresent 回调
  */
-- (void)nativeExpressAdViewDidPresentVideoVCForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewDidPresentVideoVCForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewDidPresentVideoVCForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 原生视频模板详情页 WillDismiss 回调
  */
-- (void)nativeExpressAdViewWillDismissVideoVCForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewWillDismissVideoVCForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewWillDismissVideoVCForAdManager:self views:nativeExpressAdView];
 }
 
 /**
  * 原生视频模板详情页 DidDismiss 回调
  */
-- (void)nativeExpressAdViewDidDismissVideoVCForAdapter:(MobiNativeExpressFeedView *)nativeExpressAdView {
+- (void)nativeExpressAdViewDidDismissVideoVCForAdapter:(MobiNativeExpressDrawView *)nativeExpressAdView {
     [self.delegate nativeExpressAdViewDidDismissVideoVCForAdManager:self views:nativeExpressAdView];
 }
 

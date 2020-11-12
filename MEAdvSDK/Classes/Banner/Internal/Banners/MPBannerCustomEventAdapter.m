@@ -185,6 +185,7 @@ static NSTimeInterval const kDefaultRequiredSecondsInViewForImpression = 0.0;
     model.so_t = [self.delegate sortType];
     model.posid = self.adUnitId;
     model.network = [self.delegate networkName];
+    model.nt_name = self.configuration.ntName;
     model.tk = [MEAdHelpTool stringMD5:[NSString stringWithFormat:@"%@%ld%@%ld", model.posid, model.so_t, @"mobi", (long)([[NSDate date] timeIntervalSince1970]*1000)]];
     // 立即上传
     [MELogTracker uploadImmediatelyWithLogModels:@[model]];
@@ -202,6 +203,7 @@ static NSTimeInterval const kDefaultRequiredSecondsInViewForImpression = 0.0;
     model.so_t = [self.delegate sortType];
     model.posid = self.adUnitId;
     model.network = [self.delegate networkName];
+    model.nt_name = self.configuration.ntName;
     model.type = AdLogFaultType_Normal;
     model.code = error.code;
     if (error.localizedDescription != nil || error.localizedDescription.length > 0) {
@@ -248,6 +250,7 @@ static NSTimeInterval const kDefaultRequiredSecondsInViewForImpression = 0.0;
     model.so_t = [self.delegate sortType];
     model.posid = self.adUnitId;
     model.network = [self.delegate networkName];
+    model.nt_name = self.configuration.ntName;
     model.tk = [MEAdHelpTool stringMD5:[NSString stringWithFormat:@"%@%ld%@%ld", model.posid, model.so_t, @"mobi", (long)([[NSDate date] timeIntervalSince1970]*1000)]];
     // 立即上传
     [MELogTracker uploadImmediatelyWithLogModels:@[model]];

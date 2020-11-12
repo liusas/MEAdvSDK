@@ -34,7 +34,7 @@ static NSTimeInterval const kDefaultRefreshInterval = 10; //seconds
     
     self.refreshInterval = kDefaultRefreshInterval;
     
-    if (self.adType == MobiAdTypeBanner || self.adType == MobiAdTypeFeed || self.adType == MobiAdTypeInterstitial || self.adType == MobiAdTypeSplash) {
+    if (self.adType == MobiAdTypeBanner || self.adType == MobiAdTypeFeed || self.adType == MobiAdTypeInterstitial || self.adType == MobiAdTypeSplash || self.adType == MobiAdTypeDrawView) {
         
         self.nativeConfigData = [MobiAdNativeBaseClass modelObjectWithDictionary:json];
         self.impressionTrackingURLs = [self URLsFromArray:self.nativeConfigData.impTrack];
@@ -67,6 +67,8 @@ static NSTimeInterval const kDefaultRefreshInterval = 10; //seconds
         return MobiAdTypeInterstitial;
     } else if (styleType == 106) { // 开屏
         return MobiAdTypeSplash;
+    } else if (styleType == 107) { // Draw 信息流
+        return MobiAdTypeDrawView;
     }
     
     // 若至此,则表示广告类型错误

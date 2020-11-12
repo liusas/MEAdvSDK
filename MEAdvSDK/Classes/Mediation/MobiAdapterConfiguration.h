@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (Class)getInterstitialCustomEvent;
 - (Class)getRewardedVideoCustomEvent;
 - (Class)getFullscreenCustomEvent;
+- (Class)getDrawViewCustomEvent;
 
 #pragma mark - Initialization
 
