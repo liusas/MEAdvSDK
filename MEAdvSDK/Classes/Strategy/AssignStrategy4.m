@@ -28,7 +28,7 @@
         NSInteger currentIndex = [[StrategyFactory sharedInstance].sceneIdFrequencyDic[sceneId] intValue];
         int i = 0;// 作为循环的次数记录
         while (i < listInfo.network.count) {
-             NSInteger index = [listInfo.orderParameter[(currentIndex + i) % listInfo.network.count] integerValue];
+             NSInteger index = [listInfo.orderParameter[(currentIndex + i) % listInfo.orderParameter.count] integerValue];
             if (index < listInfo.network.count) {
                 MEConfigNetwork *network = listInfo.network[index];
                 MobiConfig *configuration = [[MobiConfig alloc] init];
