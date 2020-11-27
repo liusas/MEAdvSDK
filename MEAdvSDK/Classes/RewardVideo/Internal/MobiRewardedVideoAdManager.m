@@ -285,7 +285,7 @@
     
     // 上报日志
     MEAdLogModel *model = [MEAdLogModel new];
-    model.event = AdLogEventType_Load;
+    model.event = AdLogEventType_Request;
     model.st_t = AdLogAdType_RewardVideo;
     model.so_t = self.configuration.sortType;
     model.posid = self.configuration.adUnitId;

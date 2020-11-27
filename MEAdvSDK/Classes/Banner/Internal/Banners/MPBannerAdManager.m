@@ -314,7 +314,7 @@
     
     // 上报日志
     MEAdLogModel *model = [MEAdLogModel new];
-    model.event = AdLogEventType_Load;
+    model.event = AdLogEventType_Request;
     model.st_t = AdLogAdType_Banner;
     model.so_t = self.requestingConfiguration.sortType;
     model.posid = self.requestingConfiguration.adUnitId;
