@@ -285,6 +285,18 @@
 - (void)rewardedVideoWillAppearForCustomEvent:(id<MobiRewardedVideoCustomEvent>)customEvent
 {
     [self.delegate rewardedVideoWillAppearForAdapter:self];
+    
+    // 上报日志
+    MEAdLogModel *model = [MEAdLogModel new];
+    model.event = AdLogEventType_Show;
+    model.st_t = AdLogAdType_RewardVideo;
+    model.so_t = self.configuration.sortType;
+    model.posid = self.configuration.adUnitId;
+    model.network = self.configuration.networkName;
+    model.nt_name = self.configuration.ntName;
+    model.tk = [MEAdHelpTool stringMD5:[NSString stringWithFormat:@"%@%ld%@%ld", model.posid, model.so_t, @"mobi", (long)([[NSDate date] timeIntervalSince1970]*1000)]];
+    // 立即上传
+    [MELogTracker uploadImmediatelyWithLogModels:@[model]];
 }
 
 - (void)rewardedVideoDidAppearForCustomEvent:(id<MobiRewardedVideoCustomEvent>)customEvent {

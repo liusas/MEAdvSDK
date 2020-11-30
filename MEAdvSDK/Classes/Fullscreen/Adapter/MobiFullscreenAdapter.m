@@ -270,6 +270,18 @@
 - (void)fullscreenVideoWillAppearForCustomEvent:(id<MobiFullscreenVideoCustomEvent>)customEvent
 {
     [self.delegate fullscreenVideoWillAppearForAdAdapter:self];
+    
+    // 上报日志
+    MEAdLogModel *model = [MEAdLogModel new];
+    model.event = AdLogEventType_Show;
+    model.st_t = AdLogAdType_FullVideo;
+    model.so_t = self.configuration.sortType;
+    model.posid = self.configuration.adUnitId;
+    model.network = self.configuration.networkName;
+    model.nt_name = self.configuration.ntName;
+    model.tk = [MEAdHelpTool stringMD5:[NSString stringWithFormat:@"%@%ld%@%ld", model.posid, model.so_t, @"mobi", (long)([[NSDate date] timeIntervalSince1970]*1000)]];
+    // 立即上传
+    [MELogTracker uploadImmediatelyWithLogModels:@[model]];
 }
 
 - (void)fullscreenVideoDidAppearForCustomEvent:(id<MobiFullscreenVideoCustomEvent>)customEvent {
